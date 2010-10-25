@@ -1,0 +1,42 @@
+#include "xiRTMainFrame.h"
+#include "xiRTAboutDialog.h"
+#include "xiRTPrefsDialog.h"
+
+xiRTMainFrame::xiRTMainFrame( wxWindow* parent )
+:
+MainFrame( parent )
+{
+
+}
+
+void xiRTMainFrame::OnOpenClick( wxCommandEvent& event )
+{
+	// TODO: Implement OnOpenClick
+}
+
+void xiRTMainFrame::OnExportClick( wxCommandEvent& event )
+{
+	// TODO: Implement OnExportClick
+}
+
+void xiRTMainFrame::OnPrefsClick( wxCommandEvent& event )
+{
+    xiRTPrefsDialog* dialog = new xiRTPrefsDialog( (wxWindow*)NULL );
+    dialog ->Show();
+}
+
+void xiRTMainFrame::OnExitClick( wxCommandEvent& event )
+{
+	Close();
+}
+
+void xiRTMainFrame::OnHelpClick( wxCommandEvent& event )
+{
+	// TODO: Implement OnHelpClick
+}
+
+void xiRTMainFrame::OnAboutClick( wxCommandEvent& event )
+{
+    xiRTAboutDialog* dialog = new xiRTAboutDialog( (wxWindow*)NULL );
+    dialog ->Show();
+}
