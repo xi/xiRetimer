@@ -1,0 +1,1 @@
+g++ *.h *.cpp ../src/*.h ../src/*.cpp `wx-config --cxxflags --libs`

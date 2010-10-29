@@ -1,7 +1,5 @@
+#include "rtlayer.h"
 
-#include "test.h"
-
-/*
 RTlayer::RTlayer() {
   marker;
 }
@@ -15,4 +13,4 @@ float RTlayer::getRatio(int i) {
   else
     return NULL;
 }
-*/
+

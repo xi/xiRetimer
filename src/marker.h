@@ -26,7 +26,7 @@ int main() {
   m.add(0,0);
   m.add(1,1);
   m.add(0.5,0.4);
-  std::cout << m.getNew(3) << std::endl;
+  std::cout << m.getNew(1) << std::endl;
 }
 */
 
