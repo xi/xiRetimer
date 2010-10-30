@@ -30,8 +30,27 @@ void Marker::setNew(int pi, float pnew) {
   anew.set(resort(pi), pnew);
 }
 
+float Marker::getRatio() {
+  if (length()>0)
+    return (getNew(length()-1)-getNew(0))/(getOld(length()-1)-getOld(0));
+  else
+    return NULL;
+}
+
+float Marker::getRatio(int i) {
+  if (i>=0 && i<length()-1)
+    return (getNew(i+1)-getNew(i))/(getOld(i+1)-getOld(i));
+  else
+    return NULL;
+}
+
 int Marker::length() {
   return anew.length();
+}
+
+void Marker::println() {
+  aold.println();
+  anew.println();
 }
 
 int Marker::resort(int pi) {

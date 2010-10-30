@@ -10,7 +10,6 @@ class RTlayer {
 public:
   RTlayer();
   ~RTlayer();
-  float getRatio(int i);
   Marker marker;
 };
 

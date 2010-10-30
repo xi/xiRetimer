@@ -13,7 +13,10 @@ public:
   float getNew(int pi);
   float getOld(int pi);
   void setNew(int pi, float pnew);
+  float getRatio();
+  float getRatio(int i);
   int length();
+  void println();
 private:
   Buffer anew;
   Buffer aold;
