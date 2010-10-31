@@ -18,11 +18,11 @@ MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 	
 	m_File = new wxMenu();
 	wxMenuItem* m_open;
-	m_open = new wxMenuItem( m_File, wxID_ANY, wxString( wxT("open") ) , wxEmptyString, wxITEM_NORMAL );
+	m_open = new wxMenuItem( m_File, wxID_ANY, wxString( wxT("&open") ) , wxEmptyString, wxITEM_NORMAL );
 	m_File->Append( m_open );
 	
 	wxMenuItem* m_export;
-	m_export = new wxMenuItem( m_File, wxID_ANY, wxString( wxT("export") ) , wxEmptyString, wxITEM_NORMAL );
+	m_export = new wxMenuItem( m_File, wxID_ANY, wxString( wxT("e&xport") ) , wxEmptyString, wxITEM_NORMAL );
 	m_File->Append( m_export );
 	
 	wxMenuItem* m_separator3;

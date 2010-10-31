@@ -19,6 +19,7 @@ protected:
 	void OnExitClick( wxCommandEvent& event );
 	void OnHelpClick( wxCommandEvent& event );
 	void OnAboutClick( wxCommandEvent& event );
+  void OnProcessClick( wxCommandEvent& event );
 	void OnZUpClick( wxCommandEvent& event );
 	void OnZDownClick( wxCommandEvent& event );
 	void OnZFullClick( wxCommandEvent& event );
