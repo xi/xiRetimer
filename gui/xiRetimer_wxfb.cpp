@@ -18,11 +18,11 @@ MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 	
 	m_File = new wxMenu();
 	wxMenuItem* m_open;
-	m_open = new wxMenuItem( m_File, wxID_ANY, wxString( wxT("&open") ) , wxEmptyString, wxITEM_NORMAL );
+	m_open = new wxMenuItem( m_File, wxID_ANY, wxString( wxT("open") ) , wxEmptyString, wxITEM_NORMAL );
 	m_File->Append( m_open );
 	
 	wxMenuItem* m_export;
-	m_export = new wxMenuItem( m_File, wxID_ANY, wxString( wxT("e&xport") ) , wxEmptyString, wxITEM_NORMAL );
+	m_export = new wxMenuItem( m_File, wxID_ANY, wxString( wxT("export") ) , wxEmptyString, wxITEM_NORMAL );
 	m_File->Append( m_export );
 	
 	wxMenuItem* m_separator3;
@@ -65,6 +65,7 @@ MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 	m_statusBar1 = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
 	
 	// Connect Events
+	this->Connect( wxEVT_UPDATE_UI, wxUpdateUIEventHandler( MainFrame::OnUpdateUI ) );
 	this->Connect( m_open->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnOpenClick ) );
 	this->Connect( m_export->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExportClick ) );
 	this->Connect( m_prefs->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnPrefsClick ) );
@@ -76,6 +77,7 @@ MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 MainFrame::~MainFrame()
 {
 	// Disconnect Events
+	this->Disconnect( wxEVT_UPDATE_UI, wxUpdateUIEventHandler( MainFrame::OnUpdateUI ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnOpenClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExportClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnPrefsClick ) );
@@ -182,60 +184,4 @@ PrefsDialog::~PrefsDialog()
 	m_colourPicker6->Disconnect( wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler( PrefsDialog::OnColorChange ), NULL, this );
 	m_button3->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PrefsDialog::OnOKClick ), NULL, this );
 	m_button2->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PrefsDialog::OnCancelClick ), NULL, this );
-}
-
-WaitDialog::WaitDialog( wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style ) : wxPanel( parent, id, pos, size, style )
-{
-	wxBoxSizer* bSizer7;
-	bSizer7 = new wxBoxSizer( wxVERTICAL );
-	
-	m_gauge2 = new wxGauge( this, wxID_ANY, 100, wxDefaultPosition, wxDefaultSize, wxGA_HORIZONTAL );
-	bSizer7->Add( m_gauge2, 0, wxALL|wxEXPAND, 5 );
-	
-	m_staticText5 = new wxStaticText( this, wxID_ANY, wxT("Please wait ..."), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText5->Wrap( -1 );
-	bSizer7->Add( m_staticText5, 0, wxALL, 5 );
-	
-	this->SetSizer( bSizer7 );
-	this->Layout();
-}
-
-WaitDialog::~WaitDialog()
-{
-}
-
-FileSelectDialog::FileSelectDialog( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
-{
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
-	
-	wxBoxSizer* bSizer9;
-	bSizer9 = new wxBoxSizer( wxVERTICAL );
-	
-	m_filePicker2 = new wxFilePickerCtrl( this, wxID_ANY, wxEmptyString, wxT("Select a file"), wxT("*.*"), wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE );
-	bSizer9->Add( m_filePicker2, 1, wxEXPAND|wxTOP|wxRIGHT|wxLEFT, 5 );
-	
-	wxBoxSizer* bSizer10;
-	bSizer10 = new wxBoxSizer( wxHORIZONTAL );
-	
-	m_toggleBtn2 = new wxToggleButton( this, wxID_ANY, wxT("OK"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer10->Add( m_toggleBtn2, 1, wxALL|wxEXPAND, 5 );
-	
-	m_button2 = new wxButton( this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer10->Add( m_button2, 1, wxEXPAND|wxALL, 5 );
-	
-	bSizer9->Add( bSizer10, 1, wxEXPAND, 5 );
-	
-	this->SetSizer( bSizer9 );
-	this->Layout();
-	
-	// Connect Events
-	m_toggleBtn2->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( FileSelectDialog::OnOKClick ), NULL, this );
-	m_button2->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( FileSelectDialog::OnCancelClick ), NULL, this );
-}
-
-FileSelectDialog::~FileSelectDialog()
-{
-	// Disconnect Events
-	m_toggleBtn2->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( FileSelectDialog::OnOKClick ), NULL, this );
-	m_button2->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( FileSelectDialog::OnCancelClick ), NULL, this );
 }

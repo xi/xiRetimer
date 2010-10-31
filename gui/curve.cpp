@@ -1,51 +1,39 @@
 #include "curve.h"
 
-Curve::Curve() {
-  length=0;
-  start=0;
-  zoom=1;
-  datalength=100;
+Curve::Curve(Sample* s) {
+  sample=s;
+  data=sample->data;
+  screenwidth=0;
+  seeker=0;
 }
 
 Curve::~Curve() {}
 
 float Curve::get(int i) {
-  float data[100]; // data isnet implemented yet
-  int n=int(start*datalength+i*zoom*ZOOMFACTOR);
-  if (n>=0 && n<datalength)
-    return data[0];
+  int n=int((float)i/screenwidth*getDataLength());
+  if (n>=0 && n<getDataLength())
+    return data[n];
   else
     return 0;
 }
 
-bool Curve::selected(int i) {
-  int n=int(start*datalength+i*zoom*ZOOMFACTOR);
-  return (n>=starts*datalength && n<ends*datalength);
+float Curve::getSeeker() {return seeker;}
+void Curve::setSeeker(float s) {
+  if (s>=0 && s<=1) seeker=s;
 }
 
-void Curve::setZoom(float z) {
-  zoom=z;
+void Curve::setScreenWidth(int w) {screenwidth=w;}
+
+void Curve::print() {
+  for (int i=0; i<screenwidth; ++i) {
+    for (float j=-1; j<get(i); j+=0.1)
+      std::cout << "+";
+    if (getSeeker()==i)
+      std::cout << " *";
+    std::cout << std::endl;
+  }
 }
 
-void Curve::zoomUp() {
-  setZoom(zoom*ZOOMSTEP);
-}
-
-void Curve::zoomDown() {
-  setZoom(zoom/ZOOMSTEP);
-}
-
-void Curve::zoomSel() {
-  start=starts;
-  setZoom((ends-starts)*datalength/length/ZOOMFACTOR);
-}
-
-void Curve::zoomAll() {
-  start=0;
-  setZoom(datalength/ZOOMFACTOR/length);
-}
-
-
-void Curve::setlength(int l) {
-  length=l;
+inline int Curve::getDataLength() {
+  return sample->getLength();
 }

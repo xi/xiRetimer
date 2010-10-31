@@ -25,10 +25,6 @@
 #include <wx/dialog.h>
 #include <wx/choicebk.h>
 #include <wx/clrpicker.h>
-#include <wx/gauge.h>
-#include <wx/panel.h>
-#include <wx/filepicker.h>
-#include <wx/tglbtn.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -47,6 +43,7 @@ class MainFrame : public wxFrame
 		wxStatusBar* m_statusBar1;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnUpdateUI( wxUpdateUIEvent& event ) { event.Skip(); }
 		virtual void OnOpenClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnExportClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPrefsClick( wxCommandEvent& event ) { event.Skip(); }
@@ -111,48 +108,6 @@ class PrefsDialog : public wxDialog
 		
 		PrefsDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 247,165 ), long style = wxDEFAULT_DIALOG_STYLE );
 		~PrefsDialog();
-	
-};
-
-///////////////////////////////////////////////////////////////////////////////
-/// Class WaitDialog
-///////////////////////////////////////////////////////////////////////////////
-class WaitDialog : public wxPanel 
-{
-	private:
-	
-	protected:
-		wxGauge* m_gauge2;
-		wxStaticText* m_staticText5;
-	
-	public:
-		
-		WaitDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 269,80 ), long style = wxTAB_TRAVERSAL );
-		~WaitDialog();
-	
-};
-
-///////////////////////////////////////////////////////////////////////////////
-/// Class FileSelectDialog
-///////////////////////////////////////////////////////////////////////////////
-class FileSelectDialog : public wxDialog 
-{
-	private:
-	
-	protected:
-		wxFilePickerCtrl* m_filePicker2;
-		wxToggleButton* m_toggleBtn2;
-		wxButton* m_button2;
-		
-		// Virtual event handlers, overide them in your derived class
-		virtual void OnOKClick( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnCancelClick( wxCommandEvent& event ) { event.Skip(); }
-		
-	
-	public:
-		
-		FileSelectDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 223,111 ), long style = wxCAPTION|wxCLOSE_BOX|wxDEFAULT_DIALOG_STYLE|wxMAXIMIZE_BOX|wxSTAY_ON_TOP );
-		~FileSelectDialog();
 	
 };
 

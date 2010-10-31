@@ -23,6 +23,7 @@ private:
   SF_INFO sfinfo;
 };
 
+/*
 int main() {
   Marker* m=new Marker();
   m->add(0,0);
@@ -33,5 +34,6 @@ int main() {
   error=s.loadFile("test.wav");
   error=s.writeFile("testo.wav");
 }
+*/
 
 #endif

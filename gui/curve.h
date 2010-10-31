@@ -2,29 +2,39 @@
 #define __XICURVE_H
 
 #include <iostream>
+#include "../src/sample.h"
 
 class Curve {
 public:
-  Curve(); // irgendwie muss ich das sample da rein bekommen
+  Curve(Sample* s); 
   ~Curve();
   float get(int i);
-  bool selected(int i);
-  void setZoom(float z);
-  void zoomUp();
-  void zoomDown();
-  void zoomSel();
-  void zoomAll();
-  void setlength(int l);
+  float getSeeker();
+  void setSeeker(float s);
+  void setScreenWidth(int w);
+  void print();
 private:
-  float zoom;
-  int length;  // pixel
-  float start; // 0-1
-  float starts; //selection
-  float ends; //selection
-  int datalength;
-protected:
-  static const float ZOOMFACTOR=1;
-  static const float ZOOMSTEP=1.2; // factor used by zoomUp and zoomDown
+  int screenwidth;  // pixel
+  float seeker; // 0-1
+  float* data;
+  int getDataLength();
+  Sample* sample;
 };
+
+/*
+int main() {
+  Marker* m=new Marker();
+  m->add(0,0);
+  m->add(1,1);
+  Sample* s=new Sample(m);
+  m->add(0.5,0.3);
+  int error;
+  error=s->loadFile("../../test.wav");
+  
+  Curve c(s);
+  c.setScreenWidth(100);
+  c.print();
+}
+*/
 
 #endif
