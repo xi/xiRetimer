@@ -19,7 +19,7 @@ int main() {
   RTlayer layer;
 
   int samples=10000000;
-  int sample_rate=44100;
+  int sample_rate=1024;
   float* raw=new float[samples];
 
   layer.marker.add(0,0);
@@ -27,12 +27,12 @@ int main() {
   layer.marker.add(1,1);
 
   for (int i=0; i<layer.marker.length()-1; i++) {
-//    RubberBand::RubberBandStretcher ts(44100, 1);
-//    ts.study(raw, raw.length, true);
-//    ts.process(raw, raw.length, true);
-//    int avail=ts.available();
-//    float[] tmpRaw=new tmpRaw[avail];
-//    addRaw(ts.recieve(tmpRaw,avail));
+    RubberBand::RubberBandStretcher ts(44100, 1, DefaultOptions);
+    ts.study(raw, raw.length, true);
+    ts.process(raw, raw.length, true);
+    int avail=ts.available();
+    float[] tmpRaw=new tmpRaw[avail];
+    addRaw(ts.recieve(tmpRaw,avail));
   }
 
 }
