@@ -1,6 +1,0 @@
-include
-
-// für jeden Abschnitt wird ein Stretcher erstellt, der den Abschnitt anpasst
-rb=new RubberBandStretcher(44100,1,DefaultOptions,ratio);
-rb.study(abschnitt,abschnitt.length,true);
-rb.process(abschnitt,abschnitt.length,true);
