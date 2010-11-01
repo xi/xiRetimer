@@ -1,11 +1,16 @@
+xiRetimer v 0.1
 
 breaks an audio file into pices, timestretches and reconcatenates them. 
 I want to use this to fit recorded Audio exactly to a tempo.
 
 playback - gstreamer
-
 gui - wxwidgets
-
-RTlayer
-
+xiRetimer
 timestretch - rubberband
+
+
+TODO
+
+playback !!
+improve AudioShape
+bugtracking
