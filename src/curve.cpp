@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+// TODO change first and last marker
+
 Curve::Curve() {
   marker=new Marker();
   sample=new Sample(marker);
@@ -16,7 +18,7 @@ Curve::~Curve() {
 
 float Curve::get(float nn) {
   // TODO interpolation?
-  return sample->get(nn);
+  return sample->getOld(marker->new2old(marker->nnew2new(nn)));
 }
 
 float Curve::getSeeker() {return seeker;}

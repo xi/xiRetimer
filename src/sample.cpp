@@ -23,6 +23,13 @@ float Sample::get(float nn) {
   return data[i];
 }
 
+loat Sample::getOld(float o) {
+  // TODO interpolation?
+  int i=int((olength-1)*o);
+  if (i<0 || i>=olength) return NULL;
+  return data[i];
+}
+
 int Sample::loadFile(const char* fileName) {
   SNDFILE *sndfile;
   sfinfo;

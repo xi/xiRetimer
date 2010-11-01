@@ -12,6 +12,7 @@ public:
   ~Sample();
   float *data;
   float get(float nn); // nnew
+  float getOld(float o);
   int getLength();
   int loadFile(const char* filename);
   int writeFile(const char* filename);
