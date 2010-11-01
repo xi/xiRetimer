@@ -16,6 +16,13 @@ int Sample::getLength() {
   return length;
 }
 
+float Sample::get(float nn) {
+  // TODO interpolation?
+  int i=int((getLength()-1)*nn);
+  if (i<0 || i>=getLength()) return NULL;
+  return data[i];
+}
+
 int Sample::loadFile(const char* fileName) {
   SNDFILE *sndfile;
   sfinfo;
@@ -38,6 +45,7 @@ int Sample::loadFile(const char* fileName) {
     int count = sf_readf_float(sndfile, ptr, 10240);
     if (count <= 0) break;
     // save ptr in data
+    // TODO downmix (maybe several options, maybe multichannel support)
     for (int i=0; i<count*sfinfo.channels; i+=sfinfo.channels) {
       odata[count2]=ptr[i];
       count2++;
@@ -85,7 +93,7 @@ int Sample::process() {
   length=olength*marker->getRatio();
   delete[] data;
   data=new float[length];
-  for (int i=0; i<marker->length()-1; ++i) {
+  for (int i=0; i<marker->getLength()-1; ++i) {
     float ratio=marker->getRatio(i);
     int count=0; // position in section (o)
     int frames=int((marker->getOld(i+1)-marker->getOld(i))*olength); // length of section (o)

@@ -12,7 +12,7 @@ public:
   void add(float v);
   void insert(int i,float v);
   void remove(int i);
-  int length();
+  int getLength();
   void print();
   void println();
 private:

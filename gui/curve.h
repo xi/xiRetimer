@@ -4,28 +4,34 @@
 #include <iostream>
 #include "../src/sample.h"
 
+// main part of the gui
+// layer between screen and backend. Converts everything to screen (0-1) values
 class Curve {
 public:
-  Curve(Sample* s); 
+  Curve(); 
   ~Curve();
-  float get(int i);
   float getSeeker();
-  void setSeeker(float s);
-  void setScreenWidth(int w);
+  void setSeeker(float nn);
+  void setTempo(int bpm);
+  int getTempo();
   void print();
-private:
-  int screenwidth;  // pixel
-  float seeker; // 0-1
-  float* data;
-  int getDataLength();
+  // direct access to sample
   Sample* sample;
+  // indirect access to sample
+  float get(float nn);
+  // indirect access to marker
+  void addMarker();
+  void removeMarker();
+  // TODO indirect acces for drawing
+private:
+  float seeker; // 0-1
+  Marker* marker;
+  int tempo; // bpm
 };
 
 /*
 int main() {
   Marker* m=new Marker();
-  m->add(0,0);
-  m->add(1,1);
   Sample* s=new Sample(m);
   m->add(0.5,0.3);
   int error;

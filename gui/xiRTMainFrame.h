@@ -29,7 +29,6 @@ protected:
         void OnUpdateUI( wxUpdateUIEvent& event );
         void paint();
   Sample* sample;
-  Marker* marker;
   Curve* curve;
 	
 public:

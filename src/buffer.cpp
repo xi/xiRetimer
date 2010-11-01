@@ -2,7 +2,7 @@
 
 Buffer::Buffer() {
   _length=0;
-  array=new float[length()];
+  array=new float[getLength()];
 }
 
 Buffer::~Buffer() {
@@ -10,23 +10,23 @@ Buffer::~Buffer() {
 }
 
 float Buffer::get(int i) {
-  if (i>=0 && i<length())
+  if (i>=0 && i<getLength())
     return array[i];
   else
     return NULL;
 }
 
 void Buffer::set(int i, float v) {
-  if (i>=0 && i<=length()) array[i]=v;
+  if (i>=0 && i<=getLength()) array[i]=v;
 }
 
 void Buffer::insert(int i,float v) {
-  if (i>=0 && i<=length()) {
-    float* tmpArray=new float[length()+1];
+  if (i>=0 && i<=getLength()) {
+    float* tmpArray=new float[getLength()+1];
     for (int ii=0; ii<i; ii++)
       tmpArray[ii]=array[ii];
     tmpArray[i]=v;
-    for (int ii=i; ii<length(); ii++)
+    for (int ii=i; ii<getLength(); ii++)
       tmpArray[ii+1]=array[ii];
     delete[] array;
     array=tmpArray;
@@ -35,15 +35,15 @@ void Buffer::insert(int i,float v) {
 }
 
 void Buffer::add(float v) {
-  insert(length(),v);
+  insert(getLength(),v);
 }
 
 void Buffer::remove(int i) {
-  if (i>=0 && i<length()) {
-    float* tmpArray=new float[length()-1];
+  if (i>=0 && i<getLength()) {
+    float* tmpArray=new float[getLength()-1];
     for (int ii=0; ii<i; ii++)
       tmpArray[ii]=array[ii];
-    for (int ii=i+1; ii<length(); ii++)
+    for (int ii=i+1; ii<getLength(); ii++)
       tmpArray[ii-1]=array[ii];
     delete[] array;
     array=tmpArray;
@@ -51,16 +51,16 @@ void Buffer::remove(int i) {
   }
 }
 
-int Buffer::length() {
+int Buffer::getLength() {
   return _length;
 }
 
 void Buffer::print() {
   std::cout << "[";
-  for (int i=0; i<length()-1; i++)
+  for (int i=0; i<getLength()-1; i++)
     std::cout << get(i) << " ";
-  if (length() > 0)
-    std::cout << get(length()-1);
+  if (getLength() > 0)
+    std::cout << get(getLength()-1);
   std::cout << "]";
 }
 

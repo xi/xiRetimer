@@ -11,6 +11,7 @@ public:
   Sample(Marker* m);
   ~Sample();
   float *data;
+  float get(float nn); // nnew
   int getLength();
   int loadFile(const char* filename);
   int writeFile(const char* filename);
@@ -26,8 +27,6 @@ private:
 /*
 int main() {
   Marker* m=new Marker();
-  m->add(0,0);
-  m->add(1,1);
   Sample s(m);
   m->add(0.5,0.3);
   int error;
