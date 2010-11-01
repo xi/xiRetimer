@@ -73,3 +73,5 @@ void Curve::print() {
   }
 }
 
+void Curve::clearMarker() {marker->reset();}
+

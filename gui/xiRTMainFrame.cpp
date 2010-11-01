@@ -10,8 +10,6 @@
 
 #include <iostream>
 
-// TODO icon bar
-
 xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   curve=new Curve();
   sample=curve->sample;
@@ -20,6 +18,7 @@ xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   curve->setSeeker(0.3);
   width=100; // anything greater than 2
   Marker_move=false;
+  Seeker_move=false;
 }
 
 xiRTMainFrame::~xiRTMainFrame() {}
@@ -39,11 +38,13 @@ void xiRTMainFrame::OnLeftDown( wxMouseEvent& event ) {
   }
   // if not returned set Seeker
   curve->setSeeker(event.m_x/(float)width);
+  Seeker_move=true;
   curve->selectMarker(-1);  //deselct
 }
 
 void xiRTMainFrame::OnLeftUp( wxMouseEvent& event ) {
   Marker_move=false;
+  Seeker_move=false;
 }
 
 void xiRTMainFrame::OnLeftDClick( wxMouseEvent& event ) {
@@ -65,9 +66,11 @@ void xiRTMainFrame::OnLeftDClick( wxMouseEvent& event ) {
 void xiRTMainFrame::OnMotion( wxMouseEvent& event ) {
   if (Marker_move)
     curve->setMarker(event.m_x/(float)width);
+  if (Seeker_move)
+    curve->setSeeker(event.m_x/(float)width);
 }
 
-// ************  menu  **************
+// ************  file  **************
 void xiRTMainFrame::OnOpenClick( wxCommandEvent& event )
 {
     wxFileDialog* dialog = new wxFileDialog( (wxWindow*)NULL );
@@ -81,7 +84,7 @@ void xiRTMainFrame::OnOpenClick( wxCommandEvent& event )
 
 void xiRTMainFrame::OnExportClick( wxCommandEvent& event )
 {
-    wxFileDialog* dialog = new wxFileDialog((wxWindow*)NULL, _T("Export As"), _T(""), _T(""), _T("*.*"), wxSAVE | wxOVERWRITE_PROMPT);
+    wxFileDialog* dialog = new wxFileDialog((wxWindow*)NULL, _T("Export As"), _T(""), _T(""), _T("*.wav"), wxSAVE | wxOVERWRITE_PROMPT);
     dialog ->Show();
 
     if (dialog->ShowModal()==wxID_OK) {
@@ -91,6 +94,20 @@ void xiRTMainFrame::OnExportClick( wxCommandEvent& event )
     }
 }
 
+// ************  playback  **************
+void xiRTMainFrame::OnStartClick( wxCommandEvent& event ) {
+  curve->setSeeker(0);
+}
+
+void xiRTMainFrame::OnPlayClick( wxCommandEvent& event ) {
+  // TODO implement playback
+}
+
+void xiRTMainFrame::OnEndClick( wxCommandEvent& event ) {
+  curve->setSeeker(0);
+}
+
+// ************  general  **************
 void xiRTMainFrame::OnPrefsClick( wxCommandEvent& event )
 {
     xiRTPrefsDialog* dialog = new xiRTPrefsDialog( (wxWindow*)NULL );
@@ -99,38 +116,36 @@ void xiRTMainFrame::OnPrefsClick( wxCommandEvent& event )
 
 void xiRTMainFrame::OnExitClick( wxCommandEvent& event )
 {
-  delete[] curve;
   Destroy();
 }
 
 void xiRTMainFrame::OnHelpClick( wxCommandEvent& event )
 {
-	// TODO: Implement OnHelpClick
-}
-
-void xiRTMainFrame::OnAboutClick( wxCommandEvent& event )
-{
+	// TODO: create Help
     xiRTAboutDialog* dialog = new xiRTAboutDialog( (wxWindow*)NULL );
     dialog ->Show();
 }
 
+// ************  marker  **************
+void xiRTMainFrame::OnClearClick( wxCommandEvent& event ) {
+  curve->clearMarker();
+}
+
+
+// ************  misc  **************
 void xiRTMainFrame::OnProcessClick( wxCommandEvent& event ) {
     // TODO Link process with process bar
+/*
     wxProgressDialog::wxProgressDialog* dialog = new wxProgressDialog( _T("processing..."), _T("please wait") );
     dialog ->Show();
+*/
     sample->process();
 }
 
-void xiRTMainFrame::OnMSetClick( wxCommandEvent& event )
-{
-  curve->addMarker();
-}
+void xiRTMainFrame::OnUpdateUI( wxUpdateUIEvent& event ) {paint();}
 
-void xiRTMainFrame::OnMRmClick( wxCommandEvent& event )
-{
-  curve->removeMarker();
-}
 
+// ***********************************
 void xiRTMainFrame::paint() {
   // TODO dont repaint all the time
   wxClientDC dc2(this);
@@ -149,7 +164,7 @@ void xiRTMainFrame::paint() {
   for (int i=0; i<width-1; ++i) {
     dc.DrawLine(i,int(curve->get(i/(float)(width-1))*h+h)/2,i+1,int(curve->get((i+1)/(float)(width-1))*h+h)/2);
   }
-  // TODO display tempo bars ...
+  // TODO display tempo bars !!!
   dc.SetPen(penMarker);
   for (int i=0; i<curve->getMarkerLength(); ++i) {
     int n=int(curve->getMarker(i)*(width-1));
@@ -167,6 +182,4 @@ void xiRTMainFrame::paint() {
   int seek=int(curve->getSeeker()*(width-1));
   dc.DrawLine(seek,0,seek,h);
 }
-
-void xiRTMainFrame::OnUpdateUI( wxUpdateUIEvent& event ) {paint();}
 

@@ -27,7 +27,7 @@ float Sample::getOld(float o) {
   // TODO interpolation?
   int i=int((olength-1)*o);
   if (i<0 || i>=olength) return NULL;
-  return data[i];
+  return odata[i];
 }
 
 int Sample::loadFile(const char* fileName) {

@@ -11,51 +11,8 @@
 
 MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxFrame( parent, id, title, pos, size, style )
 {
+wxInitAllImageHandlers();
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
-	
-	m_menubar1 = new wxMenuBar( 0 );
-	m_menubar1->SetMaxSize( wxSize( -1,32 ) );
-	
-	m_File = new wxMenu();
-	wxMenuItem* m_open;
-	m_open = new wxMenuItem( m_File, wxID_ANY, wxString( wxT("open") ) , wxEmptyString, wxITEM_NORMAL );
-	m_File->Append( m_open );
-	
-	wxMenuItem* m_export;
-	m_export = new wxMenuItem( m_File, wxID_ANY, wxString( wxT("export") ) , wxEmptyString, wxITEM_NORMAL );
-	m_File->Append( m_export );
-	
-	wxMenuItem* m_separator3;
-	m_separator3 = m_File->AppendSeparator();
-	
-	wxMenuItem* m_prefs;
-	m_prefs = new wxMenuItem( m_File, wxID_ANY, wxString( wxT("preferences") ) , wxEmptyString, wxITEM_NORMAL );
-	m_File->Append( m_prefs );
-	
-	wxMenuItem* m_separator2;
-	m_separator2 = m_File->AppendSeparator();
-	
-	wxMenuItem* m_exit;
-	m_exit = new wxMenuItem( m_File, wxID_ANY, wxString( wxT("Exit") ) , wxEmptyString, wxITEM_NORMAL );
-	m_File->Append( m_exit );
-	
-	m_menubar1->Append( m_File, wxT("File") );
-	
-	m_Help = new wxMenu();
-	wxMenuItem* m_help;
-	m_help = new wxMenuItem( m_Help, wxID_ANY, wxString( wxT("Help") ) , wxEmptyString, wxITEM_NORMAL );
-	m_Help->Append( m_help );
-	
-	wxMenuItem* m_separator1;
-	m_separator1 = m_Help->AppendSeparator();
-	
-	wxMenuItem* m_about;
-	m_about = new wxMenuItem( m_Help, wxID_ANY, wxString( wxT("About") ) , wxEmptyString, wxITEM_NORMAL );
-	m_Help->Append( m_about );
-	
-	m_menubar1->Append( m_Help, wxT("Help") );
-	
-	this->SetMenuBar( m_menubar1 );
 	
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
@@ -63,6 +20,117 @@ MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 	this->SetSizer( bSizer3 );
 	this->Layout();
 	m_statusBar1 = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
+	m_menubar3 = new wxMenuBar( 0 );
+	m_file = new wxMenu();
+	wxMenuItem* m_open;
+	m_open = new wxMenuItem( m_file, wxID_ANY, wxString( wxT("open") ) + wxT('\t') + wxT("CTRL+f"), wxEmptyString, wxITEM_NORMAL );
+	#ifdef __WXMSW__
+	m_open->SetBitmaps( wxBitmap( wxT("ressources/fileopen.png"), wxBITMAP_TYPE_ANY ) );
+	#elif defined( __WXGTK__ )
+	m_open->SetBitmap( wxBitmap( wxT("ressources/fileopen.png"), wxBITMAP_TYPE_ANY ) );
+	#endif
+	m_file->Append( m_open );
+	
+	wxMenuItem* m_export;
+	m_export = new wxMenuItem( m_file, wxID_ANY, wxString( wxT("export") ) + wxT('\t') + wxT("CTRL+s"), wxEmptyString, wxITEM_NORMAL );
+	#ifdef __WXMSW__
+	m_export->SetBitmaps( wxBitmap( wxT("ressources/document-save.png"), wxBITMAP_TYPE_ANY ) );
+	#elif defined( __WXGTK__ )
+	m_export->SetBitmap( wxBitmap( wxT("ressources/document-save.png"), wxBITMAP_TYPE_ANY ) );
+	#endif
+	m_file->Append( m_export );
+	
+	wxMenuItem* m_separator6;
+	m_separator6 = m_file->AppendSeparator();
+	
+	wxMenuItem* m_prefs;
+	m_prefs = new wxMenuItem( m_file, wxID_ANY, wxString( wxT("preferences") ) + wxT('\t') + wxT("F5"), wxEmptyString, wxITEM_NORMAL );
+	#ifdef __WXMSW__
+	m_prefs->SetBitmaps( wxBitmap( wxT("ressources/document-properties.png"), wxBITMAP_TYPE_ANY ) );
+	#elif defined( __WXGTK__ )
+	m_prefs->SetBitmap( wxBitmap( wxT("ressources/document-properties.png"), wxBITMAP_TYPE_ANY ) );
+	#endif
+	m_file->Append( m_prefs );
+	
+	wxMenuItem* m_separator7;
+	m_separator7 = m_file->AppendSeparator();
+	
+	wxMenuItem* b_exit;
+	b_exit = new wxMenuItem( m_file, wxID_ANY, wxString( wxT("Exit") ) , wxEmptyString, wxITEM_NORMAL );
+	#ifdef __WXMSW__
+	b_exit->SetBitmaps( wxBitmap( wxT("ressources/dialog-close.png"), wxBITMAP_TYPE_ANY ) );
+	#elif defined( __WXGTK__ )
+	b_exit->SetBitmap( wxBitmap( wxT("ressources/dialog-close.png"), wxBITMAP_TYPE_ANY ) );
+	#endif
+	m_file->Append( b_exit );
+	
+	m_menubar3->Append( m_file, wxT("File") );
+	
+	m_edit = new wxMenu();
+	wxMenuItem* m_play;
+	m_play = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("play/pause") ) + wxT('\t') + wxT("SPACE"), wxEmptyString, wxITEM_CHECK );
+	#ifdef __WXMSW__
+	m_play->SetBitmaps( wxBitmap( wxT("ressources/media-playback-start.png"), wxBITMAP_TYPE_ANY ) );
+	#elif defined( __WXGTK__ )
+	m_play->SetBitmap( wxBitmap( wxT("ressources/media-playback-start.png"), wxBITMAP_TYPE_ANY ) );
+	#endif
+	m_edit->Append( m_play );
+	
+	wxMenuItem* m_start;
+	m_start = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("start") ) + wxT('\t') + wxT("CTRL+LEFT"), wxEmptyString, wxITEM_NORMAL );
+	#ifdef __WXMSW__
+	m_start->SetBitmaps( wxBitmap( wxT("ressources/media-skip-backward.png"), wxBITMAP_TYPE_ANY ) );
+	#elif defined( __WXGTK__ )
+	m_start->SetBitmap( wxBitmap( wxT("ressources/media-skip-backward.png"), wxBITMAP_TYPE_ANY ) );
+	#endif
+	m_edit->Append( m_start );
+	
+	wxMenuItem* m_end;
+	m_end = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("end") ) + wxT('\t') + wxT("CTRL+RIGHT"), wxEmptyString, wxITEM_NORMAL );
+	#ifdef __WXMSW__
+	m_end->SetBitmaps( wxBitmap( wxT("ressources/media-skip-forward.png"), wxBITMAP_TYPE_ANY ) );
+	#elif defined( __WXGTK__ )
+	m_end->SetBitmap( wxBitmap( wxT("ressources/media-skip-forward.png"), wxBITMAP_TYPE_ANY ) );
+	#endif
+	m_edit->Append( m_end );
+	
+	wxMenuItem* m_separator8;
+	m_separator8 = m_edit->AppendSeparator();
+	
+	wxMenuItem* m_clear;
+	m_clear = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("clear markers") ) + wxT('\t') + wxT("CTRL+c"), wxEmptyString, wxITEM_NORMAL );
+	#ifdef __WXMSW__
+	m_clear->SetBitmaps( wxBitmap( wxT("ressources/edit-clear.png"), wxBITMAP_TYPE_ANY ) );
+	#elif defined( __WXGTK__ )
+	m_clear->SetBitmap( wxBitmap( wxT("ressources/edit-clear.png"), wxBITMAP_TYPE_ANY ) );
+	#endif
+	m_edit->Append( m_clear );
+	
+	wxMenuItem* m_process;
+	m_process = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("update audio data") ) + wxT('\t') + wxT("CTRL+u"), wxEmptyString, wxITEM_NORMAL );
+	#ifdef __WXMSW__
+	m_process->SetBitmaps( wxBitmap( wxT("ressources/stock_refresh.png"), wxBITMAP_TYPE_ANY ) );
+	#elif defined( __WXGTK__ )
+	m_process->SetBitmap( wxBitmap( wxT("ressources/stock_refresh.png"), wxBITMAP_TYPE_ANY ) );
+	#endif
+	m_edit->Append( m_process );
+	
+	m_menubar3->Append( m_edit, wxT("Edit") );
+	
+	m_help = new wxMenu();
+	wxMenuItem* m_about;
+	m_about = new wxMenuItem( m_help, wxID_ANY, wxString( wxT("about") ) + wxT('\t') + wxT("F1"), wxEmptyString, wxITEM_NORMAL );
+	#ifdef __WXMSW__
+	m_about->SetBitmaps( wxBitmap( wxT("ressources/help-about.png"), wxBITMAP_TYPE_ANY ) );
+	#elif defined( __WXGTK__ )
+	m_about->SetBitmap( wxBitmap( wxT("ressources/help-about.png"), wxBITMAP_TYPE_ANY ) );
+	#endif
+	m_help->Append( m_about );
+	
+	m_menubar3->Append( m_help, wxT("Help") );
+	
+	this->SetMenuBar( m_menubar3 );
+	
 	
 	// Connect Events
 	this->Connect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( MainFrame::OnLeftDClick ) );
@@ -73,9 +141,13 @@ MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 	this->Connect( m_open->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnOpenClick ) );
 	this->Connect( m_export->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExportClick ) );
 	this->Connect( m_prefs->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnPrefsClick ) );
-	this->Connect( m_exit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
-	this->Connect( m_help->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnHelpClick ) );
-	this->Connect( m_about->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnAboutClick ) );
+	this->Connect( b_exit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
+	this->Connect( m_play->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnPlayClick ) );
+	this->Connect( m_start->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnStartClick ) );
+	this->Connect( m_end->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnEndClick ) );
+	this->Connect( m_clear->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnClearClick ) );
+	this->Connect( m_process->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnProcessClick ) );
+	this->Connect( m_about->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnHelpClick ) );
 }
 
 MainFrame::~MainFrame()
@@ -90,8 +162,12 @@ MainFrame::~MainFrame()
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExportClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnPrefsClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnPlayClick ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnStartClick ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnEndClick ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnClearClick ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnProcessClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnHelpClick ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnAboutClick ) );
 }
 
 AboutDialog::AboutDialog( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )

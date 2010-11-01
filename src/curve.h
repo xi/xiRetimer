@@ -26,6 +26,7 @@ public:
   float getMarker(int i);
   void selectMarker(int i);
   void setMarker(float nn);
+  void clearMarker();
 private:
   float seeker; // 0-1
   Marker* marker;

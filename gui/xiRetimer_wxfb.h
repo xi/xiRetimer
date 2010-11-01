@@ -8,17 +8,17 @@
 #ifndef __xiRetimer_wxfb__
 #define __xiRetimer_wxfb__
 
+#include <wx/sizer.h>
+#include <wx/gdicmn.h>
+#include <wx/statusbr.h>
+#include <wx/font.h>
+#include <wx/colour.h>
+#include <wx/settings.h>
 #include <wx/string.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
 #include <wx/menu.h>
-#include <wx/gdicmn.h>
-#include <wx/font.h>
-#include <wx/colour.h>
-#include <wx/settings.h>
-#include <wx/sizer.h>
-#include <wx/statusbr.h>
 #include <wx/frame.h>
 #include <wx/stattext.h>
 #include <wx/button.h>
@@ -37,10 +37,11 @@ class MainFrame : public wxFrame
 	private:
 	
 	protected:
-		wxMenuBar* m_menubar1;
-		wxMenu* m_File;
-		wxMenu* m_Help;
 		wxStatusBar* m_statusBar1;
+		wxMenuBar* m_menubar3;
+		wxMenu* m_file;
+		wxMenu* m_edit;
+		wxMenu* m_help;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnLeftDClick( wxMouseEvent& event ) { event.Skip(); }
@@ -52,8 +53,12 @@ class MainFrame : public wxFrame
 		virtual void OnExportClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPrefsClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnExitClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnPlayClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnStartClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEndClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnClearClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnProcessClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnHelpClick( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnAboutClick( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:

@@ -11,16 +11,15 @@ Marker::~Marker() {
 }
 
 void Marker::reset() {
-  for (int i=0; i<getLength(); ++i) {
-    anew.remove(i);
-    aold.remove(i);
+  while(getLength()>0) {
+    anew.remove(0);
+    aold.remove(0);
   }
   add(0,0);
   add(1,1);
 }
 
 void Marker::add(float pold, float pnew) {
-print();
   if (pold<0 || pold>1) {
     std::cerr << "Error in Marker::add" << std::endl;
     std::cerr << "  pold not in range" << std::endl;
