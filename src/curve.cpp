@@ -9,7 +9,7 @@ Curve::Curve() {
   sample=new Sample(marker);
   seeker=0;
   tempo=90;
-  selMarker=0;
+  selMarker=-1;
 }
 
 Curve::~Curve() {
@@ -34,24 +34,29 @@ void Curve::addMarker() {
   float n=marker->nnew2new(seeker);
   marker->add(marker->new2old(n),n);
   // update selMarker
+/*
   if (n<selMarker) --selMarker;
   if (selMarker>=getMarkerLength()) --selMarker;
+*/
+  selMarker=marker->getAreaNew(n);
 }
 
 void Curve::removeMarker() {
+  if (selMarker<0) return;
   marker->remove(selMarker);
   // update selMarker
-  if (selMarker>=getMarkerLength()) --selMarker;
+//  if (selMarker>=getMarkerLength()) --selMarker;
+  selMarker=-1;
 }
 
 void Curve::setMarker(float nn) {
+  if (selMarker<0) return;
   int i=marker->getAreaNew(marker->nnew2new(nn));
-  if (i!=selMarker || i!=selMarker-1) return;
+  if (i!=selMarker && i!=selMarker-1) return;
   marker->setNew(selMarker,marker->nnew2new(nn));
 }
 
 void Curve::selectMarker(int i) {
-  if (i<0 || i>=getMarkerLength()) return;
   selMarker=i;
 }
 

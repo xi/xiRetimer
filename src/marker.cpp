@@ -10,17 +10,37 @@ Marker::Marker() {
 Marker::~Marker() {
 }
 
+void Marker::reset() {
+  for (int i=0; i<getLength(); ++i) {
+    anew.remove(i);
+    aold.remove(i);
+  }
+  add(0,0);
+  add(1,1);
+}
+
 void Marker::add(float pold, float pnew) {
-  if (pold<0 || pold>1) return;
-  if (getAreaOld(pold)!=getAreaNew(pnew)) return;
+print();
+  if (pold<0 || pold>1) {
+    std::cerr << "Error in Marker::add" << std::endl;
+    std::cerr << "  pold not in range" << std::endl;
+    return;
+  }
+  if (getAreaOld(pold)!=getAreaNew(pnew)) {
+    std::cerr << "Error in Marker::add" << std::endl;
+    std::cerr << "  Areas not Fitting: ";
+    std::cerr << getAreaOld(pold) << " " << getAreaNew(pnew) << std::endl;
+    return;
+  }
   anew.add(pnew);
   aold.add(pold);
 }
   
 void Marker::remove(int pi) {
   if (getLength()<=2) return;
-  anew.remove(resort(pi));
-  anew.remove(resort(pi));
+  int i=resort(pi);
+  anew.remove(i);
+  aold.remove(i);
 }
 
 float Marker::getNew(int pi) {
@@ -51,11 +71,6 @@ float Marker::getRatio(int i) {
 
 int Marker::getLength() {
   return anew.getLength();
-}
-
-void Marker::println() {
-  aold.println();
-  anew.println();
 }
 
 int Marker::resort(int pi) {
@@ -112,15 +127,26 @@ float Marker::nnew2new(float nn) {
 }
 
 int Marker::getAreaNew(float n) {
-  int i=0;
-  while (i<getLength()-1 && n<getNew(i+1)) ++i; // TODO n=getNew(i)
-  return i;
+  // TODO n=getNew(i)
+  for (int i=0; i<getLength(); ++i)
+    if (n<getNew(i)) return i-1;
+  return getLength()-1;
 }
 
 int Marker::getAreaOld(float o) {
-  int i=0;
-  while (i<getLength()-1 && o<getOld(i+1)) ++i; // TODO o=getOld(i)
-  return i;
+  // TODO n=getNew(i)
+  for (int i=0; i<getLength(); ++i)
+    if (o<getOld(i)) return i-1;
+  return getLength()-1;
+}
+
+void Marker::print() {
+  std::cout << "Marker" << std::endl;
+  for (int i=0; i<getLength(); ++i) {
+    std::cout << i << " ";
+    std::cout << getOld(i) << " ";
+    std::cout << getNew(i) << std::endl;
+  }
 }
 
 

@@ -15,6 +15,7 @@ class Marker {
 public:
   Marker();
   ~Marker();
+  void reset();
   void add(float pold, float pnew);
   void remove(int pi);
   float getNew(int pi);
@@ -23,7 +24,7 @@ public:
   float getRatio(); // factor by wich the whole sample is stretched; used to guess the length of the output array;
   float getRatio(int i); // factor by wich the is area is stretched;
   int getLength();
-  void println();
+  void print();
   // 0-1 conversion
   float old2new(float o);
   float new2old(float n);

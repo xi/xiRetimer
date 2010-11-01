@@ -19,19 +19,55 @@ xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   curve->addMarker();
   curve->setSeeker(0.3);
   width=100; // anything greater than 2
+  Marker_move=false;
 }
 
-xiRTMainFrame::~xiRTMainFrame() {
-  delete[] curve;
-}
+xiRTMainFrame::~xiRTMainFrame() {}
 
+// ************  mouse  **************
 void xiRTMainFrame::OnLeftDown( wxMouseEvent& event ) {
-std::cout << event.m_x << " " << event.m_x/(float)width <<std::endl;
+  // check for Marker Select
+  if (event.m_y<=MARKERWIDTH*4/5) {
+    for (int i=0; i<curve->getMarkerLength(); ++i) {
+      int n=int(curve->getMarker(i)*(width-1));
+      if (event.m_x<=n+MARKERWIDTH/2 && event.m_x>=n-MARKERWIDTH/2) {
+        curve->selectMarker(i);
+        Marker_move=true;
+        return;
+      }
+    }
+  }
+  // if not returned set Seeker
   curve->setSeeker(event.m_x/(float)width);
+  curve->selectMarker(-1);  //deselct
 }
 
-void xiRTMainFrame::OnLeftUp( wxMouseEvent& event ) {}
+void xiRTMainFrame::OnLeftUp( wxMouseEvent& event ) {
+  Marker_move=false;
+}
 
+void xiRTMainFrame::OnLeftDClick( wxMouseEvent& event ) {
+  // check for Marker Select
+  if (event.m_y<=MARKERWIDTH*4/5) {
+    for (int i=0; i<curve->getMarkerLength(); ++i) {
+      int n=int(curve->getMarker(i)*(width-1));
+      if (event.m_x<=n+MARKERWIDTH/2 && event.m_x>=n-MARKERWIDTH/2) {
+        curve->selectMarker(i);
+        curve->removeMarker();
+        return;
+      }
+    }
+  }
+  curve->setSeeker(event.m_x/(float)width);
+  curve->addMarker();
+}
+
+void xiRTMainFrame::OnMotion( wxMouseEvent& event ) {
+  if (Marker_move)
+    curve->setMarker(event.m_x/(float)width);
+}
+
+// ************  menu  **************
 void xiRTMainFrame::OnOpenClick( wxCommandEvent& event )
 {
     wxFileDialog* dialog = new wxFileDialog( (wxWindow*)NULL );
@@ -50,6 +86,7 @@ void xiRTMainFrame::OnExportClick( wxCommandEvent& event )
 
     if (dialog->ShowModal()==wxID_OK) {
       wxString filename=dialog->GetPath();
+      sample->process();
       sample->writeFile(filename.mb_str());
     }
 }
@@ -62,7 +99,8 @@ void xiRTMainFrame::OnPrefsClick( wxCommandEvent& event )
 
 void xiRTMainFrame::OnExitClick( wxCommandEvent& event )
 {
-	Destroy();
+  delete[] curve;
+  Destroy();
 }
 
 void xiRTMainFrame::OnHelpClick( wxCommandEvent& event )
@@ -116,6 +154,14 @@ void xiRTMainFrame::paint() {
   for (int i=0; i<curve->getMarkerLength(); ++i) {
     int n=int(curve->getMarker(i)*(width-1));
     dc.DrawLine(n,0,n,h);
+    wxPoint ps[3];
+    wxPoint p0(n-MARKERWIDTH/2,0);
+    ps[0]=p0;
+    wxPoint p1(n+MARKERWIDTH/2,0);
+    ps[1]=p1;
+    wxPoint p2(n+0,MARKERWIDTH*4/5);
+    ps[2]=p2;
+    dc.DrawPolygon(3,ps);
   }
   dc.SetPen(penSeeker);
   int seek=int(curve->getSeeker()*(width-1));

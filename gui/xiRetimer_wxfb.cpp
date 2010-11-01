@@ -65,8 +65,10 @@ MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 	m_statusBar1 = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
 	
 	// Connect Events
+	this->Connect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( MainFrame::OnLeftDClick ) );
 	this->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( MainFrame::OnLeftDown ) );
 	this->Connect( wxEVT_LEFT_UP, wxMouseEventHandler( MainFrame::OnLeftUp ) );
+	this->Connect( wxEVT_MOTION, wxMouseEventHandler( MainFrame::OnMotion ) );
 	this->Connect( wxEVT_UPDATE_UI, wxUpdateUIEventHandler( MainFrame::OnUpdateUI ) );
 	this->Connect( m_open->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnOpenClick ) );
 	this->Connect( m_export->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExportClick ) );
@@ -79,8 +81,10 @@ MainFrame::MainFrame( wxWindow* parent, wxWindowID id, const wxString& title, co
 MainFrame::~MainFrame()
 {
 	// Disconnect Events
+	this->Disconnect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( MainFrame::OnLeftDClick ) );
 	this->Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( MainFrame::OnLeftDown ) );
 	this->Disconnect( wxEVT_LEFT_UP, wxMouseEventHandler( MainFrame::OnLeftUp ) );
+	this->Disconnect( wxEVT_MOTION, wxMouseEventHandler( MainFrame::OnMotion ) );
 	this->Disconnect( wxEVT_UPDATE_UI, wxUpdateUIEventHandler( MainFrame::OnUpdateUI ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnOpenClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExportClick ) );
