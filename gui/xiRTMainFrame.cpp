@@ -8,7 +8,8 @@
 #include <wx/string.h>
 #include <wx/filedlg.h>
 
-// TODO move seeker with mouse
+#include <iostream>
+
 // TODO icon bar
 
 xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
@@ -17,11 +18,19 @@ xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   curve->setSeeker(0.7);
   curve->addMarker();
   curve->setSeeker(0.3);
+  width=100; // anything greater than 2
 }
 
 xiRTMainFrame::~xiRTMainFrame() {
   delete[] curve;
 }
+
+void xiRTMainFrame::OnLeftDown( wxMouseEvent& event ) {
+std::cout << event.m_x << " " << event.m_x/(float)width <<std::endl;
+  curve->setSeeker(event.m_x/(float)width);
+}
+
+void xiRTMainFrame::OnLeftUp( wxMouseEvent& event ) {}
 
 void xiRTMainFrame::OnOpenClick( wxCommandEvent& event )
 {
@@ -87,10 +96,9 @@ void xiRTMainFrame::OnMRmClick( wxCommandEvent& event )
 void xiRTMainFrame::paint() {
   // TODO dont repaint all the time
   wxClientDC dc2(this);
-  int w=0;
   int h=0;
-  dc2.GetSize(&w,&h);
-  wxBufferedDC dc(&dc2,wxSize(w,h));
+  dc2.GetSize(&width,&h);
+  wxBufferedDC dc(&dc2,wxSize(width,h));
 
   wxBrush brush(*wxBLACK); // red pen of width 1
   dc.SetBackground(brush);
@@ -100,17 +108,17 @@ void xiRTMainFrame::paint() {
   dc.SetPen(penCurve);
   dc.Clear();
   // TODO nicer looking shape
-  for (int i=0; i<w-1; ++i) {
-    dc.DrawLine(i,int(curve->get(i/(float)(w-1))*h+h)/2,i+1,int(curve->get((i+1)/(float)(w-1))*h+h)/2);
+  for (int i=0; i<width-1; ++i) {
+    dc.DrawLine(i,int(curve->get(i/(float)(width-1))*h+h)/2,i+1,int(curve->get((i+1)/(float)(width-1))*h+h)/2);
   }
   // TODO display tempo bars ...
   dc.SetPen(penMarker);
   for (int i=0; i<curve->getMarkerLength(); ++i) {
-    int n=int(curve->getMarker(i)*(w-1));
+    int n=int(curve->getMarker(i)*(width-1));
     dc.DrawLine(n,0,n,h);
   }
   dc.SetPen(penSeeker);
-  int seek=int(curve->getSeeker()*(w-1));
+  int seek=int(curve->getSeeker()*(width-1));
   dc.DrawLine(seek,0,seek,h);
 }
 

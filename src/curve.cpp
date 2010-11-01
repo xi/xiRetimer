@@ -9,6 +9,7 @@ Curve::Curve() {
   sample=new Sample(marker);
   seeker=0;
   tempo=90;
+  selMarker=0;
 }
 
 Curve::~Curve() {
@@ -29,15 +30,29 @@ void Curve::setSeeker(float nn) {
 void Curve::setTempo(int bpm) {tempo=bpm;}
 int Curve::getTempo() {return tempo;}
 
-// TODO select and move marker
 void Curve::addMarker() {
   float n=marker->nnew2new(seeker);
   marker->add(marker->new2old(n),n);
+  // update selMarker
+  if (n<selMarker) --selMarker;
+  if (selMarker>=getMarkerLength()) --selMarker;
 }
 
 void Curve::removeMarker() {
-  int i=marker->getAreaNew(marker->nnew2new(seeker));
-  marker->remove(i);
+  marker->remove(selMarker);
+  // update selMarker
+  if (selMarker>=getMarkerLength()) --selMarker;
+}
+
+void Curve::setMarker(float nn) {
+  int i=marker->getAreaNew(marker->nnew2new(nn));
+  if (i!=selMarker || i!=selMarker-1) return;
+  marker->setNew(selMarker,marker->nnew2new(nn));
+}
+
+void Curve::selectMarker(int i) {
+  if (i<0 || i>=getMarkerLength()) return;
+  selMarker=i;
 }
 
 int Curve::getMarkerLength() {return marker->getLength();}
@@ -52,5 +67,4 @@ void Curve::print() {
     std::cout << std::endl;
   }
 }
-
 

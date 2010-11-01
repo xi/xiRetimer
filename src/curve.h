@@ -24,10 +24,13 @@ public:
   void removeMarker();
   int getMarkerLength();
   float getMarker(int i);
+  void selectMarker(int i);
+  void setMarker(float nn);
 private:
   float seeker; // 0-1
   Marker* marker;
   int tempo; // bpm
+  int selMarker;
 };
 
 /*

@@ -60,8 +60,8 @@
             <event name="OnKillFocus"></event>
             <event name="OnLeaveWindow"></event>
             <event name="OnLeftDClick"></event>
-            <event name="OnLeftDown"></event>
-            <event name="OnLeftUp"></event>
+            <event name="OnLeftDown">OnLeftDown</event>
+            <event name="OnLeftUp">OnLeftUp</event>
             <event name="OnMiddleDClick"></event>
             <event name="OnMiddleDown"></event>
             <event name="OnMiddleUp"></event>

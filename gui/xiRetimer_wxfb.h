@@ -43,6 +43,8 @@ class MainFrame : public wxFrame
 		wxStatusBar* m_statusBar1;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnLeftDown( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnLeftUp( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnUpdateUI( wxUpdateUIEvent& event ) { event.Skip(); }
 		virtual void OnOpenClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnExportClick( wxCommandEvent& event ) { event.Skip(); }

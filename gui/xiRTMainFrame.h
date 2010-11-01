@@ -16,6 +16,8 @@ class xiRTMainFrame : public MainFrame
 {
 protected:
 	// Handlers for MainFrame events.
+	void OnLeftDown( wxMouseEvent& event );
+	void OnLeftUp( wxMouseEvent& event );
 	void OnOpenClick( wxCommandEvent& event );
 	void OnExportClick( wxCommandEvent& event );
 	void OnPrefsClick( wxCommandEvent& event );
@@ -29,6 +31,7 @@ protected:
         void paint();
   Sample* sample;
   Curve* curve;
+  int width;
 	
 public:
 	/** Constructor */
