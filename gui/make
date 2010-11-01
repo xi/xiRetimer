@@ -1,2 +1,2 @@
 g++ *.h *.cpp ../src/*.h ../src/*.cpp `wx-config --cxxflags --libs` `pkg-config --cflags --libs rubberband sndfile`
-rm *.gch
+rm ../*/*.gch

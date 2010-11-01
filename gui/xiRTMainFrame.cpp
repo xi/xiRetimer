@@ -8,16 +8,20 @@
 #include <wx/string.h>
 #include <wx/filedlg.h>
 
+// TODO move seeker with mouse
+// TODO icon bar
+
 xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   curve=new Curve();
   sample=curve->sample;
+  curve->setSeeker(0.7);
+  curve->addMarker();
   curve->setSeeker(0.3);
 }
 
 xiRTMainFrame::~xiRTMainFrame() {
   delete[] curve;
 }
-
 
 void xiRTMainFrame::OnOpenClick( wxCommandEvent& event )
 {
@@ -64,8 +68,10 @@ void xiRTMainFrame::OnAboutClick( wxCommandEvent& event )
 }
 
 void xiRTMainFrame::OnProcessClick( wxCommandEvent& event ) {
+    // TODO Link process with process bar
     wxProgressDialog::wxProgressDialog* dialog = new wxProgressDialog( _T("processing..."), _T("please wait") );
     dialog ->Show();
+    sample->process();
 }
 
 void xiRTMainFrame::OnMSetClick( wxCommandEvent& event )
@@ -79,7 +85,7 @@ void xiRTMainFrame::OnMRmClick( wxCommandEvent& event )
 }
 
 void xiRTMainFrame::paint() {
-  // TODO BufferedDC
+  // TODO dont repaint all the time
   wxClientDC dc2(this);
   int w=0;
   int h=0;
@@ -98,14 +104,13 @@ void xiRTMainFrame::paint() {
     dc.DrawLine(i,int(curve->get(i/(float)(w-1))*h+h)/2,i+1,int(curve->get((i+1)/(float)(w-1))*h+h)/2);
   }
   // TODO display tempo bars ...
-  // TODO display marker
-//  dc.SetPen(penMarker);
-//  for (int i=0; i<marker->getLength(); ++i) {
-//    int n=int(marker->getNew(i)*w/marker->getNew(marker->getLength()-1));
-//    dc.DrawLine(n,0,n,h);
-//  }
+  dc.SetPen(penMarker);
+  for (int i=0; i<curve->getMarkerLength(); ++i) {
+    int n=int(curve->getMarker(i)*(w-1));
+    dc.DrawLine(n,0,n,h);
+  }
   dc.SetPen(penSeeker);
-  int seek=int(curve->getSeeker()*w);
+  int seek=int(curve->getSeeker()*(w-1));
   dc.DrawLine(seek,0,seek,h);
 }
 
