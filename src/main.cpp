@@ -1,5 +1,5 @@
-#include "xiRTMainFrame.h"
-#include "test.h"
+#include "gui/xiRTMainFrame.h"
+#include "main.h"
 
 
 IMPLEMENT_APP(wxWidgetsApp)

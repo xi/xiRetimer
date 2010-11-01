@@ -13,9 +13,7 @@
 xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   curve=new Curve();
   sample=curve->sample;
-  curve->setSeeker(0.7);
-  curve->addMarker();
-  curve->setSeeker(0.3);
+  curve->setSeeker(0);
   width=100; // anything greater than 2
   Marker_move=false;
   Seeker_move=false;
