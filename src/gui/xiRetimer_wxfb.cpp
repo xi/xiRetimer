@@ -25,18 +25,16 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_open;
 	m_open = new wxMenuItem( m_file, wxID_ANY, wxString( wxT("open") ) + wxT('\t') + wxT("CTRL+f"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
-	m_open->SetBitmaps( wxBitmap( wxT("ressources/fileopen.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
-	m_open->SetBitmap( wxBitmap( wxT("ressources/fileopen.png"), wxBITMAP_TYPE_ANY ) );
+	m_open->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/fileopen.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
 	m_file->Append( m_open );
 	
 	wxMenuItem* m_export;
 	m_export = new wxMenuItem( m_file, wxID_ANY, wxString( wxT("export") ) + wxT('\t') + wxT("CTRL+s"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
-	m_export->SetBitmaps( wxBitmap( wxT("ressources/document-save.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
-	m_export->SetBitmap( wxBitmap( wxT("ressources/document-save.png"), wxBITMAP_TYPE_ANY ) );
+	m_export->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/document-save.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
 	m_file->Append( m_export );
 	
@@ -46,9 +44,8 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_prefs;
 	m_prefs = new wxMenuItem( m_file, wxID_ANY, wxString( wxT("preferences") ) + wxT('\t') + wxT("F5"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
-	m_prefs->SetBitmaps( wxBitmap( wxT("ressources/document-properties.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
-	m_prefs->SetBitmap( wxBitmap( wxT("ressources/document-properties.png"), wxBITMAP_TYPE_ANY ) );
+	m_prefs->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/document-properties.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
 	m_file->Append( m_prefs );
 	
@@ -58,9 +55,8 @@ wxInitAllImageHandlers();
 	wxMenuItem* b_exit;
 	b_exit = new wxMenuItem( m_file, wxID_ANY, wxString( wxT("Exit") ) , wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
-	b_exit->SetBitmaps( wxBitmap( wxT("ressources/dialog-close.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
-	b_exit->SetBitmap( wxBitmap( wxT("ressources/dialog-close.png"), wxBITMAP_TYPE_ANY ) );
+	b_exit->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/window-close.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
 	m_file->Append( b_exit );
 	
@@ -70,27 +66,24 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_play;
 	m_play = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("play/pause") ) + wxT('\t') + wxT("SPACE"), wxEmptyString, wxITEM_CHECK );
 	#ifdef __WXMSW__
-	m_play->SetBitmaps( wxBitmap( wxT("ressources/media-playback-start.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
-	m_play->SetBitmap( wxBitmap( wxT("ressources/media-playback-start.png"), wxBITMAP_TYPE_ANY ) );
+	m_play->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/media-playback-start.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
 	m_edit->Append( m_play );
 	
 	wxMenuItem* m_start;
 	m_start = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("start") ) + wxT('\t') + wxT("CTRL+LEFT"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
-	m_start->SetBitmaps( wxBitmap( wxT("ressources/media-skip-backward.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
-	m_start->SetBitmap( wxBitmap( wxT("ressources/media-skip-backward.png"), wxBITMAP_TYPE_ANY ) );
+	m_start->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/media-skip-backward.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
 	m_edit->Append( m_start );
 	
 	wxMenuItem* m_end;
 	m_end = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("end") ) + wxT('\t') + wxT("CTRL+RIGHT"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
-	m_end->SetBitmaps( wxBitmap( wxT("ressources/media-skip-forward.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
-	m_end->SetBitmap( wxBitmap( wxT("ressources/media-skip-forward.png"), wxBITMAP_TYPE_ANY ) );
+	m_end->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/media-skip-forward.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
 	m_edit->Append( m_end );
 	
@@ -100,18 +93,16 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_clear;
 	m_clear = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("clear markers") ) + wxT('\t') + wxT("CTRL+c"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
-	m_clear->SetBitmaps( wxBitmap( wxT("ressources/edit-clear.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
-	m_clear->SetBitmap( wxBitmap( wxT("ressources/edit-clear.png"), wxBITMAP_TYPE_ANY ) );
+	m_clear->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/edit-clear.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
 	m_edit->Append( m_clear );
 	
 	wxMenuItem* m_process;
 	m_process = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("update audio data") ) + wxT('\t') + wxT("CTRL+u"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
-	m_process->SetBitmaps( wxBitmap( wxT("ressources/stock_refresh.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
-	m_process->SetBitmap( wxBitmap( wxT("ressources/stock_refresh.png"), wxBITMAP_TYPE_ANY ) );
+	m_process->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/stock_refresh.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
 	m_edit->Append( m_process );
 	
@@ -121,9 +112,8 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_about;
 	m_about = new wxMenuItem( m_help, wxID_ANY, wxString( wxT("about") ) + wxT('\t') + wxT("F1"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
-	m_about->SetBitmaps( wxBitmap( wxT("ressources/help-about.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
-	m_about->SetBitmap( wxBitmap( wxT("ressources/help-about.png"), wxBITMAP_TYPE_ANY ) );
+	m_about->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/help-about.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
 	m_help->Append( m_about );
 	
@@ -180,12 +170,13 @@ AboutDialog::AboutDialog( wxWindow* parent, wxWindowID id, const wxString& title
 	wxBoxSizer* bSizer14;
 	bSizer14 = new wxBoxSizer( wxVERTICAL );
 	
-	m_staticText1 = new wxStaticText( this, wxID_ANY, wxT("Created by xi."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText1 = new wxStaticText( this, wxID_ANY, wxT("xiRetimer v0.1 by xi."), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText1->Wrap( -1 );
 	bSizer14->Add( m_staticText1, 0, wxALIGN_CENTER|wxALL, 5 );
 	
 	m_staticText2 = new wxStaticText( this, wxID_ANY, wxT("www.github.com/xi"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText2->Wrap( -1 );
+
 	bSizer14->Add( m_staticText2, 0, wxALIGN_CENTER|wxALL, 5 );
 	
 	bSizer4->Add( bSizer14, 1, wxEXPAND, 5 );
