@@ -13,11 +13,12 @@
 xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   curve=new Curve();
   sample=curve->sample;
-  curve->setSeeker(0);
+  playback=new Playback(sample);
   width=100; // anything greater than 2
   height=100;
   Marker_move=false;
   Seeker_move=false;
+  _play=false;
 }
 
 xiRTMainFrame::~xiRTMainFrame() {}
@@ -99,7 +100,14 @@ void xiRTMainFrame::OnStartClick( wxCommandEvent& event ) {
 }
 
 void xiRTMainFrame::OnPlayClick( wxCommandEvent& event ) {
-  // TODO implement playback
+  if (_play) {
+    playback->stop();
+    _play=false;
+  }
+  else {
+    if (playback->start()==0)
+      _play=true;
+  }
 }
 
 void xiRTMainFrame::OnEndClick( wxCommandEvent& event ) {

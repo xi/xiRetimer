@@ -64,7 +64,7 @@ wxInitAllImageHandlers();
 	
 	m_edit = new wxMenu();
 	wxMenuItem* m_play;
-	m_play = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("play/pause") ) + wxT('\t') + wxT("SPACE"), wxEmptyString, wxITEM_CHECK );
+	m_play = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("play/pause") ) + wxT('\t') + wxT("SPACE"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
 	#elif defined( __WXGTK__ )
 	m_play->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/media-playback-start.png"), wxBITMAP_TYPE_ANY ) );
