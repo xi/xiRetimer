@@ -16,6 +16,10 @@ int Sample::getLength() {
   return length;
 }
 
+int Sample::getGuessedLength() {
+  return int(olength*marker->getRatio());
+}
+
 float Sample::get(float nn) {
   // TODO interpolation?
   int i=int((getLength()-1)*nn);

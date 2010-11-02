@@ -12,8 +12,6 @@ public:
   ~Curve();
   float getSeeker();
   void setSeeker(float nn);
-  void setTempo(int bpm);
-  int getTempo();
   void print();
   // direct access to sample
   Sample* sample;
@@ -27,11 +25,18 @@ public:
   void selectMarker(int i);
   void setMarker(float nn);
   void clearMarker();
+  // bars
+  float getBars();
+  void setBeatResolution(float n);
+  float getBeatResolution();
+  void setTempo(int bpm);
+  int getTempo();
 private:
   float seeker; // 0-1
   Marker* marker;
   int tempo; // bpm
   int selMarker;
+  float beatResolution;
 };
 
 /*

@@ -14,15 +14,16 @@ public:
   float get(float nn); // nnew
   float getOld(float o);
   int getLength();
+  int getGuessedLength();
   int loadFile(const char* filename);
   int writeFile(const char* filename);
   int process();
+  SF_INFO sfinfo;
 private:
   int length;
   Marker* marker;
   int olength;
   float *odata;
-  SF_INFO sfinfo;
 };
 
 /*

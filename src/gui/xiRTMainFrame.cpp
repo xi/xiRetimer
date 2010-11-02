@@ -15,6 +15,7 @@ xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   sample=curve->sample;
   curve->setSeeker(0);
   width=100; // anything greater than 2
+  height=100;
   Marker_move=false;
   Seeker_move=false;
 }
@@ -102,7 +103,7 @@ void xiRTMainFrame::OnPlayClick( wxCommandEvent& event ) {
 }
 
 void xiRTMainFrame::OnEndClick( wxCommandEvent& event ) {
-  curve->setSeeker(0);
+  curve->setSeeker(1);
 }
 
 // ************  general  **************
@@ -147,9 +148,9 @@ void xiRTMainFrame::OnUpdateUI( wxUpdateUIEvent& event ) {paint();}
 void xiRTMainFrame::paint() {
   // TODO dont repaint all the time
   wxClientDC dc2(this);
-  int h=0;
-  dc2.GetSize(&width,&h);
-  wxBufferedDC dc(&dc2,wxSize(width,h));
+  dc2.GetSize(&width,&height);
+  wxBufferedDC dc(&dc2,wxSize(width,height));
+  int h=height-BEAT;
 
   wxBrush brush(*wxBLACK); // red pen of width 1
   dc.SetBackground(brush);
@@ -160,13 +161,13 @@ void xiRTMainFrame::paint() {
   dc.Clear();
   // TODO nicer looking shape
   for (int i=0; i<width-1; ++i) {
-    dc.DrawLine(i,int(curve->get(i/(float)(width-1))*h+h)/2,i+1,int(curve->get((i+1)/(float)(width-1))*h+h)/2);
+    dc.DrawLine(i,int(curve->get(i/(float)(width-1))*h+height)/2,i+1,int(curve->get((i+1)/(float)(width-1))*h+height)/2);
   }
   // TODO display tempo bars !!!
   dc.SetPen(penMarker);
   for (int i=0; i<curve->getMarkerLength(); ++i) {
     int n=int(curve->getMarker(i)*(width-1));
-    dc.DrawLine(n,0,n,h);
+    dc.DrawLine(n,0,n,height);
     wxPoint ps[3];
     wxPoint p0(n-MARKERWIDTH/2,0);
     ps[0]=p0;
@@ -176,8 +177,16 @@ void xiRTMainFrame::paint() {
     ps[2]=p2;
     dc.DrawPolygon(3,ps);
   }
+  // seeker
   dc.SetPen(penSeeker);
   int seek=int(curve->getSeeker()*(width-1));
-  dc.DrawLine(seek,0,seek,h);
+  dc.DrawLine(seek,0,seek,height);
+  //beats
+  dc.SetPen(penMarker);
+  int step=int(width/curve->getBars()/curve->getBeatResolution());
+  for (int i=0; i<width && step!=0; i+=step) {
+    dc.DrawLine(i,0,i,BEAT);  
+  }
+
 }
 

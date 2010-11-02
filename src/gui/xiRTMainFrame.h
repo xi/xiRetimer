@@ -39,10 +39,12 @@ protected:
 
   void paint();
   static const int MARKERWIDTH=15;
+  static const int BEAT=15;
   
   Sample* sample;
   Curve* curve;
   int width;
+  int height;
   bool Marker_move;
   bool Seeker_move;
 	

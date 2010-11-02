@@ -10,6 +10,7 @@ Curve::Curve() {
   seeker=0;
   tempo=90;
   selMarker=-1;
+  beatResolution=1;
 }
 
 Curve::~Curve() {
@@ -27,8 +28,19 @@ void Curve::setSeeker(float nn) {
   if (nn>=0 && nn<=1) seeker=nn;
 }
 
+float Curve::getBars() {
+  int beats=sample->getGuessedLength()/(float)sample->sfinfo.samplerate/60/4*tempo;
+  if (beats!=0)
+    return beats;
+  else
+    return 1;
+}
+
 void Curve::setTempo(int bpm) {tempo=bpm;}
 int Curve::getTempo() {return tempo;}
+
+void Curve::setBeatResolution(float n) {beatResolution=n;}
+float Curve::getBeatResolution() {return beatResolution;}
 
 void Curve::addMarker() {
   float n=marker->nnew2new(seeker);
