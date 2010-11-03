@@ -23,6 +23,26 @@ float Curve::get(float nn) {
   return sample->getOld(marker->new2old(marker->nnew2new(nn)));
 }
 
+int MINMAXRES=15;
+
+float Curve::getMin(float nn, float l) {
+  float min=1;
+  for (int i=0; i<MINMAXRES; ++i) {
+    float g=get(nn+l*i/MINMAXRES);
+    if (g<min) min=g;
+  }
+  return min;
+}
+
+float Curve::getMax(float nn, float l) {
+  float max=-1;
+  for (int i=0; i<MINMAXRES; ++i) {
+    float g=get(nn+l*i/MINMAXRES);
+    if (g>max) max=g;
+  }
+  return max;
+}
+
 float Curve::getSeeker() {
   return playback->getSeeker();
 }

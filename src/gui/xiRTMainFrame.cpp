@@ -156,16 +156,21 @@ void xiRTMainFrame::paint() {
   wxBufferedDC dc(&dc2,wxSize(width,height));
   int h=height-BEAT;
 
-  wxBrush brush(*wxBLACK); // red pen of width 1
+  wxBrush brush(*wxBLACK);
   dc.SetBackground(brush);
   wxPen penCurve(*wxBLUE,1);
   wxPen penSeeker(*wxWHITE,1);
   wxPen penMarker(wxColor(255,255,0),1);
   dc.SetPen(penCurve);
   dc.Clear();
-  // TODO nicer looking shape
-  for (int i=0; i<width-1; ++i) {
+  for (int i=0; i<width; ++i) {
     dc.DrawLine(i,int(curve->get(i/(float)(width-1))*h+height)/2,i+1,int(curve->get((i+1)/(float)(width-1))*h+height)/2);
+// TODO nicer looking shape is too slow. Should be painted on an extra buffer
+/*    
+    float min=curve->getMin(i/(float)width, 1/(float)width);
+    float max=curve->getMax(i/(float)width, 1/(float)width);
+    dc.DrawLine(i,int(min*h+height)/2,i,int(max*h+height)/2);
+*/
   }
   dc.SetPen(penMarker);
   for (int i=0; i<curve->getMarkerLength(); ++i) {
@@ -182,7 +187,7 @@ void xiRTMainFrame::paint() {
   }
   // seeker
   dc.SetPen(penSeeker);
-  playback->setSeeker(curve->getSeeker()); // TODO mainloop stuff
+  playback->setSeeker(curve->getSeeker());
   int seek=int(curve->getSeeker()*(width-1));
   dc.DrawLine(seek,0,seek,height);
   //beats

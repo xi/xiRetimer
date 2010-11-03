@@ -12,9 +12,12 @@ class Curve {
 public:
   Curve(Marker* m, Sample* s, Playback* p); 
   ~Curve();
+  // indirect access to playback
+  float getSeeker();
   // indirect access to sample
   float get(float nn);
-  float getSeeker();
+  float getMin(float nn, float l); // nicer looking waveform
+  float getMax(float nn, float l); // nicer looking waveform
   // indirect access to marker
   void addMarker();
   void removeMarker();

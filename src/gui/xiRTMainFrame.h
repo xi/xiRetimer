@@ -40,6 +40,7 @@ protected:
   void OnUpdateUI( wxUpdateUIEvent& event );
 
   void paint();
+  void paintSeeker();
   static const int MARKERWIDTH=15;
   static const int BEAT=15;
   
