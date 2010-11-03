@@ -4,10 +4,10 @@
 
 // TODO change first and last marker
 
-Curve::Curve() {
-  marker=new Marker();
-  sample=new Sample(marker);
-  seeker=0;
+Curve::Curve(Marker* m, Sample* s, Playback* p) {
+  marker=m;
+  sample=s;
+  playback=p;
   tempo=90;
   selMarker=-1;
   beatResolution=1;
@@ -23,9 +23,8 @@ float Curve::get(float nn) {
   return sample->getOld(marker->new2old(marker->nnew2new(nn)));
 }
 
-float Curve::getSeeker() {return seeker;}
-void Curve::setSeeker(float nn) {
-  if (nn>=0 && nn<=1) seeker=nn;
+float Curve::getSeeker() {
+  return playback->getSeeker();
 }
 
 float Curve::getBars() {
@@ -43,7 +42,7 @@ void Curve::setBeatResolution(float n) {beatResolution=n;}
 float Curve::getBeatResolution() {return beatResolution;}
 
 void Curve::addMarker() {
-  float n=marker->nnew2new(seeker);
+  float n=marker->nnew2new(getSeeker());
   marker->add(marker->new2old(n),n);
   // update selMarker
 /*
@@ -74,16 +73,6 @@ void Curve::selectMarker(int i) {
 
 int Curve::getMarkerLength() {return marker->getLength();}
 float Curve::getMarker(int i) {return marker->new2nnew(marker->getNew(i));}
-
-void Curve::print() {
-  for (int i=0; i<100; ++i) { // 100 or any number 
-    for (float j=-1; j<get(i); j+=0.1)
-      std::cout << "+";
-    if (std::abs(getSeeker()-i)<0.01)
-      std::cout << " *";
-    std::cout << std::endl;
-  }
-}
 
 void Curve::clearMarker() {marker->reset();}
 

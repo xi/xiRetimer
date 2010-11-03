@@ -1,3 +1,6 @@
+#ifndef __XIPLAYBACK_H
+#define __XIPLAYBACK_H
+
 #include <iostream>
 
 #include "SDL.h"
@@ -17,4 +20,4 @@ private:
   void stop();
 };
 
-
+#endif

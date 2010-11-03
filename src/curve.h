@@ -2,21 +2,19 @@
 #define __XICURVE_H
 
 #include <iostream>
+#include "marker.h"
 #include "sample.h"
+#include "playback.h"
 
 // main part of the gui
 // layer between screen and backend. Converts everything to screen (0-1) values
 class Curve {
 public:
-  Curve(); 
+  Curve(Marker* m, Sample* s, Playback* p); 
   ~Curve();
-  float getSeeker();
-  void setSeeker(float nn);
-  void print();
-  // direct access to sample
-  Sample* sample;
   // indirect access to sample
   float get(float nn);
+  float getSeeker();
   // indirect access to marker
   void addMarker();
   void removeMarker();
@@ -32,8 +30,9 @@ public:
   void setTempo(int bpm);
   int getTempo();
 private:
-  float seeker; // 0-1
   Marker* marker;
+  Sample* sample;
+  Playback* playback;
   int tempo; // bpm
   int selMarker;
   float beatResolution;
