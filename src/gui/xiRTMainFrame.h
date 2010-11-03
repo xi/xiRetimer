@@ -42,14 +42,12 @@ protected:
   static const int MARKERWIDTH=15;
   static const int BEAT=15;
   
-  Sample *sample;
-  Curve *curve;
-  Playback *playback;
+  Curve curve;
+  Playback* playback;
   int width;
   int height;
   bool Marker_move;
   bool Seeker_move;
-  bool _play;
 	
 public:
 	/** Constructor */

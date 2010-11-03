@@ -11,14 +11,12 @@
 #include <iostream>
 
 xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
-  curve=new Curve();
-  sample=curve->sample;
-  playback=new Playback(sample);
+  curve;
+  playback=new Playback(curve.sample);
   width=100; // anything greater than 2
   height=100;
   Marker_move=false;
   Seeker_move=false;
-  _play=false;
 }
 
 xiRTMainFrame::~xiRTMainFrame() {}
@@ -27,19 +25,20 @@ xiRTMainFrame::~xiRTMainFrame() {}
 void xiRTMainFrame::OnLeftDown( wxMouseEvent& event ) {
   // check for Marker Select
   if (event.m_y<=MARKERWIDTH*4/5) {
-    for (int i=0; i<curve->getMarkerLength(); ++i) {
-      int n=int(curve->getMarker(i)*(width-1));
+    for (int i=0; i<curve.getMarkerLength(); ++i) {
+      int n=int(curve.getMarker(i)*(width-1));
       if (event.m_x<=n+MARKERWIDTH/2 && event.m_x>=n-MARKERWIDTH/2) {
-        curve->selectMarker(i);
+        curve.selectMarker(i);
         Marker_move=true;
         return;
       }
     }
   }
   // if not returned set Seeker
-  curve->setSeeker(event.m_x/(float)width);
+  curve.setSeeker(event.m_x/(float)width);
+  playback->setSeeker(curve.getSeeker());
   Seeker_move=true;
-  curve->selectMarker(-1);  //deselct
+  curve.selectMarker(-1);  //deselct
 }
 
 void xiRTMainFrame::OnLeftUp( wxMouseEvent& event ) {
@@ -50,75 +49,71 @@ void xiRTMainFrame::OnLeftUp( wxMouseEvent& event ) {
 void xiRTMainFrame::OnLeftDClick( wxMouseEvent& event ) {
   // check for Marker Select
   if (event.m_y<=MARKERWIDTH*4/5) {
-    for (int i=0; i<curve->getMarkerLength(); ++i) {
-      int n=int(curve->getMarker(i)*(width-1));
+    for (int i=0; i<curve.getMarkerLength(); ++i) {
+      int n=int(curve.getMarker(i)*(width-1));
       if (event.m_x<=n+MARKERWIDTH/2 && event.m_x>=n-MARKERWIDTH/2) {
-        curve->selectMarker(i);
-        curve->removeMarker();
+        curve.selectMarker(i);
+        curve.removeMarker();
         return;
       }
     }
   }
-  curve->setSeeker(event.m_x/(float)width);
-  curve->addMarker();
+  curve.setSeeker(event.m_x/(float)width);
+  curve.addMarker();
 }
 
 void xiRTMainFrame::OnMotion( wxMouseEvent& event ) {
   if (Marker_move)
-    curve->setMarker(event.m_x/(float)width);
+    curve.setMarker(event.m_x/(float)width);
   if (Seeker_move)
-    curve->setSeeker(event.m_x/(float)width);
+    curve.setSeeker(event.m_x/(float)width);
 }
 
 // ************  file  **************
 void xiRTMainFrame::OnOpenClick( wxCommandEvent& event )
 {
     wxFileDialog* dialog = new wxFileDialog( (wxWindow*)NULL );
-    dialog ->Show();
+    dialog->Show();
 
     if (dialog->ShowModal()==wxID_OK) {
       wxString filename=dialog->GetPath();
-      sample->loadFile(filename.mb_str());
+      curve.sample->loadFile(filename.mb_str());
     }
 }
 
 void xiRTMainFrame::OnExportClick( wxCommandEvent& event )
 {
     wxFileDialog* dialog = new wxFileDialog((wxWindow*)NULL, _T("Export As"), _T(""), _T(""), _T("*.wav"), wxSAVE | wxOVERWRITE_PROMPT);
-    dialog ->Show();
+    dialog->Show();
 
     if (dialog->ShowModal()==wxID_OK) {
       wxString filename=dialog->GetPath();
-      sample->process();
-      sample->writeFile(filename.mb_str());
+      curve.sample->process();
+      curve.sample->writeFile(filename.mb_str());
     }
 }
 
 // ************  playback  **************
 void xiRTMainFrame::OnStartClick( wxCommandEvent& event ) {
-  curve->setSeeker(0);
+  curve.setSeeker(0);
 }
 
 void xiRTMainFrame::OnPlayClick( wxCommandEvent& event ) {
-  if (_play) {
-    playback->stop();
-    _play=false;
-  }
-  else {
-    if (playback->start()==0)
-      _play=true;
-  }
+std::cout << "play ";
+  int err;
+  err=playback->play();
+std::cout << err << std::endl;
 }
 
 void xiRTMainFrame::OnEndClick( wxCommandEvent& event ) {
-  curve->setSeeker(1);
+  curve.setSeeker(1);
 }
 
 // ************  general  **************
 void xiRTMainFrame::OnPrefsClick( wxCommandEvent& event )
 {
     xiRTPrefsDialog* dialog = new xiRTPrefsDialog( (wxWindow*)NULL );
-    dialog ->Show();
+    dialog->Show();
 }
 
 void xiRTMainFrame::OnExitClick( wxCommandEvent& event )
@@ -130,12 +125,12 @@ void xiRTMainFrame::OnHelpClick( wxCommandEvent& event )
 {
 	// TODO: create Help
     xiRTAboutDialog* dialog = new xiRTAboutDialog( (wxWindow*)NULL );
-    dialog ->Show();
+    dialog->Show();
 }
 
 // ************  marker  **************
 void xiRTMainFrame::OnClearClick( wxCommandEvent& event ) {
-  curve->clearMarker();
+  curve.clearMarker();
 }
 
 
@@ -146,7 +141,7 @@ void xiRTMainFrame::OnProcessClick( wxCommandEvent& event ) {
     wxProgressDialog::wxProgressDialog* dialog = new wxProgressDialog( _T("processing..."), _T("please wait") );
     dialog ->Show();
 */
-    sample->process();
+    curve.sample->process();
 }
 
 void xiRTMainFrame::OnUpdateUI( wxUpdateUIEvent& event ) {paint();}
@@ -155,6 +150,7 @@ void xiRTMainFrame::OnUpdateUI( wxUpdateUIEvent& event ) {paint();}
 // ***********************************
 void xiRTMainFrame::paint() {
   // TODO dont repaint all the time
+  // TODO repaint also if UI update is not necessary, eg whe seeker is moving from playback
   wxClientDC dc2(this);
   dc2.GetSize(&width,&height);
   wxBufferedDC dc(&dc2,wxSize(width,height));
@@ -169,12 +165,11 @@ void xiRTMainFrame::paint() {
   dc.Clear();
   // TODO nicer looking shape
   for (int i=0; i<width-1; ++i) {
-    dc.DrawLine(i,int(curve->get(i/(float)(width-1))*h+height)/2,i+1,int(curve->get((i+1)/(float)(width-1))*h+height)/2);
+    dc.DrawLine(i,int(curve.get(i/(float)(width-1))*h+height)/2,i+1,int(curve.get((i+1)/(float)(width-1))*h+height)/2);
   }
-  // TODO display tempo bars !!!
   dc.SetPen(penMarker);
-  for (int i=0; i<curve->getMarkerLength(); ++i) {
-    int n=int(curve->getMarker(i)*(width-1));
+  for (int i=0; i<curve.getMarkerLength(); ++i) {
+    int n=int(curve.getMarker(i)*(width-1));
     dc.DrawLine(n,0,n,height);
     wxPoint ps[3];
     wxPoint p0(n-MARKERWIDTH/2,0);
@@ -187,11 +182,11 @@ void xiRTMainFrame::paint() {
   }
   // seeker
   dc.SetPen(penSeeker);
-  int seek=int(curve->getSeeker()*(width-1));
+  int seek=int(playback->getSeeker()*(width-1));
   dc.DrawLine(seek,0,seek,height);
   //beats
   dc.SetPen(penMarker);
-  int step=int(width/curve->getBars()/curve->getBeatResolution());
+  int step=int(width/curve.getBars()/curve.getBeatResolution());
   for (int i=0; i<width && step!=0; i+=step) {
     dc.DrawLine(i,0,i,BEAT);  
   }
