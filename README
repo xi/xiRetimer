@@ -11,9 +11,8 @@ timestretch - rubberband
 
 TODO
 
-playback !!
 exits with error
-improve AudioShape
+draw to different buffers onlly when needed
 bugtracking
-libmad
+im/export different kinds of audio files (libmad)
 soundtouch
