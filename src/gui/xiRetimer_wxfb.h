@@ -23,8 +23,8 @@
 #include <wx/stattext.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
-#include <wx/choicebk.h>
-#include <wx/clrpicker.h>
+#include <wx/choice.h>
+#include <wx/textctrl.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -99,23 +99,29 @@ class PrefsDialog : public wxDialog
 	private:
 	
 	protected:
-		wxStaticText* m_staticText3;
-		wxChoicebook* m_choicebook1;
-		wxStaticText* m_staticText4;
-		wxColourPickerCtrl* m_colourPicker6;
-		wxButton* m_button3;
-		wxButton* m_button2;
+		wxStaticText* l_intmode;
+		wxChoice* c_intmode;
+		wxStaticText* l_stretchmode;
+		wxChoice* c_stretchmode;
+		wxStaticText* l_tempo;
+		wxTextCtrl* t_tempo;
+		wxStaticText* l_beatres;
+		wxTextCtrl* t_beatres;
+		wxButton* b_OK;
+		wxButton* b_Cancel;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnIModeChange( wxChoicebookEvent& event ) { event.Skip(); }
-		virtual void OnColorChange( wxColourPickerEvent& event ) { event.Skip(); }
+		virtual void OnIntModeChange( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnStretchModeChange( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnTempoEnter( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBeatResEnter( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOKClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCancelClick( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
 		
-		PrefsDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 247,165 ), long style = wxDEFAULT_DIALOG_STYLE );
+		PrefsDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 322,238 ), long style = wxDEFAULT_DIALOG_STYLE );
 		~PrefsDialog();
 	
 };

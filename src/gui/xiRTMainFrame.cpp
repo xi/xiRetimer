@@ -23,7 +23,12 @@ xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   Seeker_move=false;
 }
 
-xiRTMainFrame::~xiRTMainFrame() {}
+xiRTMainFrame::~xiRTMainFrame() {
+  delete[] curve;
+  delete[] playback;
+  delete[] sample;
+  delete[] marker;
+}
 
 // ************  mouse  **************
 void xiRTMainFrame::OnLeftDown( wxMouseEvent& event ) {
@@ -112,7 +117,7 @@ void xiRTMainFrame::OnEndClick( wxCommandEvent& event ) {
 // ************  general  **************
 void xiRTMainFrame::OnPrefsClick( wxCommandEvent& event )
 {
-    xiRTPrefsDialog* dialog = new xiRTPrefsDialog( (wxWindow*)NULL );
+    xiRTPrefsDialog* dialog = new xiRTPrefsDialog(marker, sample, curve);
     dialog->Show();
 }
 

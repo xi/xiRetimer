@@ -25,6 +25,7 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_open;
 	m_open = new wxMenuItem( m_file, wxID_ANY, wxString( wxT("open") ) + wxT('\t') + wxT("CTRL+f"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
+	m_open->SetBitmaps( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/fileopen.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
 	m_open->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/fileopen.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
@@ -33,6 +34,7 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_export;
 	m_export = new wxMenuItem( m_file, wxID_ANY, wxString( wxT("export") ) + wxT('\t') + wxT("CTRL+s"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
+	m_export->SetBitmaps( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/document-save.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
 	m_export->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/document-save.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
@@ -44,6 +46,7 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_prefs;
 	m_prefs = new wxMenuItem( m_file, wxID_ANY, wxString( wxT("preferences") ) + wxT('\t') + wxT("F5"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
+	m_prefs->SetBitmaps( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/document-properties.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
 	m_prefs->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/document-properties.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
@@ -55,6 +58,7 @@ wxInitAllImageHandlers();
 	wxMenuItem* b_exit;
 	b_exit = new wxMenuItem( m_file, wxID_ANY, wxString( wxT("Exit") ) , wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
+	b_exit->SetBitmaps( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/window-close.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
 	b_exit->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/window-close.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
@@ -66,6 +70,7 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_play;
 	m_play = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("play/pause") ) + wxT('\t') + wxT("SPACE"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
+	m_play->SetBitmaps( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/media-playback-start.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
 	m_play->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/media-playback-start.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
@@ -74,6 +79,7 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_start;
 	m_start = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("start") ) + wxT('\t') + wxT("CTRL+LEFT"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
+	m_start->SetBitmaps( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/media-skip-backward.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
 	m_start->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/media-skip-backward.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
@@ -82,6 +88,7 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_end;
 	m_end = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("end") ) + wxT('\t') + wxT("CTRL+RIGHT"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
+	m_end->SetBitmaps( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/media-skip-forward.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
 	m_end->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/media-skip-forward.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
@@ -93,6 +100,7 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_clear;
 	m_clear = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("clear markers") ) + wxT('\t') + wxT("CTRL+c"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
+	m_clear->SetBitmaps( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/edit-clear.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
 	m_clear->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/edit-clear.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
@@ -101,6 +109,7 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_process;
 	m_process = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("update audio data") ) + wxT('\t') + wxT("CTRL+u"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
+	m_process->SetBitmaps( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/stock_refresh.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
 	m_process->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/stock_refresh.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
@@ -112,6 +121,7 @@ wxInitAllImageHandlers();
 	wxMenuItem* m_about;
 	m_about = new wxMenuItem( m_help, wxID_ANY, wxString( wxT("about") ) + wxT('\t') + wxT("F1"), wxEmptyString, wxITEM_NORMAL );
 	#ifdef __WXMSW__
+	m_about->SetBitmaps( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/help-about.png"), wxBITMAP_TYPE_ANY ) );
 	#elif defined( __WXGTK__ )
 	m_about->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/help-about.png"), wxBITMAP_TYPE_ANY ) );
 	#endif
@@ -170,13 +180,12 @@ AboutDialog::AboutDialog( wxWindow* parent, wxWindowID id, const wxString& title
 	wxBoxSizer* bSizer14;
 	bSizer14 = new wxBoxSizer( wxVERTICAL );
 	
-	m_staticText1 = new wxStaticText( this, wxID_ANY, wxT("xiRetimer v0.1 by xi."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText1 = new wxStaticText( this, wxID_ANY, wxT("Created by xi."), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText1->Wrap( -1 );
 	bSizer14->Add( m_staticText1, 0, wxALIGN_CENTER|wxALL, 5 );
 	
 	m_staticText2 = new wxStaticText( this, wxID_ANY, wxT("www.github.com/xi"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText2->Wrap( -1 );
-
 	bSizer14->Add( m_staticText2, 0, wxALIGN_CENTER|wxALL, 5 );
 	
 	bSizer4->Add( bSizer14, 1, wxEXPAND, 5 );
@@ -215,30 +224,52 @@ PrefsDialog::PrefsDialog( wxWindow* parent, wxWindowID id, const wxString& title
 	fgSizer4->SetFlexibleDirection( wxBOTH );
 	fgSizer4->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_staticText3 = new wxStaticText( this, wxID_ANY, wxT("Interpolation Mode"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText3->Wrap( -1 );
-	fgSizer4->Add( m_staticText3, 0, wxALL, 5 );
+	l_intmode = new wxStaticText( this, wxID_ANY, wxT("Interpolation Mode"), wxDefaultPosition, wxDefaultSize, 0 );
+	l_intmode->Wrap( -1 );
+	fgSizer4->Add( l_intmode, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_choicebook1 = new wxChoicebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxCHB_DEFAULT );
-	fgSizer4->Add( m_choicebook1, 0, wxALL|wxALIGN_RIGHT|wxEXPAND, 5 );
+	wxString c_intmodeChoices[] = { wxT("Linear") };
+	int c_intmodeNChoices = sizeof( c_intmodeChoices ) / sizeof( wxString );
+	c_intmode = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, c_intmodeNChoices, c_intmodeChoices, 0 );
+	c_intmode->SetSelection( 0 );
+	fgSizer4->Add( c_intmode, 1, wxALL|wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText4 = new wxStaticText( this, wxID_ANY, wxT("Color"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText4->Wrap( -1 );
-	fgSizer4->Add( m_staticText4, 0, wxALL, 5 );
+	l_stretchmode = new wxStaticText( this, wxID_ANY, wxT("Stretch Mode"), wxDefaultPosition, wxDefaultSize, 0 );
+	l_stretchmode->Wrap( -1 );
+	fgSizer4->Add( l_stretchmode, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_colourPicker6 = new wxColourPickerCtrl( this, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizer4->Add( m_colourPicker6, 0, wxALL|wxEXPAND, 5 );
+	wxString c_stretchmodeChoices[] = { wxT("none"), wxT("RubberBand") };
+	int c_stretchmodeNChoices = sizeof( c_stretchmodeChoices ) / sizeof( wxString );
+	c_stretchmode = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, c_stretchmodeNChoices, c_stretchmodeChoices, 0 );
+	c_stretchmode->SetSelection( 0 );
+	fgSizer4->Add( c_stretchmode, 1, wxALL|wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	l_tempo = new wxStaticText( this, wxID_ANY, wxT("Tempo"), wxDefaultPosition, wxDefaultSize, 0 );
+	l_tempo->Wrap( -1 );
+	fgSizer4->Add( l_tempo, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	t_tempo = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER|wxTE_RIGHT );
+	fgSizer4->Add( t_tempo, 1, wxALL|wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	l_beatres = new wxStaticText( this, wxID_ANY, wxT("Beat Resolution"), wxDefaultPosition, wxDefaultSize, 0 );
+	l_beatres->Wrap( -1 );
+	fgSizer4->Add( l_beatres, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	t_beatres = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER|wxTE_RIGHT );
+	fgSizer4->Add( t_beatres, 1, wxALL|wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	bSizer5->Add( fgSizer4, 1, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizer15;
 	bSizer15 = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_button3 = new wxButton( this, wxID_ANY, wxT("OK"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer15->Add( m_button3, 0, wxALL|wxALIGN_BOTTOM|wxALIGN_RIGHT, 5 );
+	b_OK = new wxButton( this, wxID_ANY, wxT("OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer15->Add( b_OK, 0, wxALL|wxALIGN_BOTTOM|wxALIGN_RIGHT, 5 );
 	
-	m_button2 = new wxButton( this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer15->Add( m_button2, 0, wxALIGN_BOTTOM|wxALIGN_RIGHT|wxALL, 5 );
+	b_Cancel = new wxButton( this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	b_Cancel->SetToolTip( wxT("Escape") );
+	
+	bSizer15->Add( b_Cancel, 0, wxALIGN_BOTTOM|wxALIGN_RIGHT|wxALL, 5 );
 	
 	bSizer5->Add( bSizer15, 0, wxALIGN_RIGHT, 5 );
 	
@@ -246,17 +277,21 @@ PrefsDialog::PrefsDialog( wxWindow* parent, wxWindowID id, const wxString& title
 	this->Layout();
 	
 	// Connect Events
-	m_choicebook1->Connect( wxEVT_COMMAND_CHOICEBOOK_PAGE_CHANGED, wxChoicebookEventHandler( PrefsDialog::OnIModeChange ), NULL, this );
-	m_colourPicker6->Connect( wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler( PrefsDialog::OnColorChange ), NULL, this );
-	m_button3->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PrefsDialog::OnOKClick ), NULL, this );
-	m_button2->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PrefsDialog::OnCancelClick ), NULL, this );
+	c_intmode->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PrefsDialog::OnIntModeChange ), NULL, this );
+	c_stretchmode->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PrefsDialog::OnStretchModeChange ), NULL, this );
+	t_tempo->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( PrefsDialog::OnTempoEnter ), NULL, this );
+	t_beatres->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( PrefsDialog::OnBeatResEnter ), NULL, this );
+	b_OK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PrefsDialog::OnOKClick ), NULL, this );
+	b_Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PrefsDialog::OnCancelClick ), NULL, this );
 }
 
 PrefsDialog::~PrefsDialog()
 {
 	// Disconnect Events
-	m_choicebook1->Disconnect( wxEVT_COMMAND_CHOICEBOOK_PAGE_CHANGED, wxChoicebookEventHandler( PrefsDialog::OnIModeChange ), NULL, this );
-	m_colourPicker6->Disconnect( wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler( PrefsDialog::OnColorChange ), NULL, this );
-	m_button3->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PrefsDialog::OnOKClick ), NULL, this );
-	m_button2->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PrefsDialog::OnCancelClick ), NULL, this );
+	c_intmode->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PrefsDialog::OnIntModeChange ), NULL, this );
+	c_stretchmode->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PrefsDialog::OnStretchModeChange ), NULL, this );
+	t_tempo->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( PrefsDialog::OnTempoEnter ), NULL, this );
+	t_beatres->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( PrefsDialog::OnBeatResEnter ), NULL, this );
+	b_OK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PrefsDialog::OnOKClick ), NULL, this );
+	b_Cancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PrefsDialog::OnCancelClick ), NULL, this );
 }
