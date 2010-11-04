@@ -48,7 +48,8 @@ class MainFrame : public wxFrame
 		virtual void OnLeftDown( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnLeftUp( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMotion( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnUpdateUI( wxUpdateUIEvent& event ) { event.Skip(); }
+		virtual void OnSize( wxSizeEvent& event ) { event.Skip(); }
+		virtual void OnPaint( wxUpdateUIEvent& event ) { event.Skip(); }
 		virtual void OnOpenClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnExportClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPrefsClick( wxCommandEvent& event ) { event.Skip(); }

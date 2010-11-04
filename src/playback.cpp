@@ -61,7 +61,6 @@ int Playback::start() {
     for (int i=0; i<length; ++i) {
       idata[i]=int(sample->get(i/(float)length)*128);
     }
-std::cout << length << " ";
     /* Put the sound data in the slot (it starts playing immediately) */
     sounds.dlen = length;
     sounds.data = idata;

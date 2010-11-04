@@ -16,8 +16,8 @@ public:
   float getSeeker();
   // indirect access to sample
   float get(float nn);
-  float getMin(float nn, float l); // nicer looking waveform
-  float getMax(float nn, float l); // nicer looking waveform
+  float getMin(float nn, float l, int n=10); // nicer looking waveform
+  float getMax(float nn, float l, int n=10); // nicer looking waveform
   // indirect access to marker
   void addMarker();
   void removeMarker();

@@ -2,15 +2,9 @@
 #include "xiRTAboutDialog.h"
 #include "xiRTPrefsDialog.h"
 
-#include <wx/progdlg.h>
-#include <wx/dcclient.h>
-#include <wx/dcbuffer.h>
-#include <wx/string.h>
-#include <wx/filedlg.h>
-
 #include <iostream>
 
-// everything is living here
+
 
 xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   marker=new Marker();
@@ -21,13 +15,21 @@ xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   height=100;
   Marker_move=false;
   Seeker_move=false;
+
+  brushbg=new wxBrush(*wxBLACK);
+  penCurve=new wxPen(*wxBLUE,1);
+  penSeeker=new wxPen(*wxWHITE,1);
+  penMarker=new wxPen(wxColor(255,255,0),1);
+  wxBitmap waveform;
+  _updateWaveform=true;
 }
 
+
 xiRTMainFrame::~xiRTMainFrame() {
-  delete[] curve;
-  delete[] playback;
-  delete[] sample;
-  delete[] marker;
+//  delete[] curve;
+//  delete[] playback;
+//  delete[] sample;
+//  delete[] marker;
 }
 
 // ************  mouse  **************
@@ -62,6 +64,7 @@ void xiRTMainFrame::OnLeftDClick( wxMouseEvent& event ) {
       if (event.m_x<=n+MARKERWIDTH/2 && event.m_x>=n-MARKERWIDTH/2) {
         curve->selectMarker(i);
         curve->removeMarker();
+        _updateWaveform=true;
         return;
       }
     }
@@ -71,8 +74,10 @@ void xiRTMainFrame::OnLeftDClick( wxMouseEvent& event ) {
 }
 
 void xiRTMainFrame::OnMotion( wxMouseEvent& event ) {
-  if (Marker_move)
+  if (Marker_move) {
     curve->setMarker(event.m_x/(float)width);
+    _updateWaveform=true;
+  }
   if (Seeker_move)
     playback->setSeeker(event.m_x/(float)width);
 }
@@ -80,13 +85,14 @@ void xiRTMainFrame::OnMotion( wxMouseEvent& event ) {
 // ************  file  **************
 void xiRTMainFrame::OnOpenClick( wxCommandEvent& event )
 {
-    wxFileDialog* dialog = new wxFileDialog( (wxWindow*)NULL );
-    dialog->Show();
+  wxFileDialog* dialog = new wxFileDialog( (wxWindow*)NULL );
+  dialog->Show();
 
-    if (dialog->ShowModal()==wxID_OK) {
-      wxString filename=dialog->GetPath();
-      sample->loadFile(filename.mb_str());
-    }
+  if (dialog->ShowModal()==wxID_OK) {
+    wxString filename=dialog->GetPath();
+    sample->loadFile(filename.mb_str());
+  }
+  _updateWaveform=true;
 }
 
 void xiRTMainFrame::OnExportClick( wxCommandEvent& event )
@@ -136,6 +142,7 @@ void xiRTMainFrame::OnHelpClick( wxCommandEvent& event )
 // ************  marker  **************
 void xiRTMainFrame::OnClearClick( wxCommandEvent& event ) {
   curve->clearMarker();
+  _updateWaveform=true;
 }
 
 
@@ -149,38 +156,43 @@ void xiRTMainFrame::OnProcessClick( wxCommandEvent& event ) {
     sample->process();
 }
 
-void xiRTMainFrame::OnUpdateUI( wxUpdateUIEvent& event ) {paint();}
+void xiRTMainFrame::OnPaint( wxUpdateUIEvent& event ) {
+// TODO repaint also if UI update is not necessary, eg whe seeker is moving from playback
+  paint();
+}
+
+void xiRTMainFrame::OnSize( wxSizeEvent& event ) {
+  _updateWaveform=true;
+}
 
 
 // ***********************************
 void xiRTMainFrame::paint() {
-  // TODO dont repaint all the time
-  // TODO repaint also if UI update is not necessary, eg whe seeker is moving from playback
-  wxClientDC dc2(this);
-  dc2.GetSize(&width,&height);
-  wxBufferedDC dc(&dc2,wxSize(width,height));
-  int h=height-BEAT;
-
-  wxBrush brush(*wxBLACK);
-  dc.SetBackground(brush);
-  wxPen penCurve(*wxBLUE,1);
-  wxPen penSeeker(*wxWHITE,1);
-  wxPen penMarker(wxColor(255,255,0),1);
-  dc.SetPen(penCurve);
-  dc.Clear();
-  for (int i=0; i<width; ++i) {
-    dc.DrawLine(i,int(curve->get(i/(float)(width-1))*h+height)/2,i+1,int(curve->get((i+1)/(float)(width-1))*h+height)/2);
-// TODO nicer looking shape is too slow. Should be painted on an extra buffer
-/*    
-    float min=curve->getMin(i/(float)width, 1/(float)width);
-    float max=curve->getMax(i/(float)width, 1/(float)width);
-    dc.DrawLine(i,int(min*h+height)/2,i,int(max*h+height)/2);
-*/
+  wxClientDC dc(this);
+  dc.GetSize(&width,&height);
+  wxBufferedDC bdc(&dc,wxSize(width,height));
+  // waveform
+  if (_updateWaveform) {
+    waveform.Create(width, height);
+    wxMemoryDC mdc;
+    mdc.SelectObject(waveform);
+    mdc.SetBackground(*brushbg);
+    mdc.Clear();
+    mdc.SetPen(*penCurve);
+    for (int i=0; i<width; ++i) {
+//      mdc.DrawLine(i, int(curve->get(i/(float)width)*(height-BEAT)+height)/2, i+1, int(curve->get((i+1)/(float)width)*(height-BEAT)+height)/2);
+      float min=1+curve->getMin(i/(float)width, 1/(float)width);
+      float max=1+curve->getMax(i/(float)width, 1/(float)width);
+      mdc.DrawLine(i,int(min*height/2),i,int(max*height/2));
+    }
+    _updateWaveform=false;
   }
-  dc.SetPen(penMarker);
+  bdc.DrawBitmap(waveform,0,0,false);
+  // marker
+  bdc.SetPen(*penMarker);
   for (int i=0; i<curve->getMarkerLength(); ++i) {
     int n=int(curve->getMarker(i)*(width-1));
-    dc.DrawLine(n,0,n,height);
+    bdc.DrawLine(n,0,n,height);
     wxPoint ps[3];
     wxPoint p0(n-MARKERWIDTH/2,0);
     ps[0]=p0;
@@ -188,19 +200,19 @@ void xiRTMainFrame::paint() {
     ps[1]=p1;
     wxPoint p2(n+0,MARKERWIDTH*4/5);
     ps[2]=p2;
-    dc.DrawPolygon(3,ps);
+    bdc.DrawPolygon(3,ps);
   }
   // seeker
-  dc.SetPen(penSeeker);
+  bdc.SetPen(*penSeeker);
   playback->setSeeker(curve->getSeeker());
   int seek=int(curve->getSeeker()*(width-1));
-  dc.DrawLine(seek,0,seek,height);
+  bdc.DrawLine(seek,0,seek,height);
   //beats
-  dc.SetPen(penMarker);
+  bdc.SetPen(*penMarker);
   int step=int(width/curve->getBars()/curve->getBeatResolution());
   for (int i=0; i<width && step!=0; i+=step) {
-    dc.DrawLine(i,0,i,BEAT);  
+    bdc.DrawLine(i,0,i,BEAT);
   }
-
 }
+
 
