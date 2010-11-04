@@ -11,8 +11,9 @@ timestretch - rubberband
 
 TODO
 
+draw to different buffers only when needed
+getRatio(float) -> interpolation
 exits with error
-draw to different buffers onlly when needed
 bugtracking
 im/export different kinds of audio files (libmad)
 soundtouch

@@ -61,11 +61,19 @@ float Marker::getRatio() {
     return NULL;
 }
 
+/*
 float Marker::getRatio(int i) {
   if (i>=0 && i<getLength()-1)
     return (getNew(i+1)-getNew(i))/(getOld(i+1)-getOld(i));
   else
     return NULL;
+}
+*/
+
+float Marker::getRatio(float o) {
+  // TODO not exact at all
+  float n=100;
+  return ((old2new(o+1/n)-old2new(o-1/n))/(2/n));
 }
 
 int Marker::getLength() {
@@ -101,6 +109,7 @@ int Marker::resort(int pi) {
 }
 
 float Marker::old2new(float o) {
+// !!linear
 // converts old 0-1 values to new 0-1 values
   int i=getAreaOld(o);
   // linear interpolation

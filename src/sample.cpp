@@ -1,5 +1,7 @@
 #include "sample.h"
 
+// TODO quality!!!
+
 Sample::Sample(Marker* m) {
   marker=m;
   length=0;
@@ -45,7 +47,7 @@ int Sample::loadFile(const char* fileName) {
     return 1;
   }
   // setup data
-  olength=sfinfo.frames; // apropriate length
+  olength=sfinfo.frames; // expected length
   delete[] odata;
   odata=new float[olength];
   
@@ -94,7 +96,7 @@ int Sample::writeFile(const char* fileNameOut) {
 
 int Sample::process() {
   //reads from odata and writes to data
-  const int bufferLength=100000;  // important
+  const int bufferLength=4096; // important // 
   float **ibuf = new float *[1];
   ibuf[0]=new float[bufferLength];
   float **obuf = new float *[1];
@@ -105,7 +107,7 @@ int Sample::process() {
   delete[] data;
   data=new float[length];
   for (int i=0; i<marker->getLength()-1; ++i) {
-    float ratio=marker->getRatio(i);
+//    float ratio=marker->getRatio(i); // redesign: getRatio(o)
     int count=0; // position in section (o)
     int frames=int((marker->getOld(i+1)-marker->getOld(i))*olength); // length of section (o)
     while (count<frames && count2<olength && avail2<length) {
@@ -114,7 +116,9 @@ int Sample::process() {
         ibuf[0][j]=odata[count2+j];
         count++;
       }
+      float ratio=marker->getRatio(count2/(float)olength);
       count2+=bufferLength;
+      if (count2>olength) count2=olength;
       // process ibuf
       RubberBand::RubberBandStretcher ts(sfinfo.samplerate, 1, 0, ratio);
       ts.setMaxProcessSize(bufferLength*10);

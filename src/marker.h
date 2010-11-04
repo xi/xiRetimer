@@ -22,7 +22,8 @@ public:
   float getOld(int pi);
   void setNew(int pi, float pnew);
   float getRatio(); // factor by wich the whole sample is stretched; used to guess the length of the output array;
-  float getRatio(int i); // factor by wich the is area is stretched;
+//  float getRatio(int i); // factor by wich this area is stretched;
+  float getRatio(float o); // factor by wich is stretched on this place;
   int getLength();
   void print();
   // 0-1 conversion
