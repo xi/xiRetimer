@@ -52,19 +52,14 @@ int Playback::play() {
 }
 
 int Playback::start() {
-//    if ( sounds.dpos != sounds.dlen )
-//        return 1;
-
   SDL_LockAudio();
-
 //    if ( sounds.data ) {
 //        free(sounds.data);
 //    }
-
     int length=sample->getLength();
     Uint8 idata[length];
     for (int i=0; i<length; ++i) {
-      idata[i]=int(sample->data[i]*128);
+      idata[i]=int(sample->get(i/(float)length)*128);
     }
 std::cout << length << " ";
     /* Put the sound data in the slot (it starts playing immediately) */

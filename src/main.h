@@ -1,4 +1,3 @@
-
 #ifndef __WXWIDGETSAPP_H
 #define __WXWIDGETSAPP_H
 

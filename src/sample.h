@@ -4,26 +4,35 @@
 #include <sndfile.h>
 #include <iostream>
 #include "marker.h"
-#include <rubberband/RubberBandStretcher.h>
+
+/*
+Stretchmodes
+0 - none (plain sample copy)
+1 - rubberband
+// TODO define constants
+*/
 
 class Sample {
 public:
   Sample(Marker* m);
   ~Sample();
-  float *data;
   float get(float nn); // nnew
   float getOld(float o);
   int getLength();
   int getGuessedLength();
   int loadFile(const char* filename);
   int writeFile(const char* filename);
-  int process();
+  int process(); // implements the main functionality
   SF_INFO sfinfo;
+  int getStretchMode();
+  void setStretchMode(int m);
 private:
+  float *data;
   int length;
   Marker* marker;
   int olength;
   float *odata;
+  int stretchMode;
 };
 
 /*

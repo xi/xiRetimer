@@ -6,9 +6,22 @@
 
 /*
 marker works with float values
-it mapps old values from 0 (start) to 1 (end) to any new float values
-nnew values are normalized new values
+it mapps old values (o) from 0 (start) to 1 (end) to any new float values (n)
+nnew values (nn) are normalized new values
 most classes apart from marker use nnew values. Never forget to convert them!
+*/
+/*
+For different modes of interpolation you have to edit 3 functions: 
+old2new
+new2old - inverse of old2new
+getRatio - derivate of old2new
+// TODO define new2old and getRatio from old2new to make sure everything works together
+*/
+
+/*
+interpolation modes:
+0 - LINEAR
+// TODO define constants
 */
 
 class Marker {
@@ -21,9 +34,6 @@ public:
   float getNew(int pi);
   float getOld(int pi);
   void setNew(int pi, float pnew);
-  float getRatio(); // factor by wich the whole sample is stretched; used to guess the length of the output array;
-//  float getRatio(int i); // factor by wich this area is stretched;
-  float getRatio(float o); // factor by wich is stretched on this place;
   int getLength();
   void print();
   // 0-1 conversion
@@ -33,10 +43,15 @@ public:
   float nnew2new(float n);
   int getAreaNew(float n);
   int getAreaOld(float o);
+  float getRatio(); // factor by wich the whole sample is stretched; used to guess the length of the output array;
+  float getRatio(float o); // factor by wich is stretched on this place;
+  int getInterpolationMode();
+  void setInterpolationMode(int m);
 private:
   Buffer anew;
   Buffer aold;
   int resort(int pi);
+  int interpolationMode;
 };
 
 /*

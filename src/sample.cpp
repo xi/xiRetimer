@@ -1,6 +1,5 @@
 #include "sample.h"
-
-// TODO quality!!!
+#include "rbprocess.h"
 
 Sample::Sample(Marker* m) {
   marker=m;
@@ -8,6 +7,7 @@ Sample::Sample(Marker* m) {
   data=new float[0];
   olength=0;
   odata=new float[0];
+  stretchMode=-1;
 }
 
 Sample::~Sample() {
@@ -23,20 +23,22 @@ int Sample::getGuessedLength() {
 }
 
 float Sample::get(float nn) {
-  // TODO interpolation?
-  int i=int((getLength()-1)*nn);
-  if (i<0 || i>=getLength()) return NULL;
+  int i=int(length*nn);
+  if (i<0 || i>=length) return NULL;
   return data[i];
 }
 
 float Sample::getOld(float o) {
-  // TODO interpolation?
   int i=int((olength-1)*o);
   if (i<0 || i>=olength) return NULL;
   return odata[i];
 }
 
+int Sample::getStretchMode() {return stretchMode;}
+void Sample::setStretchMode(int m) {stretchMode=m;}
+
 int Sample::loadFile(const char* fileName) {
+// TODO multi filetype support
   SNDFILE *sndfile;
   sfinfo;
   // open file
@@ -71,6 +73,7 @@ int Sample::loadFile(const char* fileName) {
 }
 
 int Sample::writeFile(const char* fileNameOut) {  
+// TODO multi filetype support
   if (length<=0) {
     std::cerr << "ERROR: Load a file first" << std::endl;
     return 1;
@@ -95,60 +98,23 @@ int Sample::writeFile(const char* fileNameOut) {
 }
 
 int Sample::process() {
-  //reads from odata and writes to data
-  const int bufferLength=4096; // important // 
-  float **ibuf = new float *[1];
-  ibuf[0]=new float[bufferLength];
-  float **obuf = new float *[1];
-  int count2=0; // position in odata
-  int avail2=0; // position in data
+/*
+This function does the nmain thing: it stretches the original data as defined by the marker object.
+Therefore it reads data from odata and writes to data.
+*/
   // setup data
-  length=olength*marker->getRatio();
+  length=int(marker->getRatio()*olength);
   delete[] data;
   data=new float[length];
-  for (int i=0; i<marker->getLength()-1; ++i) {
-//    float ratio=marker->getRatio(i); // redesign: getRatio(o)
-    int count=0; // position in section (o)
-    int frames=int((marker->getOld(i+1)-marker->getOld(i))*olength); // length of section (o)
-    while (count<frames && count2<olength && avail2<length) {
-      // load odata to ibuf
-      for (int j=0; j<bufferLength && count2+j<olength; ++j) {
-        ibuf[0][j]=odata[count2+j];
-        count++;
+  switch (getStretchMode()) {
+    // rubberband
+    case 0: RBprocess(odata, olength, data, length, marker); break;
+    default: {
+      for (int i=0; i<length; ++i) {
+        data[i]=getOld(marker->new2old(marker->nnew2new(i/(float)length)));
       }
-      float ratio=marker->getRatio(count2/(float)olength);
-      count2+=bufferLength;
-      if (count2>olength) count2=olength;
-      // process ibuf
-      RubberBand::RubberBandStretcher ts(sfinfo.samplerate, 1, 0, ratio);
-      ts.setMaxProcessSize(bufferLength*10);
-      ts.study(ibuf, bufferLength, true);
-      int a1=-1;
-      int a2=0;
-      while (a1!=a2) {
-        ts.process(ibuf, ts.getSamplesRequired(), false);
-        a1=a2;
-        a2=ts.available();
-      }
-      ts.process(ibuf, bufferLength, true); // hope two times is enough
-      int avail=ts.available();
-
-      obuf[0]=new float[avail];
-      ts.retrieve(obuf, avail);
-      // write obuf to data
-      for (int j=0; j<avail && j+avail2<length; ++j) {
-        float value = obuf[0][j];
-        if (value > 1.f) value = 1.f;
-        if (value < -1.f) value = -1.f;
-        data[j+avail2] = value;
-      }
-      avail2+=avail;
-      delete[] obuf[0];
     }
   }
-  delete[] ibuf[0];
-  delete[] ibuf;
-  delete[] obuf;
-}
 
+}
 

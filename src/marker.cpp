@@ -5,6 +5,7 @@ Marker::Marker() {
   aold;
   add(0,0);
   add(1,1);
+  interpolationMode=0;
 }
 
 Marker::~Marker() {
@@ -54,6 +55,9 @@ void Marker::setNew(int pi, float pnew) {
   anew.set(resort(pi), pnew);
 }
 
+int Marker::getInterpolationMode() {return interpolationMode;}
+void Marker::setInterpolationMode(int m) {interpolationMode=m;}
+
 float Marker::getRatio() {
   if (getLength()>0)
     return (getNew(getLength()-1)-getNew(0))/(getOld(getLength()-1)-getOld(0));
@@ -61,19 +65,30 @@ float Marker::getRatio() {
     return NULL;
 }
 
-/*
-float Marker::getRatio(int i) {
-  if (i>=0 && i<getLength()-1)
-    return (getNew(i+1)-getNew(i))/(getOld(i+1)-getOld(i));
-  else
-    return NULL;
-}
-*/
-
 float Marker::getRatio(float o) {
-  // TODO not exact at all
-  float n=100;
-  return ((old2new(o+1/n)-old2new(o-1/n))/(2/n));
+// derivate of old2new
+// hardcode the derivate to improve performance
+  switch (getInterpolationMode()) {
+    // linear
+    case 0: {
+      int i=getAreaOld(o);
+      float dold=(getOld(i+1)-getOld(i));
+      if (dold<=0) return 0;
+      return (getNew(i+1)-getNew(i))/dold;
+    } break;
+    default: {
+      // approxmiate ratio
+      float n=100; // TODO automate this
+      float o1=o-1/n;
+      if (o1<0) o1=0;
+      if (o1>1) return 0;
+      float o2=o+1/n;
+      if (o2<0) return 0;
+      if (o2>1) o2=1;
+      if (o2-o1<=0) return 0;
+      return ((old2new(o2)-old2new(o1))/(o2-o1));
+    }
+  }
 }
 
 int Marker::getLength() {
@@ -109,24 +124,42 @@ int Marker::resort(int pi) {
 }
 
 float Marker::old2new(float o) {
-// !!linear
-// converts old 0-1 values to new 0-1 values
-  int i=getAreaOld(o);
-  // linear interpolation
-  //      n    - n_i        o    - o_i
-  //   -------------- =  --------------
-  //   n_{i+1} - n_i     o_{i+1} - o_i
-  return (o-getOld(i))/(getOld(i+1)-getOld(i))*(getNew(i+1)-getNew(i))+getNew(i);
+// this one does all the interpolation!
+// for performance reasons you should also hard code the interpolation modes to getRatio(float) and new2old
+  switch (getInterpolationMode()) {
+//    case 0: // linear is default
+    default: {
+      int i=getAreaOld(o);
+      // linear interpolation
+      //      n    - n_i        o    - o_i
+      //   -------------- =  --------------
+      //   n_{i+1} - n_i     o_{i+1} - o_i
+      return (o-getOld(i))/(getOld(i+1)-getOld(i))*(getNew(i+1)-getNew(i))+getNew(i);
+    }
+  }
 }
 
 float Marker::new2old(float n) {
-// see old2new
-  int i=getAreaNew(n);
-  return (n-getNew(i))/(getNew(i+1)-getNew(i))*(getOld(i+1)-getOld(i))+getOld(i);
+// inverse of old2new
+// hardcode the derivate to improve performance
+  switch (getInterpolationMode()) {
+    // linear
+    case 0: {
+      int i=getAreaNew(n);
+      return (n-getNew(i))/(getNew(i+1)-getNew(i))*(getOld(i+1)-getOld(i))+getOld(i);
+    } break;
+    default: {
+      // approximate o;
+      float o=n;
+      for (int i=1; i<10; ++i) {
+        o+=(n-old2new(o))/i;
+      }
+      return o;
+    }
+  }
 }
 
 float Marker::new2nnew(float n) {
-  // normalizing
   return (n-getNew(0))/(getNew(getLength()-1)-getNew(0));
 }
 
