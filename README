@@ -1,9 +1,9 @@
-xiRetimer v 0.1
+xiRetimer v 0.2
 
-breaks an audio file into pices, timestretches and reconcatenates them. 
+breaks an audio file into pieces, timestretches and reconcatenates them. 
 I want to use this to fit recorded Audio exactly to a tempo.
 
-playback - gstreamer
+playback - sdl
 gui - wxwidgets
 xiRetimer
 timestretch - rubberband
@@ -11,8 +11,7 @@ timestretch - rubberband
 
 TODO
 
-draw to different buffers only when needed
-getRatio(float) -> interpolation
+always update gui
 exits with error
 bugtracking
 im/export different kinds of audio files (libmad)
