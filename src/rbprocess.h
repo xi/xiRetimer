@@ -2,6 +2,7 @@
 #define __XIRBPROCESS_H
 
 #include "marker.h"
+#include "sample.h"
 #include <rubberband/RubberBandStretcher.h>
 
 /*
@@ -9,10 +10,9 @@ this is called by sample.process()
 this uses the rubberband library
 */
 
-void RBprocess(float* odata, int olength, float* data, int length, Marker* marker) {
-  // TODO better Quality by loading more into the buffer than needed
+void RBprocess(float* odata, int olength, float* data, int length, Marker* marker, Sample* caller) {
   
-  const int bufferLength=4096;  // important
+  const int bufferLength=4096;
   float **ibuf = new float *[1];
   ibuf[0]=new float[bufferLength];
   float **obuf = new float *[1];
@@ -56,6 +56,9 @@ void RBprocess(float* odata, int olength, float* data, int length, Marker* marke
     avail2+=avail;
 
     delete[] obuf[0];
+    
+    // update ProgressBar
+    caller->setFinished(i/(float)olength);
   }
   for (int i=avail2; i<length; ++i) {
     data[i]=0;

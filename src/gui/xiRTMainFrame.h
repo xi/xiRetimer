@@ -46,6 +46,7 @@ protected:
   void OnSize( wxSizeEvent& event );
 
   void paint();
+  void process();
   bool _updateWaveform;
   static const int MARKERWIDTH=15;
   static const int BEAT=15;

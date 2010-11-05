@@ -26,6 +26,7 @@ xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
 
 
 xiRTMainFrame::~xiRTMainFrame() {
+// TODO destroy objects
 //  delete[] curve;
 //  delete[] playback;
 //  delete[] sample;
@@ -91,8 +92,9 @@ void xiRTMainFrame::OnOpenClick( wxCommandEvent& event )
   if (dialog->ShowModal()==wxID_OK) {
     wxString filename=dialog->GetPath();
     sample->loadFile(filename.mb_str());
+    process();
+    _updateWaveform=true;
   }
-  _updateWaveform=true;
 }
 
 void xiRTMainFrame::OnExportClick( wxCommandEvent& event )
@@ -147,14 +149,7 @@ void xiRTMainFrame::OnClearClick( wxCommandEvent& event ) {
 
 
 // ************  misc  **************
-void xiRTMainFrame::OnProcessClick( wxCommandEvent& event ) {
-    // TODO Link process with process bar
-/*
-    wxProgressDialog::wxProgressDialog* dialog = new wxProgressDialog( _T("processing..."), _T("please wait") );
-    dialog ->Show();
-*/
-    sample->process();
-}
+void xiRTMainFrame::OnProcessClick( wxCommandEvent& event ) {process();}
 
 void xiRTMainFrame::OnPaint( wxUpdateUIEvent& event ) {
 // TODO repaint also if UI update is not necessary, eg whe seeker is moving from playback
@@ -167,6 +162,18 @@ void xiRTMainFrame::OnSize( wxSizeEvent& event ) {
 
 
 // ***********************************
+void xiRTMainFrame::process() {
+    sample->process();
+
+    wxProgressDialog::wxProgressDialog* dialog = new wxProgressDialog( _T("processing..."), _T("please wait") );
+    dialog ->Show();
+    while (sample->getProcessing()) {
+      dialog->Update(int(sample->getFinished()*100));
+    }
+    dialog->Show(false);
+    // TODO deatroy dialog
+}
+
 void xiRTMainFrame::paint() {
   wxClientDC dc(this);
   dc.GetSize(&width,&height);

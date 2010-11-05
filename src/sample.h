@@ -26,6 +26,9 @@ public:
   SF_INFO sfinfo;
   int getStretchMode();
   void setStretchMode(int m);
+  bool getProcessing();
+  float getFinished();
+  void setFinished(float f);
 private:
   float *data;
   int length;
@@ -33,6 +36,10 @@ private:
   int olength;
   float *odata;
   int stretchMode;
+  static void * EntryPoint(void*);
+  int process_bg();
+  bool _processing;
+  float _finished;
 };
 
 /*
@@ -41,7 +48,10 @@ int main() {
   Sample s(m);
   m->add(0.5,0.3);
   int error;
-  error=s.loadFile("test.wav");
+  error=s.loadFile("../../test.wav");
+  while (s.getProcessing())  {
+  std::cout << int(s.getFinished()*100) << "%" << std::endl;
+  }
   error=s.writeFile("testo.wav");
 }
 */

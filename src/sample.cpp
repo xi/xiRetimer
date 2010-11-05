@@ -1,5 +1,6 @@
 #include "sample.h"
 #include "rbprocess.h"
+#include <pthread.h>
 
 Sample::Sample(Marker* m) {
   marker=m;
@@ -7,7 +8,9 @@ Sample::Sample(Marker* m) {
   data=new float[0];
   olength=0;
   odata=new float[0];
-  stretchMode=-1;
+  stretchMode=0;
+  _processing=false;
+  _finished=0;
 }
 
 Sample::~Sample() {
@@ -23,6 +26,7 @@ int Sample::getGuessedLength() {
 }
 
 float Sample::get(float nn) {
+  if (_processing) return NULL;
   int i=int(length*nn);
   if (i<0 || i>=length) return NULL;
   return data[i];
@@ -35,10 +39,15 @@ float Sample::getOld(float o) {
 }
 
 int Sample::getStretchMode() {return stretchMode;}
-void Sample::setStretchMode(int m) {stretchMode=m;}
+
+void Sample::setStretchMode(int m) {
+  if (_processing) return;
+  stretchMode=m;
+}
 
 int Sample::loadFile(const char* fileName) {
 // TODO multi filetype support
+  if (_processing) return 1;
   SNDFILE *sndfile;
   sfinfo;
   // open file
@@ -74,6 +83,7 @@ int Sample::loadFile(const char* fileName) {
 
 int Sample::writeFile(const char* fileNameOut) {  
 // TODO multi filetype support
+  if (_processing) return 1;
   if (length<=0) {
     std::cerr << "ERROR: Load a file first" << std::endl;
     return 1;
@@ -98,6 +108,22 @@ int Sample::writeFile(const char* fileNameOut) {
 }
 
 int Sample::process() {
+//  process_bg();
+  if (_processing) return 1;
+  setFinished(0);
+  pthread_t thread;
+  pthread_create(&thread, NULL, Sample::EntryPoint, (void*)this);
+  _processing=true;
+  return 0;
+}
+
+void* Sample::EntryPoint(void* pthis)
+{
+   Sample* pt = (Sample*)pthis;
+   pt->process_bg();
+}
+
+int Sample::process_bg() {
 /*
 This function does the nmain thing: it stretches the original data as defined by the marker object.
 Therefore it reads data from odata and writes to data.
@@ -108,13 +134,21 @@ Therefore it reads data from odata and writes to data.
   data=new float[length];
   switch (getStretchMode()) {
     // rubberband
-    case 1: RBprocess(odata, olength, data, length, marker); break;
+    case 1: RBprocess(odata, olength, data, length, marker, this); break;
     default: {
       for (int i=0; i<length; ++i) {
         data[i]=getOld(marker->new2old(marker->nnew2new(i/(float)length)));
+        setFinished(i/(float)length);
       }
     }
   }
-
+  setFinished(1);
+  _processing=false;
+  pthread_exit((void*)0);
 }
+
+bool Sample::getProcessing() {return _processing;}
+
+void Sample::setFinished(float f) {_finished=f;}
+float Sample::getFinished() {return _finished;}
 
