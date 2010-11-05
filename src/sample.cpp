@@ -48,7 +48,7 @@ void Sample::setStretchMode(int m) {
 int Sample::loadFile(const char* fileName) {
 // TODO multi filetype support
   if (_processing) return 1;
-  SNDFILE *sndfile;
+  SNDFILE *sndfile=NULL;
   sfinfo;
   // open file
   sndfile = sf_open(fileName, SFM_READ, &sfinfo);
@@ -69,16 +69,18 @@ int Sample::loadFile(const char* fileName) {
     int count = sf_readf_float(sndfile, ptr, 10240);
     if (count <= 0) break;
     // save ptr in data
-    // TODO downmix (maybe several options, maybe multichannel support)
     for (int i=0; i<count*sfinfo.channels; i+=sfinfo.channels) {
-      odata[count2]=ptr[i];
+      odata[count2]=0;
+      for (int j=0; j<sfinfo.channels; ++j)
+        odata[count2]+=ptr[i+j];
+      odata[count2]/=sfinfo.channels;
       count2++;
     }
   }
   sf_close(sndfile);
   olength=count2; // exact length
   // fill data 
-  process();
+  return process();
 }
 
 int Sample::writeFile(const char* fileNameOut) {  

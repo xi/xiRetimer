@@ -91,10 +91,13 @@ void xiRTMainFrame::OnOpenClick( wxCommandEvent& event )
 
   if (dialog->ShowModal()==wxID_OK) {
     wxString filename=dialog->GetPath();
-    sample->loadFile(filename.mb_str());
+    if (sample->loadFile(filename.mb_str())!=0)
+      reportError( _T("Could not read from that file"));
     process();
     _updateWaveform=true;
   }
+  else
+    reportError( _T("Please choose a valid file!"));
 }
 
 void xiRTMainFrame::OnExportClick( wxCommandEvent& event )
@@ -104,9 +107,13 @@ void xiRTMainFrame::OnExportClick( wxCommandEvent& event )
 
     if (dialog->ShowModal()==wxID_OK) {
       wxString filename=dialog->GetPath();
-      sample->process();
-      sample->writeFile(filename.mb_str());
+      process();
+      if (sample->writeFile(filename.mb_str())!=0) {
+        reportError(_T("Could not write to File"));
+      }
     }
+    else
+      reportError(_T("Could not write to File"));
 }
 
 // ************  playback  **************
@@ -131,7 +138,7 @@ void xiRTMainFrame::OnPrefsClick( wxCommandEvent& event )
 
 void xiRTMainFrame::OnExitClick( wxCommandEvent& event )
 {
-  Destroy();
+  Close();
 }
 
 void xiRTMainFrame::OnHelpClick( wxCommandEvent& event )
@@ -163,7 +170,10 @@ void xiRTMainFrame::OnSize( wxSizeEvent& event ) {
 
 // ***********************************
 void xiRTMainFrame::process() {
-    sample->process();
+    // sometings wrong here
+    if (sample->process()!=0)
+//      reportError(_T("Could not process data!"));
+      {}
 
     wxProgressDialog::wxProgressDialog* dialog = new wxProgressDialog( _T("processing..."), _T("please wait") );
     dialog ->Show();
@@ -222,4 +232,8 @@ void xiRTMainFrame::paint() {
   }
 }
 
+void xiRTMainFrame::reportError(wxString string) {
+  wxMessageDialog::wxMessageDialog* dialog = new wxMessageDialog( this, string, _T("Error"), wxOK | wxICON_ERROR );
+  dialog ->ShowModal();
+}
 
