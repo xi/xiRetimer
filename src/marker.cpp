@@ -58,9 +58,9 @@ void Marker::setNew(int pi, float pnew) {
 int Marker::getInterpolationMode() {return interpolationMode;}
 void Marker::setInterpolationMode(int m) {interpolationMode=m;}
 
-float Marker::getRatio() {
+float Marker::getLengthf() {
   if (getLength()>0)
-    return (getNew(getLength()-1)-getNew(0))/(getOld(getLength()-1)-getOld(0));
+    return getNew(getLength()-1)-getNew(0);
   else
     return NULL;
 }
@@ -72,6 +72,7 @@ float Marker::getRatio(float o) {
     // linear
     case 0: {
       int i=getAreaOld(o);
+      if (i<0 || i+1>getLength()-1) return 0;
       float dold=(getOld(i+1)-getOld(i));
       if (dold<=0) return 0;
       return (getNew(i+1)-getNew(i))/dold;
@@ -130,6 +131,7 @@ float Marker::old2new(float o) {
 //    case 0: // linear is default
     default: {
       int i=getAreaOld(o);
+      if (i<0 || i+1>getLength()-1) return 0;
       // linear interpolation
       //      n    - n_i        o    - o_i
       //   -------------- =  --------------
@@ -146,6 +148,7 @@ float Marker::new2old(float n) {
     // linear
     case 0: {
       int i=getAreaNew(n);
+      if (i<0 || i+1>getLength()-1) return 0;
       return (n-getNew(i))/(getNew(i+1)-getNew(i))*(getOld(i+1)-getOld(i))+getOld(i);
     } break;
     default: {

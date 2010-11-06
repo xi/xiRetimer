@@ -15,7 +15,6 @@ For different modes of interpolation you have to edit 3 functions:
 old2new
 new2old - inverse of old2new
 getRatio - derivate of old2new
-// TODO define new2old and getRatio from old2new to make sure everything works together
 */
 
 /*
@@ -43,7 +42,7 @@ public:
   float nnew2new(float n);
   int getAreaNew(float n);
   int getAreaOld(float o);
-  float getRatio(); // factor by wich the whole sample is stretched; used to guess the length of the output array;
+  float getLengthf(); // factor by wich the length is changed;
   float getRatio(float o); // factor by wich is stretched on this place;
   int getInterpolationMode();
   void setInterpolationMode(int m);

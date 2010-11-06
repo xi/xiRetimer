@@ -10,7 +10,6 @@ timestretch - rubberband (v>=1.5)
 
 
 TODO
-process (first and last marker should change tempo)
 smooth interpolation
 always update gui
 libmad

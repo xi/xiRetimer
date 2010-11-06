@@ -22,19 +22,19 @@ int Sample::getLength() {
 }
 
 int Sample::getGuessedLength() {
-  return int(olength*marker->getRatio());
+  return int(olength*marker->getLengthf());
 }
 
 float Sample::get(float nn) {
-  if (_processing) return NULL;
+  if (_processing) return 0;
   int i=int(length*nn);
-  if (i<0 || i>=length) return NULL;
+  if (i<0 || i>=length) return 0;
   return data[i];
 }
 
 float Sample::getOld(float o) {
   int i=int((olength-1)*o);
-  if (i<0 || i>=olength) return NULL;
+  if (i<0 || i>=olength) return 0;
   return odata[i];
 }
 
@@ -131,12 +131,12 @@ This function does the nmain thing: it stretches the original data as defined by
 Therefore it reads data from odata and writes to data.
 */
   // setup data
-  length=int(marker->getRatio()*olength);
+  length=getGuessedLength();
   delete[] data;
   data=new float[length];
   switch (getStretchMode()) {
     // rubberband
-    case 1: RBprocess(odata, olength, data, length, marker, this); break;
+    case 1: RBprocess(olength, data, length, marker, this); break;
     default: {
       for (int i=0; i<length; ++i) {
         data[i]=getOld(marker->new2old(marker->nnew2new(i/(float)length)));
