@@ -6,13 +6,14 @@ I want to use this to fit recorded Audio exactly to a tempo.
 playback - sdl
 gui - wxwidgets
 xiRetimer
-timestretch - rubberband
+timestretch - rubberband (v>=1.5)
 
 
 TODO
-
+process (first and last marker should change tempo)
+smooth interpolation
 always update gui
+libmad
 exits with error
-bugtracking
-im/export different kinds of audio files (libmad)
 soundtouch
+bugtracking
