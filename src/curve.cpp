@@ -2,8 +2,6 @@
 
 #include <cmath>
 
-// TODO change first and last marker
-
 Curve::Curve(Marker* m, Sample* s, Playback* p) {
   marker=m;
   sample=s;
@@ -19,7 +17,6 @@ Curve::~Curve() {
 }
 
 float Curve::get(float nn) {
-  // TODO interpolation?
   return sample->getOld(marker->new2old(marker->nnew2new(nn)));
 }
 
@@ -62,19 +59,12 @@ float Curve::getBeatResolution() {return beatResolution;}
 void Curve::addMarker() {
   float n=marker->nnew2new(getSeeker());
   marker->add(marker->new2old(n),n);
-  // update selMarker
-/*
-  if (n<selMarker) --selMarker;
-  if (selMarker>=getMarkerLength()) --selMarker;
-*/
   selMarker=marker->getAreaNew(n);
 }
 
 void Curve::removeMarker() {
   if (selMarker<0) return;
   marker->remove(selMarker);
-  // update selMarker
-//  if (selMarker>=getMarkerLength()) --selMarker;
   selMarker=-1;
 }
 

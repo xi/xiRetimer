@@ -85,15 +85,6 @@ wxInitAllImageHandlers();
 	#endif
 	m_edit->Append( m_start );
 	
-	wxMenuItem* m_end;
-	m_end = new wxMenuItem( m_edit, wxID_ANY, wxString( wxT("end") ) + wxT('\t') + wxT("CTRL+RIGHT"), wxEmptyString, wxITEM_NORMAL );
-	#ifdef __WXMSW__
-	m_end->SetBitmaps( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/media-skip-forward.png"), wxBITMAP_TYPE_ANY ) );
-	#elif defined( __WXGTK__ )
-	m_end->SetBitmap( wxBitmap( wxT("/usr/share/icons/gnome/16x16/actions/media-skip-forward.png"), wxBITMAP_TYPE_ANY ) );
-	#endif
-	m_edit->Append( m_end );
-	
 	wxMenuItem* m_separator8;
 	m_separator8 = m_edit->AppendSeparator();
 	
@@ -145,7 +136,6 @@ wxInitAllImageHandlers();
 	this->Connect( b_exit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
 	this->Connect( m_play->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnPlayClick ) );
 	this->Connect( m_start->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnStartClick ) );
-	this->Connect( m_end->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnEndClick ) );
 	this->Connect( m_clear->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnClearClick ) );
 	this->Connect( m_process->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnProcessClick ) );
 	this->Connect( m_about->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnHelpClick ) );
@@ -166,7 +156,6 @@ MainFrame::~MainFrame()
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnExitClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnPlayClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnStartClick ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnEndClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnClearClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnProcessClick ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MainFrame::OnHelpClick ) );

@@ -36,7 +36,6 @@ protected:
   // playback
   void OnStartClick( wxCommandEvent& event );
   void OnPlayClick( wxCommandEvent& event );
-  void OnEndClick( wxCommandEvent& event );
   // general
   void OnExitClick( wxCommandEvent& event );
   void OnHelpClick( wxCommandEvent& event );

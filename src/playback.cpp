@@ -8,12 +8,14 @@ struct sample {
 
   Sample* sample;
   float seeker;
+  float oseeker;
   bool _play;
 
 Playback::Playback(Sample* s) {
   sample=s;
   _play=false;
   seeker=0;
+  oseeker=0;
 
   extern void callback(void *unused, Uint8 *stream, int len);
   SDL_AudioSpec fmt;
@@ -53,9 +55,7 @@ int Playback::play() {
 
 int Playback::start() {
   SDL_LockAudio();
-//    if ( sounds.data ) {
-//        free(sounds.data);
-//    }
+
     int length=sample->getLength();
     Uint8 idata[length];
     for (int i=0; i<length; ++i) {
@@ -70,24 +70,32 @@ int Playback::start() {
 }
 
 void callback(void *udata, Uint8 *stream, int len) {
-  Uint32 amount;
+  if (_play) {
+std::cout << seeker;
+std::cout << oseeker;
+std::cout << std::endl;
 
-  amount = (sounds.dlen-sounds.dpos);
-  if ( amount > len ) {
-    amount = len;
-  }
-  SDL_MixAudio(stream, &sounds.data[sounds.dpos], amount, SDL_MIX_MAXVOLUME);
-  sounds.dpos += amount;
+    if (sounds.dpos==sounds.dlen) {
+      _play=false;
+      seeker=float(oseeker);
+      return;
+    }
+    Uint32 amount;
 
-  // update
-  if (sounds.dpos==sounds.dlen)
-    _play=false;
-  if (_play)
+    amount = (sounds.dlen-sounds.dpos);
+    if ( amount > len ) {
+      amount = len;
+    }
+    SDL_MixAudio(stream, &sounds.data[sounds.dpos], amount, SDL_MIX_MAXVOLUME);
+    sounds.dpos += amount;
+
     seeker=sounds.dpos/(float)sounds.dlen;
+  }
 }
 
 void Playback::stop() {
   seeker=sounds.dpos/(float)sounds.dlen;
+  oseeker=float(seeker);
   SDL_LockAudio();
   sounds.dpos=sounds.dlen;
   SDL_UnlockAudio();
@@ -95,6 +103,7 @@ void Playback::stop() {
 
 void Playback::setSeeker(float nn) {
   seeker=nn;
+  oseeker=float(seeker);
   if (_play) {
     SDL_LockAudio();
     sounds.dpos = int(seeker*sounds.dlen);

@@ -56,7 +56,6 @@ class MainFrame : public wxFrame
 		virtual void OnExitClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPlayClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStartClick( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnEndClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnClearClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnProcessClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnHelpClick( wxCommandEvent& event ) { event.Skip(); }

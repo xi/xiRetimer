@@ -125,10 +125,6 @@ void RetimerMainFrame::OnPlayClick( wxCommandEvent& event ) {
   playback->play();
 }
 
-void RetimerMainFrame::OnEndClick( wxCommandEvent& event ) {
-  playback->setSeeker(1);
-}
-
 // ************  general  **************
 void RetimerMainFrame::OnPrefsClick( wxCommandEvent& event )
 {
@@ -221,7 +217,6 @@ void RetimerMainFrame::paint() {
   }
   // seeker
   bdc.SetPen(*penSeeker);
-  playback->setSeeker(curve->getSeeker());
   int seek=int(curve->getSeeker()*(width-1));
   bdc.DrawLine(seek,0,seek,height);
   //beats

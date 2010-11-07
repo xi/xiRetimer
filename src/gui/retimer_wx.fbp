@@ -285,21 +285,6 @@
                         <event name="OnMenuSelection">OnStartClick</event>
                         <event name="OnUpdateUI"></event>
                     </object>
-                    <object class="wxMenuItem" expanded="1">
-                        <property name="bitmap">/usr/share/icons/gnome/16x16/actions/media-skip-forward.png; Load From File</property>
-                        <property name="checked">0</property>
-                        <property name="enabled">1</property>
-                        <property name="help"></property>
-                        <property name="id">wxID_ANY</property>
-                        <property name="kind">wxITEM_NORMAL</property>
-                        <property name="label">end</property>
-                        <property name="name">m_end</property>
-                        <property name="permission">none</property>
-                        <property name="shortcut">CTRL+RIGHT</property>
-                        <property name="unchecked_bitmap"></property>
-                        <event name="OnMenuSelection">OnEndClick</event>
-                        <event name="OnUpdateUI"></event>
-                    </object>
                     <object class="separator" expanded="1">
                         <property name="name">m_separator8</property>
                         <property name="permission">none</property>
