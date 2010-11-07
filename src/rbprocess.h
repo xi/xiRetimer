@@ -1,5 +1,5 @@
-#ifndef __XIRBPROCESS_H
-#define __XIRBPROCESS_H
+#ifndef __RBPROCESS_H
+#define __RBPROCESS_H
 
 #include "marker.h"
 #include "sample.h"

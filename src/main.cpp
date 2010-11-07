@@ -1,4 +1,3 @@
-#include "gui/xiRTMainFrame.h"
 #include "main.h"
 
 
@@ -14,7 +13,7 @@ wxWidgetsApp::~wxWidgetsApp()
 
 bool wxWidgetsApp::OnInit()
 {
-    xiRTMainFrame* dialog = new xiRTMainFrame( (wxWindow*)NULL );
+    RetimerMainFrame* dialog = new RetimerMainFrame( (wxWindow*)NULL );
     dialog ->Show();
     SetTopWindow( dialog );
     return true;

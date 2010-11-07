@@ -10,6 +10,9 @@ timestretch - rubberband (v>=1.5)
 
 
 TODO
+renaming (remove xi)
+rubberband crashes
+remove deprecated buttons
 smooth interpolation
 always update gui
 libmad

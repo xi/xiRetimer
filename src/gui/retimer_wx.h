@@ -5,8 +5,8 @@
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __xiRetimer_wxfb__
-#define __xiRetimer_wxfb__
+#ifndef __retimer_wx__
+#define __retimer_wx__
 
 #include <wx/sizer.h>
 #include <wx/gdicmn.h>
@@ -77,6 +77,7 @@ class AboutDialog : public wxDialog
 	private:
 	
 	protected:
+		wxStaticText* m_staticText7;
 		wxStaticText* m_staticText1;
 		wxStaticText* m_staticText2;
 		wxButton* m_button1;
@@ -87,7 +88,7 @@ class AboutDialog : public wxDialog
 	
 	public:
 		
-		AboutDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 159,135 ), long style = wxDEFAULT_DIALOG_STYLE );
+		AboutDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("About"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 159,135 ), long style = wxDEFAULT_DIALOG_STYLE );
 		~AboutDialog();
 	
 };
@@ -127,4 +128,4 @@ class PrefsDialog : public wxDialog
 	
 };
 
-#endif //__xiRetimer_wxfb__
+#endif //__retimer_wx__

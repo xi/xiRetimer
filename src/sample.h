@@ -1,5 +1,5 @@
-#ifndef __XISAMPLE_H
-#define __XISAMPLE_H
+#ifndef __SAMPLE_H
+#define __SAMPLE_H
 
 #include <sndfile.h>
 #include <iostream>

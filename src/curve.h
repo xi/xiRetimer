@@ -1,5 +1,5 @@
-#ifndef __XICURVE_H
-#define __XICURVE_H
+#ifndef __CURVE_H
+#define __CURVE_H
 
 #include <iostream>
 #include "marker.h"

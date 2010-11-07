@@ -1,5 +1,5 @@
-#ifndef __XIPLAYBACK_H
-#define __XIPLAYBACK_H
+#ifndef __PLAYBACK_H
+#define __PLAYBACK_H
 
 #include <iostream>
 

@@ -5,7 +5,7 @@
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#include "xiRetimer_wxfb.h"
+#include "retimer_wx.h"
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -181,6 +181,10 @@ AboutDialog::AboutDialog( wxWindow* parent, wxWindowID id, const wxString& title
 	
 	wxBoxSizer* bSizer14;
 	bSizer14 = new wxBoxSizer( wxVERTICAL );
+	
+	m_staticText7 = new wxStaticText( this, wxID_ANY, wxT("xiRetimer v0.2"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText7->Wrap( -1 );
+	bSizer14->Add( m_staticText7, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5 );
 	
 	m_staticText1 = new wxStaticText( this, wxID_ANY, wxT("Created by xi."), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText1->Wrap( -1 );

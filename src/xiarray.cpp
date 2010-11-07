@@ -1,26 +1,26 @@
-#include "buffer.h"
+#include "xiarray.h"
 
-Buffer::Buffer() {
+xiArray::xiArray() {
   _length=0;
   array=new float[getLength()];
 }
 
-Buffer::~Buffer() {
+xiArray::~xiArray() {
   delete[] array;
 }
 
-float Buffer::get(int i) {
+float xiArray::get(int i) {
   if (i>=0 && i<getLength())
     return array[i];
   else
     return NULL;
 }
 
-void Buffer::set(int i, float v) {
+void xiArray::set(int i, float v) {
   if (i>=0 && i<=getLength()) array[i]=v;
 }
 
-void Buffer::insert(int i,float v) {
+void xiArray::insert(int i,float v) {
   if (i>=0 && i<=getLength()) {
     float* tmpArray=new float[getLength()+1];
     for (int ii=0; ii<i; ii++)
@@ -34,11 +34,11 @@ void Buffer::insert(int i,float v) {
   }
 }
 
-void Buffer::add(float v) {
+void xiArray::add(float v) {
   insert(getLength(),v);
 }
 
-void Buffer::remove(int i) {
+void xiArray::remove(int i) {
   if (i>=0 && i<getLength()) {
     float* tmpArray=new float[getLength()-1];
     for (int ii=0; ii<i; ii++)
@@ -51,11 +51,11 @@ void Buffer::remove(int i) {
   }
 }
 
-int Buffer::getLength() {
+int xiArray::getLength() {
   return _length;
 }
 
-void Buffer::print() {
+void xiArray::print() {
   std::cout << "[";
   for (int i=0; i<getLength()-1; i++)
     std::cout << get(i) << " ";
@@ -64,7 +64,7 @@ void Buffer::print() {
   std::cout << "]";
 }
 
-void Buffer::println() {
+void xiArray::println() {
   print();
   std::cout << std::endl;
 }

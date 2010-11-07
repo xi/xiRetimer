@@ -1,12 +1,16 @@
-#ifndef __XIBUFFER_H
-#define __XIBUFFER_H
+#ifndef __XIARRAY_H
+#define __XIARRAY_H
 
 #include <iostream>
 
-class Buffer {
+/*
+This is like the first c++ class I wrote and was more like making an easy start. If anybody wants to eliminate this from the project and replace it with vectors or something lika that, just do as you want.
+*/
+
+class xiArray {
 public:
-  Buffer();
-  ~Buffer();
+  xiArray();
+  ~xiArray();
   float get(int i);
   void set(int i, float v);
   void add(float v);

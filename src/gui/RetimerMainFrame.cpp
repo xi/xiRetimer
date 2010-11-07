@@ -1,12 +1,12 @@
-#include "xiRTMainFrame.h"
-#include "xiRTAboutDialog.h"
-#include "xiRTPrefsDialog.h"
+#include "RetimerMainFrame.h"
+#include "RetimerAboutDialog.h"
+#include "RetimerPrefsDialog.h"
 
 #include <iostream>
 
 
 
-xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
+RetimerMainFrame::RetimerMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   marker=new Marker();
   sample=new Sample(marker);
   playback=new Playback(sample);
@@ -25,7 +25,7 @@ xiRTMainFrame::xiRTMainFrame( wxWindow* parent ) : MainFrame( parent ) {
 }
 
 
-xiRTMainFrame::~xiRTMainFrame() {
+RetimerMainFrame::~RetimerMainFrame() {
 // TODO destroy objects
 //  delete[] curve;
 //  delete[] playback;
@@ -34,7 +34,7 @@ xiRTMainFrame::~xiRTMainFrame() {
 }
 
 // ************  mouse  **************
-void xiRTMainFrame::OnLeftDown( wxMouseEvent& event ) {
+void RetimerMainFrame::OnLeftDown( wxMouseEvent& event ) {
   // check for Marker Select
   if (event.m_y<=MARKERWIDTH*4/5) {
     for (int i=0; i<curve->getMarkerLength(); ++i) {
@@ -52,12 +52,12 @@ void xiRTMainFrame::OnLeftDown( wxMouseEvent& event ) {
   curve->selectMarker(-1);  //deselct
 }
 
-void xiRTMainFrame::OnLeftUp( wxMouseEvent& event ) {
+void RetimerMainFrame::OnLeftUp( wxMouseEvent& event ) {
   Marker_move=false;
   Seeker_move=false;
 }
 
-void xiRTMainFrame::OnLeftDClick( wxMouseEvent& event ) {
+void RetimerMainFrame::OnLeftDClick( wxMouseEvent& event ) {
   // check for Marker Select
   if (event.m_y<=MARKERWIDTH*4/5) {
     for (int i=0; i<curve->getMarkerLength(); ++i) {
@@ -74,7 +74,7 @@ void xiRTMainFrame::OnLeftDClick( wxMouseEvent& event ) {
   curve->addMarker();
 }
 
-void xiRTMainFrame::OnMotion( wxMouseEvent& event ) {
+void RetimerMainFrame::OnMotion( wxMouseEvent& event ) {
   if (Marker_move) {
     curve->setMarker(event.m_x/(float)width);
     _updateWaveform=true;
@@ -84,7 +84,7 @@ void xiRTMainFrame::OnMotion( wxMouseEvent& event ) {
 }
 
 // ************  file  **************
-void xiRTMainFrame::OnOpenClick( wxCommandEvent& event )
+void RetimerMainFrame::OnOpenClick( wxCommandEvent& event )
 {
   wxFileDialog* dialog = new wxFileDialog( (wxWindow*)NULL );
   dialog->Show();
@@ -100,7 +100,7 @@ void xiRTMainFrame::OnOpenClick( wxCommandEvent& event )
     reportError( _T("Please choose a valid file!"));
 }
 
-void xiRTMainFrame::OnExportClick( wxCommandEvent& event )
+void RetimerMainFrame::OnExportClick( wxCommandEvent& event )
 {
     wxFileDialog* dialog = new wxFileDialog((wxWindow*)NULL, _T("Export As"), _T(""), _T(""), _T("*.wav"), wxSAVE | wxOVERWRITE_PROMPT);
     dialog->Show();
@@ -117,59 +117,59 @@ void xiRTMainFrame::OnExportClick( wxCommandEvent& event )
 }
 
 // ************  playback  **************
-void xiRTMainFrame::OnStartClick( wxCommandEvent& event ) {
+void RetimerMainFrame::OnStartClick( wxCommandEvent& event ) {
   playback->setSeeker(0);
 }
 
-void xiRTMainFrame::OnPlayClick( wxCommandEvent& event ) {
+void RetimerMainFrame::OnPlayClick( wxCommandEvent& event ) {
   playback->play();
 }
 
-void xiRTMainFrame::OnEndClick( wxCommandEvent& event ) {
+void RetimerMainFrame::OnEndClick( wxCommandEvent& event ) {
   playback->setSeeker(1);
 }
 
 // ************  general  **************
-void xiRTMainFrame::OnPrefsClick( wxCommandEvent& event )
+void RetimerMainFrame::OnPrefsClick( wxCommandEvent& event )
 {
-    xiRTPrefsDialog* dialog = new xiRTPrefsDialog(marker, sample, curve);
+    RetimerPrefsDialog* dialog = new RetimerPrefsDialog(marker, sample, curve);
     dialog->Show();
 }
 
-void xiRTMainFrame::OnExitClick( wxCommandEvent& event )
+void RetimerMainFrame::OnExitClick( wxCommandEvent& event )
 {
   Close();
 }
 
-void xiRTMainFrame::OnHelpClick( wxCommandEvent& event )
+void RetimerMainFrame::OnHelpClick( wxCommandEvent& event )
 {
 	// TODO: create Help
-    xiRTAboutDialog* dialog = new xiRTAboutDialog( (wxWindow*)NULL );
+    RetimerAboutDialog* dialog = new RetimerAboutDialog( (wxWindow*)NULL );
     dialog->Show();
 }
 
 // ************  marker  **************
-void xiRTMainFrame::OnClearClick( wxCommandEvent& event ) {
+void RetimerMainFrame::OnClearClick( wxCommandEvent& event ) {
   curve->clearMarker();
   _updateWaveform=true;
 }
 
 
 // ************  misc  **************
-void xiRTMainFrame::OnProcessClick( wxCommandEvent& event ) {process();}
+void RetimerMainFrame::OnProcessClick( wxCommandEvent& event ) {process();}
 
-void xiRTMainFrame::OnPaint( wxUpdateUIEvent& event ) {
+void RetimerMainFrame::OnPaint( wxUpdateUIEvent& event ) {
 // TODO repaint also if UI update is not necessary, eg whe seeker is moving from playback
   paint();
 }
 
-void xiRTMainFrame::OnSize( wxSizeEvent& event ) {
+void RetimerMainFrame::OnSize( wxSizeEvent& event ) {
   _updateWaveform=true;
 }
 
 
 // ***********************************
-void xiRTMainFrame::process() {
+void RetimerMainFrame::process() {
     // sometings wrong here
     if (sample->process()!=0)
 //      reportError(_T("Could not process data!"));
@@ -184,7 +184,7 @@ void xiRTMainFrame::process() {
     // TODO deatroy dialog
 }
 
-void xiRTMainFrame::paint() {
+void RetimerMainFrame::paint() {
   wxClientDC dc(this);
   dc.GetSize(&width,&height);
   wxBufferedDC bdc(&dc,wxSize(width,height));
@@ -232,7 +232,7 @@ void xiRTMainFrame::paint() {
   }
 }
 
-void xiRTMainFrame::reportError(wxString string) {
+void RetimerMainFrame::reportError(wxString string) {
   wxMessageDialog::wxMessageDialog* dialog = new wxMessageDialog( this, string, _T("Error"), wxOK | wxICON_ERROR );
   dialog ->ShowModal();
 }

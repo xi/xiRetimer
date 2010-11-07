@@ -1,8 +1,8 @@
-#ifndef __XIMARKER_H
-#define __XIMARKER_H
+#ifndef __MARKER_H
+#define __MARKER_H
 
 #include <iostream>
-#include "buffer.h"
+#include "xiarray.h"
 
 /*
 marker works with float values
@@ -47,8 +47,8 @@ public:
   int getInterpolationMode();
   void setInterpolationMode(int m);
 private:
-  Buffer anew;
-  Buffer aold;
+  xiArray anew;
+  xiArray aold;
   int resort(int pi);
   int interpolationMode;
 };

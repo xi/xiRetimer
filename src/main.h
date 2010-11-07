@@ -2,6 +2,7 @@
 #define __WXWIDGETSAPP_H
 
 #include <wx/wx.h>
+#include "gui/RetimerMainFrame.h"
 
 class wxWidgetsApp : public wxApp
 {

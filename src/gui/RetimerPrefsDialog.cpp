@@ -1,7 +1,6 @@
-#include "xiRTPrefsDialog.h"
-#include <iostream>
+#include "RetimerPrefsDialog.h"
 
-xiRTPrefsDialog::xiRTPrefsDialog(Marker* m, Sample* s, Curve* c) : PrefsDialog( (wxWindow*)NULL )
+RetimerPrefsDialog::RetimerPrefsDialog(Marker* m, Sample* s, Curve* c) : PrefsDialog( (wxWindow*)NULL )
 {
   marker=m;
   sample=s;
@@ -24,15 +23,15 @@ xiRTPrefsDialog::xiRTPrefsDialog(Marker* m, Sample* s, Curve* c) : PrefsDialog( 
   t_beatres->SetValue(wxs5);
 }
 
-void xiRTPrefsDialog::OnIntModeChange( wxCommandEvent& event ) {
+void RetimerPrefsDialog::OnIntModeChange( wxCommandEvent& event ) {
   marker->setInterpolationMode(c_intmode->GetSelection());
 }
 
-void xiRTPrefsDialog::OnStretchModeChange( wxCommandEvent& event ) {
+void RetimerPrefsDialog::OnStretchModeChange( wxCommandEvent& event ) {
   sample->setStretchMode(c_stretchmode->GetSelection());
 }
 
-void xiRTPrefsDialog::OnTempoEnter( wxCommandEvent& event ) {
+void RetimerPrefsDialog::OnTempoEnter( wxCommandEvent& event ) {
   long tempo;
   if (event.GetString().ToLong(&tempo))
     curve->setTempo(tempo);
@@ -40,7 +39,7 @@ void xiRTPrefsDialog::OnTempoEnter( wxCommandEvent& event ) {
     std::cout << "Please insert an interger " << curve->getTempo() << std::endl;
 }
 
-void xiRTPrefsDialog::OnBeatResEnter( wxCommandEvent& event ) {
+void RetimerPrefsDialog::OnBeatResEnter( wxCommandEvent& event ) {
   double beatres;
   if (event.GetString().ToDouble(&beatres))
     curve->setBeatResolution(beatres);
@@ -48,11 +47,11 @@ void xiRTPrefsDialog::OnBeatResEnter( wxCommandEvent& event ) {
     std::cout << "Please insert a float " << std::endl;
 }
 
-void xiRTPrefsDialog::OnOKClick( wxCommandEvent& event ) {
+void RetimerPrefsDialog::OnOKClick( wxCommandEvent& event ) {
   Close();
 }
 
-void xiRTPrefsDialog::OnCancelClick( wxCommandEvent& event ) {
+void RetimerPrefsDialog::OnCancelClick( wxCommandEvent& event ) {
   marker->setInterpolationMode(oldInterpolationMode);
   sample->setStretchMode(oldStretchMode);
   curve->setTempo(oldTempo);
