@@ -10,9 +10,7 @@ timestretch - rubberband (v>=1.5)
 
 
 TODO
-rubberband crashes
 smooth interpolation
-always update gui
 libmad
 exits with error
 soundtouch

@@ -22,10 +22,16 @@ RetimerMainFrame::RetimerMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   penMarker=new wxPen(wxColor(255,255,0),1);
   wxBitmap waveform;
   _updateWaveform=true;
+
+  timer;
+  timer.SetOwner(this);
+  Connect( wxEVT_TIMER, wxTimerEventHandler( RetimerMainFrame::OnTimer ) );
+  timer.Start(100);
 }
 
 
 RetimerMainFrame::~RetimerMainFrame() {
+  timer.Stop();
 // TODO destroy objects
 //  delete[] curve;
 //  delete[] playback;
@@ -156,36 +162,19 @@ void RetimerMainFrame::OnClearClick( wxCommandEvent& event ) {
 // ************  misc  **************
 void RetimerMainFrame::OnProcessClick( wxCommandEvent& event ) {process();}
 
-void RetimerMainFrame::OnPaint( wxUpdateUIEvent& event ) {
-// TODO repaint also if UI update is not necessary, eg whe seeker is moving from playback
-  paint();
+void RetimerMainFrame::OnPaint( wxPaintEvent& event ) {
+  wxPaintDC pdc(this);
+//  paint(&pdc);
 }
 
-void RetimerMainFrame::OnSize( wxSizeEvent& event ) {
-  _updateWaveform=true;
-}
-
-
-// ***********************************
-void RetimerMainFrame::process() {
-    // sometings wrong here
-    if (sample->process()!=0)
-//      reportError(_T("Could not process data!"));
-      {}
-
-    wxProgressDialog::wxProgressDialog* dialog = new wxProgressDialog( _T("processing..."), _T("please wait") );
-    dialog ->Show();
-    while (sample->getProcessing()) {
-      dialog->Update(int(sample->getFinished()*100));
-    }
-    dialog->Show(false);
-    // TODO deatroy dialog
-}
-
-void RetimerMainFrame::paint() {
+void RetimerMainFrame::OnTimer(wxTimerEvent& event) {
   wxClientDC dc(this);
-  dc.GetSize(&width,&height);
-  wxBufferedDC bdc(&dc,wxSize(width,height));
+  paint(&dc);
+}
+
+void RetimerMainFrame::paint(wxDC* dc) {
+  dc->GetSize(&width,&height);
+  wxBufferedDC bdc(dc,wxSize(width,height));
   // waveform
   if (_updateWaveform) {
     waveform.Create(width, height);
@@ -227,6 +216,27 @@ void RetimerMainFrame::paint() {
   for (int i=0; i<width && step!=0; i+=step) {
     bdc.DrawLine(i,0,i,BEAT);
   }
+}
+
+void RetimerMainFrame::OnSize( wxSizeEvent& event ) {
+  _updateWaveform=true;
+}
+
+
+// ***********************************
+void RetimerMainFrame::process() {
+    // sometings wrong here
+    if (sample->process()!=0)
+//      reportError(_T("Could not process data!"));
+      {}
+
+    wxProgressDialog::wxProgressDialog* dialog = new wxProgressDialog( _T("processing..."), _T("please wait") );
+    dialog ->Show();
+    while (sample->getProcessing()) {
+      dialog->Update(int(sample->getFinished()*100));
+    }
+    dialog->Show(false);
+    // TODO deatroy dialog
 }
 
 void RetimerMainFrame::reportError(wxString string) {

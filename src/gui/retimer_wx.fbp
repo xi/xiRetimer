@@ -68,13 +68,13 @@
             <event name="OnMotion">OnMotion</event>
             <event name="OnMouseEvents"></event>
             <event name="OnMouseWheel"></event>
-            <event name="OnPaint"></event>
+            <event name="OnPaint">OnPaint</event>
             <event name="OnRightDClick"></event>
             <event name="OnRightDown"></event>
             <event name="OnRightUp"></event>
             <event name="OnSetFocus"></event>
             <event name="OnSize">OnSize</event>
-            <event name="OnUpdateUI">OnPaint</event>
+            <event name="OnUpdateUI"></event>
             <object class="wxBoxSizer" expanded="1">
                 <property name="minimum_size"></property>
                 <property name="name">bSizer3</property>
@@ -130,7 +130,7 @@
                 <event name="OnSize"></event>
                 <event name="OnUpdateUI"></event>
             </object>
-            <object class="wxMenuBar" expanded="1">
+            <object class="wxMenuBar" expanded="0">
                 <property name="bg"></property>
                 <property name="context_help"></property>
                 <property name="enabled">1</property>
@@ -342,7 +342,7 @@
                 </object>
             </object>
         </object>
-        <object class="Dialog" expanded="1">
+        <object class="Dialog" expanded="0">
             <property name="bg"></property>
             <property name="center"></property>
             <property name="context_help"></property>
@@ -648,7 +648,7 @@
                 </object>
             </object>
         </object>
-        <object class="Dialog" expanded="1">
+        <object class="Dialog" expanded="0">
             <property name="bg"></property>
             <property name="center"></property>
             <property name="context_help"></property>
