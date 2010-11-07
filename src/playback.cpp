@@ -71,10 +71,6 @@ int Playback::start() {
 
 void callback(void *udata, Uint8 *stream, int len) {
   if (_play) {
-std::cout << seeker;
-std::cout << oseeker;
-std::cout << std::endl;
-
     if (sounds.dpos==sounds.dlen) {
       _play=false;
       seeker=float(oseeker);

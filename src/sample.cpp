@@ -136,7 +136,7 @@ Therefore it reads data from odata and writes to data.
   data=new float[length];
   switch (getStretchMode()) {
     // rubberband
-    case 1: RBprocess(olength, data, length, marker, this); break;
+    case 1: RBprocess(olength, data, marker, this); break;
     default: {
       for (int i=0; i<length; ++i) {
         data[i]=getOld(marker->new2old(marker->nnew2new(i/(float)length)));

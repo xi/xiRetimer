@@ -91,13 +91,15 @@ void RetimerMainFrame::OnOpenClick( wxCommandEvent& event )
 
   if (dialog->ShowModal()==wxID_OK) {
     wxString filename=dialog->GetPath();
-    if (sample->loadFile(filename.mb_str())!=0)
+    if (sample->loadFile(filename.mb_str())!=0) {
       reportError( _T("Could not read from that file"));
+      return;
+    }
     process();
     _updateWaveform=true;
   }
-  else
-    reportError( _T("Please choose a valid file!"));
+//  else
+//    reportError( _T("Please choose a valid file!"));
 }
 
 void RetimerMainFrame::OnExportClick( wxCommandEvent& event )
