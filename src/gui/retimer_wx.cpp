@@ -233,6 +233,7 @@ PrefsDialog::PrefsDialog( wxWindow* parent, wxWindowID id, const wxString& title
 	l_stretchmode->Wrap( -1 );
 	fgSizer4->Add( l_stretchmode, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
+        // TODO #ifdef MODE_RUBBERBAND
 	wxString c_stretchmodeChoices[] = { wxT("none"), wxT("RubberBand") };
 	int c_stretchmodeNChoices = sizeof( c_stretchmodeChoices ) / sizeof( wxString );
 	c_stretchmode = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, c_stretchmodeNChoices, c_stretchmodeChoices, 0 );

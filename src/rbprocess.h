@@ -3,6 +3,9 @@
 
 #include "marker.h"
 #include "sample.h"
+
+#ifdef MODE_RUBBERBAND
+
 #include <rubberband/RubberBandStretcher.h>
 #include <map>
 
@@ -29,12 +32,11 @@ int RBprocess(int olength, float* data, Marker* marker, Sample* sample, int n=1)
   obuf[0]=data;
 
   RubberBand::RubberBandStretcher ts(44100, 1, 0, 1);
-  // map // TODO not precise
+  // map // TODO simply todo
   std::map<unsigned int, unsigned int> fmap;
-  for (int i=0; i<marker->getLength(); ++i) {
-    float old= marker->getOld(i);
-    float nnew= marker->new2nnew(marker->old2new(old));
-    fmap[int(old*olength)-ostart]=int(nnew*length);
+  for (int i=0; i<length; i+=1024) {
+    float old= marker->nnew2new(marker->new2old(i/(float)length));
+    fmap[int(old*olength)-ostart]=int(i);
   }
   ts.setKeyFrameMap(fmap);
 
@@ -71,3 +73,4 @@ int RBprocess(int olength, float* data, Marker* marker, Sample* sample, int n=1)
 
 #endif
 
+#endif

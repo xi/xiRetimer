@@ -1,6 +1,10 @@
 #include "sample.h"
-#include "rbprocess.h"
 #include <pthread.h>
+
+// TODO create configure/make
+#define MODE_RUBBERBAND
+
+#include "rbprocess.h"
 
 Sample::Sample(Marker* m) {
   marker=m;
@@ -113,30 +117,35 @@ int Sample::process() {
 //  process_bg();
   if (_processing) return 1;
   setFinished(0);
+/*
   pthread_t thread;
   pthread_create(&thread, NULL, Sample::EntryPoint, (void*)this);
-  _processing=true;
+*/
+  process_bg();
   return 0;
 }
 
 void* Sample::EntryPoint(void* pthis)
 {
-   Sample* pt = (Sample*)pthis;
-   pt->process_bg();
+  Sample* pt = (Sample*)pthis;
+  int error=pt->process_bg();
+  pthread_exit((void*)error);
 }
 
 int Sample::process_bg() {
 /*
-This function does the nmain thing: it stretches the original data as defined by the marker object.
+This function does the main thing: it stretches the original data as defined by the marker object.
 Therefore it reads data from odata and writes to data.
 */
+  _processing=true;
   // setup data
   length=getGuessedLength();
   delete[] data;
   data=new float[length];
   switch (getStretchMode()) {
-    // rubberband
+#ifdef MODE_RUBBERBAND
     case 1: RBprocess(olength, data, marker, this); break;
+#endif
     default: {
       for (int i=0; i<length; ++i) {
         data[i]=getOld(marker->new2old(marker->nnew2new(i/(float)length)));
@@ -146,7 +155,6 @@ Therefore it reads data from odata and writes to data.
   }
   setFinished(1);
   _processing=false;
-  pthread_exit((void*)0);
 }
 
 bool Sample::getProcessing() {return _processing;}
