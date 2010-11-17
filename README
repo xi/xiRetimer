@@ -8,7 +8,6 @@ gui - wxwidgets
 xiRetimer
 timestretch - rubberband (v>=1.5)
 
-
 TODO
 smooth interpolation
 libmad

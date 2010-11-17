@@ -32,7 +32,7 @@ int RBprocess(int olength, float* data, Marker* marker, Sample* sample, int n=1)
   obuf[0]=data;
 
   RubberBand::RubberBandStretcher ts(44100, 1, 0, 1);
-  // map // TODO simply todo
+  // map
   std::map<unsigned int, unsigned int> fmap;
   for (int i=0; i<length; i+=1024) {
     float old= marker->nnew2new(marker->new2old(i/(float)length));
