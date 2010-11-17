@@ -1,9 +1,6 @@
 #include "sample.h"
 #include <pthread.h>
 
-// TODO create configure/make
-#define MODE_RUBBERBAND
-
 #include "rbprocess.h"
 
 Sample::Sample(Marker* m) {
@@ -117,11 +114,9 @@ int Sample::process() {
 //  process_bg();
   if (_processing) return 1;
   setFinished(0);
-/*
   pthread_t thread;
   pthread_create(&thread, NULL, Sample::EntryPoint, (void*)this);
-*/
-  process_bg();
+//  process_bg();
   return 0;
 }
 
@@ -155,6 +150,7 @@ Therefore it reads data from odata and writes to data.
   }
   setFinished(1);
   _processing=false;
+  return 0;
 }
 
 bool Sample::getProcessing() {return _processing;}

@@ -1,7 +1,5 @@
 #include "curve.h"
 
-#include <cmath>
-
 Curve::Curve(Marker* m, Sample* s, Playback* p) {
   marker=m;
   sample=s;

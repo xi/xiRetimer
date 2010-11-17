@@ -1,3 +1,0 @@
-g++ *.h *.cpp gui/*.h gui/*.cpp `wx-config --cxxflags --libs` `sdl-config --cflags --libs` `pkg-config --cflags --libs rubberband sndfile` -o ../xiRetimer
-rm *.gch
-rm gui/*.gch
