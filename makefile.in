@@ -10,9 +10,14 @@ xiRetimer: .gui .back
 	$(CC) $(CFLAGS) -c src/gui/*.cpp src/gui/*.h
 	touch .gui
 
-.back: src/*.cpp src/*.h
+.back: src/*.cpp src/*.h .dep
 	$(CC) $(CFLAGS) -c src/*.cpp src/*.h
 	touch .back
+
+.dep:
+	$(CC) $(CFLAGS) -c dep/*.h dep/*.so
+	touch .dep
+	
 
 .PHONY: clean
 clean:

@@ -1,4 +1,3 @@
-AC_PREREQ([2.67])
 AC_INIT([retimer], [0.2], [])
 AC_CONFIG_SRCDIR([src/playback.h])
 
@@ -24,6 +23,8 @@ AC_CHECK_FILES(
 if test "x$icons" = "x" ; then 
   _CFLAGS="$_CFLAGS -DICONS_GNOME"
   echo "  Compiling with Gnome icons"
+else
+  echo "  Compiling without Gnome icons!"
 fi
 
 # Checks for libraries.
@@ -33,7 +34,8 @@ PKG_CHECK_MODULES([sndfile],[sndfile])
 PKG_CHECK_MODULES([RubberBand],[rubberband >= 1.4],
 	[_CFLAGS="$_CFLAGS -DMODE_RUBBERBAND"
          _PKGC="$_PKGC rubberband"
-	 echo "  Compiling with RubberBand support"])
+	 echo "  Compiling with RubberBand support"],
+	[ echo "  Compiling without RubberBand support!"])
 
 
 # Checks for header files.
