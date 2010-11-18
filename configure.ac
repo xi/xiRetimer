@@ -29,6 +29,7 @@ if test "x$icons" = "x" ; then
   _CFLAGS="$_CFLAGS -DICONS_GNOME"
   echo "  Compiling with Gnome icons"
 else
+  _CFLAGS="$_CFLAGS -UICONS_GNOME"
   echo "  Compiling without Gnome icons!"
 fi
 
@@ -37,10 +38,24 @@ PKG_CHECK_MODULES([SDL],[sdl])
 PKG_CHECK_MODULES([sndfile],[sndfile])
 
 PKG_CHECK_MODULES([RubberBand],[rubberband >= 1.4],
-	[_CFLAGS="$_CFLAGS -DMODE_RUBBERBAND"
-         _PKGC="$_PKGC rubberband"
+	[
+	_CFLAGS="$_CFLAGS -DMODE_RUBBERBAND"
+	_PKGC="$_PKGC rubberband"
 	 echo "  Compiling with RubberBand support"],
-	[ echo "  Compiling without RubberBand support!"])
+	[
+	_CFLAGS="$_CFLAGS -UMODE_RUBBERBAND"
+	echo "  Compiling without RubberBand support!"
+	])
+
+PKG_CHECK_MODULES([mad],[mad],
+	[
+	_CFLAGS="$_CFLAGS -DENABLE_MP3"
+#	_PKGC="$_PKGC rubberband"
+	 echo "  Compiling with mp3 support"],
+	[
+	_CFLAGS="$_CFLAGS -UENABLE_MP3"
+	echo "  Compiling without mp3 support!"
+	])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
