@@ -1,7 +1,7 @@
 #include "sample.h"
 #include <pthread.h>
 
-#include "rbprocess.h"
+#include "rbprocess.cpp"
 
 Sample::Sample(Marker* m) {
   marker=m;

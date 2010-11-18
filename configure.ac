@@ -1,6 +1,11 @@
 AC_INIT([retimer], [0.2], [])
 AC_CONFIG_SRCDIR([src/playback.h])
 
+VERSION=0.2
+NAME=xiRetimer
+AC_SUBST(VERSION)
+AC_SUBST(NAME)
+
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
@@ -37,14 +42,11 @@ PKG_CHECK_MODULES([RubberBand],[rubberband >= 1.4],
 	 echo "  Compiling with RubberBand support"],
 	[ echo "  Compiling without RubberBand support!"])
 
-
-# Checks for header files.
-
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
 
-# Checks for library functions.
-
-AC_CONFIG_FILES([makefile])
+AC_CONFIG_FILES([makefile
+	src/gui/retimer_wx.cpp
+	])
 AC_OUTPUT
 
