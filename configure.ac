@@ -34,8 +34,22 @@ else
 fi
 
 # Checks for libraries.
-PKG_CHECK_MODULES([SDL],[sdl])
-PKG_CHECK_MODULES([sndfile],[sndfile])
+AC_CHECK_PROG(HAVE_PKG_CONFIG, pkg-config, yes, no)
+if test x$HAVE_PKG_CONFIG = xno ; then
+   AC_MSG_ERROR([pkg-config is required for compilation!])
+fi
+
+AC_CHECK_PROG(HAVE_WX_CONFIG, wx-config, yes, no)
+if test x$HAVE_WX_CONFIG = xno ; then
+   AC_MSG_ERROR([wx-config is required for compilation! Is wxWidgets installed?])
+fi
+
+AC_CHECK_PROG(HAVE_SDL_CONFIG, sdl-config, yes, no)
+if test x$HAVE_SDL_CONFIG = xno ; then
+   AC_MSG_ERROR([sdl-config is required for compilation! Is SDL installed?])
+fi
+
+PKG_CHECK_MODULES([SNDFILE],[sndfile])
 
 PKG_CHECK_MODULES([RubberBand],[rubberband >= 1.4],
 	[
@@ -47,7 +61,7 @@ PKG_CHECK_MODULES([RubberBand],[rubberband >= 1.4],
 	echo "  Compiling without RubberBand support!"
 	])
 
-PKG_CHECK_MODULES([mad],[mad],
+PKG_CHECK_MODULES([MAD],[mad],
 	[
 	_CFLAGS="$_CFLAGS -DENABLE_MP3"
 #	_PKGC="$_PKGC rubberband"
