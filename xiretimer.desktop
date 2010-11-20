@@ -1,0 +1,18 @@
+[Desktop Entry]
+Name=xiRetimer
+Comment[en]=warp audio files
+
+GenericName=retimer
+
+Version=0.2
+
+Type=Application
+Categories=AudioVideo;Audio;
+
+MimeType=text/xml;
+
+Exec=xiRetimer
+Terminal=false
+StartupNotify=false
+
+Icon=stock_refresh

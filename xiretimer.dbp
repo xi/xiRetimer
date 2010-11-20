@@ -1,0 +1,46 @@
+[DEBREATE-1.0]
+<<MODE>>0<</MODE>>
+<<CTRL>>
+Package: xiretimer
+Version: 0.2
+Section: sound
+Maintainer: xi <tobias.bengfort@fu-berlin.de>
+Priority: optional
+Architecture: all
+Depends: libsndfile1, libsdl1.2debian, libwxbase2.8-0 | libwxbase2.8-0
+
+<</CTRL>>
+<<FILES>>
+1
+/home/tobias/stuff/code/xiRetimer/xiretimer.desktop -> xiretimer.desktop -> /usr/share/applications/
+/home/tobias/stuff/code/xiRetimer/xiRetimer* -> xiRetimer -> /usr/bin
+<</FILES>>
+<<SCRIPTS>>
+<<PREINST>>
+0
+<</PREINST>>
+<<POSTINST>>
+0
+<</POSTINST>>
+<<PRERM>>
+0
+<</PRERM>>
+<<POSTRM>>
+0
+<</POSTRM>>
+<</SCRIPTS>>
+<<CHANGELOG>>
+<<DEST>>DEFAULT<</DEST>>
+
+<</CHANGELOG>>
+<<COPYRIGHT>>
+
+<</COPYRIGHT>>
+<<MENU>>
+0
+<</MENU>>
+<<BUILD>>
+0
+1
+1
+<</BUILD>>
