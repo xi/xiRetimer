@@ -1,5 +1,7 @@
 #include "marker.h"
 
+#include "intmode_poly.h"
+
 Marker::Marker() {
   anew;
   aold;
@@ -66,6 +68,7 @@ float Marker::getLengthf() {
 }
 
 float Marker::getRatio(float o) {
+// deprivated
 // derivate of old2new
 // hardcode the derivate to improve performance
   switch (getInterpolationMode()) {
@@ -129,6 +132,9 @@ float Marker::old2new(float o) {
 // for performance reasons you should also hard code the interpolation modes to getRatio(float) and new2old
   switch (getInterpolationMode()) {
 //    case 0: // linear is default
+    case 1: { // polynominal spline
+      return int_poly(this, o);
+    } break;
     default: {
       int i=getAreaOld(o);
       if (i<0 || i+1>getLength()-1) return 0;
@@ -152,6 +158,7 @@ float Marker::new2old(float n) {
       return (n-getNew(i))/(getNew(i+1)-getNew(i))*(getOld(i+1)-getOld(i))+getOld(i);
     } break;
     default: {
+      // TODO
       // approximate o;
       float o=n;
       for (int i=1; i<10; ++i) {

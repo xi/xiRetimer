@@ -206,7 +206,7 @@ PrefsDialog::PrefsDialog( wxWindow* parent, wxWindowID id, const wxString& title
 	l_intmode->Wrap( -1 );
 	fgSizer4->Add( l_intmode, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	wxString c_intmodeChoices[] = { wxT("Linear") };
+	wxString c_intmodeChoices[] = { wxT("Linear"), wxT("Polynominal") };
 	int c_intmodeNChoices = sizeof( c_intmodeChoices ) / sizeof( wxString );
 	c_intmode = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, c_intmodeNChoices, c_intmodeChoices, 0 );
 	c_intmode->SetSelection( 0 );

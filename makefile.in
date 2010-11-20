@@ -5,7 +5,7 @@ LDFLAGS = `sdl-config --libs` `pkg-config --libs sndfile @_PKGC@` `wx-config --l
 @NAME@: .gui .back
 	$(CC) -o @NAME@ *.o $(LDFLAGS)
 
-.gui: .back src/gui/*.cpp src/gui/*.h
+.gui: src/gui/*.cpp src/gui/*.h
 	$(CC) $(CFLAGS) -c src/gui/*.cpp src/gui/*.h
 	touch .gui
 
