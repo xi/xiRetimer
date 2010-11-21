@@ -212,6 +212,13 @@ PrefsDialog::PrefsDialog( wxWindow* parent, wxWindowID id, const wxString& title
 	c_intmode->SetSelection( 0 );
 	fgSizer4->Add( c_intmode, 1, wxALL|wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
 	
+	l_showint = new wxStaticText( this, wxID_ANY, wxT("show interpolation curve"), wxDefaultPosition, wxDefaultSize, 0 );
+	l_showint->Wrap( -1 );
+	fgSizer4->Add( l_showint, 0, wxALL, 5 );
+	
+	m_showint = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer4->Add( m_showint, 0, wxALL, 5 );
+
 	l_stretchmode = new wxStaticText( this, wxID_ANY, wxT("Stretch Mode"), wxDefaultPosition, wxDefaultSize, 0 );
 	l_stretchmode->Wrap( -1 );
 	fgSizer4->Add( l_stretchmode, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
@@ -262,6 +269,7 @@ PrefsDialog::PrefsDialog( wxWindow* parent, wxWindowID id, const wxString& title
 	
 	// Connect Events
 	c_intmode->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PrefsDialog::OnIntModeChange ), NULL, this );
+	m_showint->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( PrefsDialog::OnCheckShowInt ), NULL, this );
 	c_stretchmode->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PrefsDialog::OnStretchModeChange ), NULL, this );
 	t_tempo->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( PrefsDialog::OnTempoEnter ), NULL, this );
 	t_beatres->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( PrefsDialog::OnBeatResEnter ), NULL, this );

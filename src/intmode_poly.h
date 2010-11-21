@@ -6,7 +6,6 @@
 
 /*
 This defines a interpolytion mode used in marker
-// TODO lots of optimisation to do
 */
 
 namespace _IntPoly {

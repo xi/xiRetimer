@@ -24,6 +24,7 @@
 #include <wx/button.h>
 #include <wx/dialog.h>
 #include <wx/choice.h>
+#include <wx/checkbox.h>
 #include <wx/textctrl.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -102,6 +103,8 @@ class PrefsDialog : public wxDialog
 	protected:
 		wxStaticText* l_intmode;
 		wxChoice* c_intmode;
+		wxStaticText* l_showint;
+		wxCheckBox* m_showint;
 		wxStaticText* l_stretchmode;
 		wxChoice* c_stretchmode;
 		wxStaticText* l_tempo;
@@ -113,6 +116,7 @@ class PrefsDialog : public wxDialog
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnIntModeChange( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCheckShowInt( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnStretchModeChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnTempoEnter( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnBeatResEnter( wxCommandEvent& event ) { event.Skip(); }

@@ -7,6 +7,7 @@ Curve::Curve(Marker* m, Sample* s, Playback* p) {
   tempo=90;
   selMarker=-1;
   beatResolution=1;
+  _showIntLine=false;
 }
 
 Curve::~Curve() {
@@ -81,9 +82,4 @@ int Curve::getMarkerLength() {return marker->getLength();}
 float Curve::getMarker(int i) {return marker->new2nnew(marker->getNew(i));}
 
 void Curve::clearMarker() {marker->reset();}
-
-bool Curve::showIntLine() {
-  // TODO showIntLine
-  return true;
-}
 

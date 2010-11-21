@@ -190,7 +190,7 @@ void RetimerMainFrame::paint(wxDC* dc) {
       float max=1+curve->getMax(i/(float)width, 1/(float)width);
       mdc.DrawLine(i,int(min*height/2),i,int(max*height/2));
     }
-    if (curve->showIntLine()) {
+    if (curve->_showIntLine) {
       mdc.SetPen(*penCurve2);
       float x1;
       float x2=marker->new2nnew(marker->old2new(0));
@@ -246,7 +246,7 @@ void RetimerMainFrame::process() {
       dialog->Update(int(sample->getFinished()*100));
     }
     dialog->Show(false);
-    // TODO deatroy dialog
+    // TODO destroy dialog
 }
 
 void RetimerMainFrame::reportError(wxString string) {

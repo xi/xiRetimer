@@ -19,6 +19,7 @@ class RetimerPrefsDialog : public PrefsDialog
 protected:
 	// Handlers for PrefsDialog events.
 	void OnIntModeChange( wxCommandEvent& event );
+	void OnCheckShowInt( wxCommandEvent& event );
 	void OnStretchModeChange( wxCommandEvent& event );
 	void OnTempoEnter( wxCommandEvent& event );
 	void OnBeatResEnter( wxCommandEvent& event );
@@ -26,6 +27,7 @@ protected:
 	void OnCancelClick( wxCommandEvent& event );
 
   int oldInterpolationMode;
+  bool oldShowIntLine;
   int oldStretchMode;
   int oldTempo;
   float oldBeatResolution;

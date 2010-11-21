@@ -32,7 +32,7 @@ public:
   float getBeatResolution();
   void setTempo(int bpm);
   int getTempo();
-  bool showIntLine();
+  bool _showIntLine;
 private:
   Marker* marker;
   Sample* sample;
@@ -41,19 +41,5 @@ private:
   int selMarker;
   float beatResolution;
 };
-
-/*
-int main() {
-  Marker* m=new Marker();
-  Sample* s=new Sample(m);
-  m->add(0.5,0.3);
-  int error;
-  error=s->loadFile("../../test.wav");
-  
-  Curve c(s);
-  c.setScreenWidth(100);
-  c.print();
-}
-*/
 
 #endif

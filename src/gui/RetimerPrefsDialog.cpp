@@ -7,11 +7,13 @@ RetimerPrefsDialog::RetimerPrefsDialog(Marker* m, Sample* s, Curve* c) : PrefsDi
   curve=c;
   
   oldInterpolationMode=marker->getInterpolationMode();
+  oldShowIntLine=curve->_showIntLine;
   oldStretchMode=sample->getStretchMode();
   oldTempo=curve->getTempo();
   oldBeatResolution=curve->getBeatResolution();
 
   c_intmode->SetSelection(oldInterpolationMode);
+  m_showint->SetValue(oldShowIntLine);
   c_stretchmode->SetSelection(oldStretchMode);
 
   wxString wxs4;
@@ -25,6 +27,10 @@ RetimerPrefsDialog::RetimerPrefsDialog(Marker* m, Sample* s, Curve* c) : PrefsDi
 
 void RetimerPrefsDialog::OnIntModeChange( wxCommandEvent& event ) {
   marker->setInterpolationMode(c_intmode->GetSelection());
+}
+
+void RetimerPrefsDialog::OnCheckShowInt( wxCommandEvent& event ) {
+  curve->_showIntLine=m_showint->GetValue();
 }
 
 void RetimerPrefsDialog::OnStretchModeChange( wxCommandEvent& event ) {
@@ -53,6 +59,7 @@ void RetimerPrefsDialog::OnOKClick( wxCommandEvent& event ) {
 
 void RetimerPrefsDialog::OnCancelClick( wxCommandEvent& event ) {
   marker->setInterpolationMode(oldInterpolationMode);
+  curve->_showIntLine=oldShowIntLine;
   sample->setStretchMode(oldStretchMode);
   curve->setTempo(oldTempo);
   curve->setBeatResolution(oldBeatResolution);

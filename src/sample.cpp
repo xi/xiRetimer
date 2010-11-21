@@ -45,7 +45,7 @@ void Sample::setStretchMode(int m) {
 }
 
 int Sample::loadFile(const char* fileName) {
-// TODO multi filetype support
+// TODO madliub/mp3 support
   if (_processing) return 1;
   SNDFILE *sndfile=NULL;
   sfinfo;
@@ -82,8 +82,7 @@ int Sample::loadFile(const char* fileName) {
   return process();
 }
 
-int Sample::writeFile(const char* fileNameOut) {  
-// TODO multi filetype support
+int Sample::writeFile(const char* fileNameOut) {
   if (_processing) return 1;
   if (length<=0) {
     std::cerr << "ERROR: Load a file first" << std::endl;
