@@ -77,6 +77,7 @@ AC_HEADER_STDBOOL
 AC_CONFIG_FILES([makefile
 	src/gui/retimer_wx.cpp
 	xiretimer.desktop
+	README
 	])
 AC_OUTPUT
 
