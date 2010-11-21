@@ -18,6 +18,7 @@ RetimerMainFrame::RetimerMainFrame( wxWindow* parent ) : MainFrame( parent ) {
 
   brushbg=new wxBrush(*wxBLACK);
   penCurve=new wxPen(*wxBLUE,1);
+  penCurve2=new wxPen(*wxRED,1);
   penSeeker=new wxPen(*wxWHITE,1);
   penMarker=new wxPen(wxColor(255,255,0),1);
   wxBitmap waveform;
@@ -189,6 +190,16 @@ void RetimerMainFrame::paint(wxDC* dc) {
       float max=1+curve->getMax(i/(float)width, 1/(float)width);
       mdc.DrawLine(i,int(min*height/2),i,int(max*height/2));
     }
+    if (curve->showIntLine()) {
+      mdc.SetPen(*penCurve2);
+      float x1;
+      float x2=marker->new2nnew(marker->old2new(0));
+      for (int i=0; i<height-1; ++i) {
+        x1=x2;
+        x2=marker->new2nnew(marker->old2new((i+1)/(float)height));
+        mdc.DrawLine(int(x1*width),i,int(x2*width),i+1);
+      }
+    }
     _updateWaveform=false;
   }
   bdc.DrawBitmap(waveform,0,0,false);
@@ -227,8 +238,7 @@ void RetimerMainFrame::OnSize( wxSizeEvent& event ) {
 void RetimerMainFrame::process() {
     // sometings wrong here
     if (sample->process()!=0)
-//      reportError(_T("Could not process data!"));
-      {}
+      reportError(_T("Could not process data!"));
 
     wxProgressDialog::wxProgressDialog* dialog = new wxProgressDialog( _T("processing..."), _T("please wait") );
     dialog ->Show();

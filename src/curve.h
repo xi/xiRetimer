@@ -32,6 +32,7 @@ public:
   float getBeatResolution();
   void setTempo(int bpm);
   int getTempo();
+  bool showIntLine();
 private:
   Marker* marker;
   Sample* sample;

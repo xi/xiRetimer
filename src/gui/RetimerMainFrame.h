@@ -70,6 +70,7 @@ Curve* curve;
 
 wxBrush* brushbg;
 wxPen* penCurve;
+wxPen* penCurve2;
 wxPen* penSeeker;
 wxPen* penMarker;
 wxBitmap waveform;

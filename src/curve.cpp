@@ -82,3 +82,8 @@ float Curve::getMarker(int i) {return marker->new2nnew(marker->getNew(i));}
 
 void Curve::clearMarker() {marker->reset();}
 
+bool Curve::showIntLine() {
+  // TODO showIntLine
+  return false;
+}
+
