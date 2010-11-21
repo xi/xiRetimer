@@ -8,6 +8,7 @@ Curve::Curve(Marker* m, Sample* s, Playback* p) {
   selMarker=-1;
   beatResolution=1;
   _showIntLine=false;
+  _update=true;
 }
 
 Curve::~Curve() {

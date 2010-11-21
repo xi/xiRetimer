@@ -53,7 +53,6 @@ protected:
   void OnTimer(wxTimerEvent& event);
 
   void process();
-  bool _updateWaveform;
   void reportError(wxString string);
   static const int MARKERWIDTH=15;
   static const int BEAT=15;

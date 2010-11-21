@@ -22,7 +22,6 @@ RetimerMainFrame::RetimerMainFrame( wxWindow* parent ) : MainFrame( parent ) {
   penSeeker=new wxPen(*wxWHITE,1);
   penMarker=new wxPen(wxColor(255,255,0),1);
   wxBitmap waveform;
-  _updateWaveform=true;
 
   timer;
   timer.SetOwner(this);
@@ -72,7 +71,7 @@ void RetimerMainFrame::OnLeftDClick( wxMouseEvent& event ) {
       if (event.m_x<=n+MARKERWIDTH/2 && event.m_x>=n-MARKERWIDTH/2) {
         curve->selectMarker(i);
         curve->removeMarker();
-        _updateWaveform=true;
+        curve->_update=true;
         return;
       }
     }
@@ -84,7 +83,7 @@ void RetimerMainFrame::OnLeftDClick( wxMouseEvent& event ) {
 void RetimerMainFrame::OnMotion( wxMouseEvent& event ) {
   if (Marker_move) {
     curve->setMarker(event.m_x/(float)width);
-    _updateWaveform=true;
+    curve->_update=true;
   }
   if (Seeker_move)
     playback->setSeeker(event.m_x/(float)width);
@@ -103,7 +102,7 @@ void RetimerMainFrame::OnOpenClick( wxCommandEvent& event )
       return;
     }
     process();
-    _updateWaveform=true;
+    curve->_update=true;
   }
 //  else
 //    reportError( _T("Please choose a valid file!"));
@@ -156,7 +155,7 @@ void RetimerMainFrame::OnHelpClick( wxCommandEvent& event )
 // ************  marker  **************
 void RetimerMainFrame::OnClearClick( wxCommandEvent& event ) {
   curve->clearMarker();
-  _updateWaveform=true;
+  curve->_update=true;
 }
 
 
@@ -177,7 +176,7 @@ void RetimerMainFrame::paint(wxDC* dc) {
   dc->GetSize(&width,&height);
   wxBufferedDC bdc(dc,wxSize(width,height));
   // waveform
-  if (_updateWaveform) {
+  if (curve->_update) {
     waveform.Create(width, height);
     wxMemoryDC mdc;
     mdc.SelectObject(waveform);
@@ -200,7 +199,7 @@ void RetimerMainFrame::paint(wxDC* dc) {
         mdc.DrawLine(int(x1*width),i,int(x2*width),i+1);
       }
     }
-    _updateWaveform=false;
+    curve->_update=false;
   }
   bdc.DrawBitmap(waveform,0,0,false);
   // marker
@@ -230,7 +229,7 @@ void RetimerMainFrame::paint(wxDC* dc) {
 }
 
 void RetimerMainFrame::OnSize( wxSizeEvent& event ) {
-  _updateWaveform=true;
+  curve->_update=true;
 }
 
 

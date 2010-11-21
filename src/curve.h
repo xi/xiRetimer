@@ -33,6 +33,7 @@ public:
   void setTempo(int bpm);
   int getTempo();
   bool _showIntLine;
+  bool _update;
 private:
   Marker* marker;
   Sample* sample;

@@ -54,6 +54,7 @@ void RetimerPrefsDialog::OnBeatResEnter( wxCommandEvent& event ) {
 }
 
 void RetimerPrefsDialog::OnOKClick( wxCommandEvent& event ) {
+  curve->_update=true;
   Close();
 }
 
