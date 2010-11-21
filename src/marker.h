@@ -46,6 +46,7 @@ public:
   float getRatio(float o); // factor by wich is stretched on this place;
   int getInterpolationMode();
   void setInterpolationMode(int m);
+  bool _update; // used by interpolation modes to determine if data has to be updated
 private:
   xiArray anew;
   xiArray aold;

@@ -3,6 +3,7 @@
 
 #include <sndfile.h>
 #include <iostream>
+#include <pthread.h>
 #include "marker.h"
 
 /*

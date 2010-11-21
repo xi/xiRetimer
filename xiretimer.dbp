@@ -8,6 +8,14 @@ Maintainer: xi <tobias.bengfort@fu-berlin.de>
 Priority: optional
 Architecture: all
 Depends: libsndfile1, libsdl1.2debian, libwxbase2.8-0 | libwxbase2.8-0
+Description: Tool to fit recordet Audio to a tempo
+ This is basicly some kind of gui to rubberband, where some other modes than rubberband itself are available.
+ .
+ dependencies:
+ .
+ playback - sdl
+ gui - wxwidgets
+ timestretch - rubberband (optional)
 
 <</CTRL>>
 <<FILES>>

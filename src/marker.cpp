@@ -1,5 +1,4 @@
 #include "marker.h"
-
 #include "intmode_poly.h"
 
 Marker::Marker() {
@@ -8,6 +7,7 @@ Marker::Marker() {
   add(0,0);
   add(1,1);
   interpolationMode=0;
+  _update=true;
 }
 
 Marker::~Marker() {
@@ -36,6 +36,7 @@ void Marker::add(float pold, float pnew) {
   }
   anew.add(pnew);
   aold.add(pold);
+  _update=true;
 }
   
 void Marker::remove(int pi) {
@@ -43,6 +44,7 @@ void Marker::remove(int pi) {
   int i=resort(pi);
   anew.remove(i);
   aold.remove(i);
+  _update=true;
 }
 
 float Marker::getNew(int pi) {
@@ -55,6 +57,7 @@ float Marker::getOld(int pi) {
 
 void Marker::setNew(int pi, float pnew) {
   anew.set(resort(pi), pnew);
+  _update=true;
 }
 
 int Marker::getInterpolationMode() {return interpolationMode;}

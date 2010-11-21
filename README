@@ -1,6 +1,6 @@
 xiRetimer v 0.2
 
-Tool to fir recordet Audio to a tempo.
+Tool to fit recordet Audio to a tempo.
 
 playback - sdl
 gui - wxwidgets

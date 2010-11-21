@@ -6,11 +6,99 @@
 
 /*
 This defines a interpolytion mode used in marker
-// TODO doesnt really work yet
 // TODO lots of optimisation to do
 */
 
-float** invertMatrix(float** A) {
+namespace _IntPoly {
+  void update(Marker* marker, int pi);
+  float calculate(float x);
+  float** invertMatrix(float** A);
+  float a=0,b=0,c=0,d=0;
+  int IPi,IPn;
+}
+
+float int_poly(Marker* marker, float old) {
+  int ii=marker->getAreaOld(old);
+  if (marker->_update || ii!=_IntPoly::IPi) _IntPoly::update(marker,ii);
+  marker->_update=false;
+  return _IntPoly::calculate(old);
+}
+
+//*********************************************************************//
+
+float _IntPoly::calculate(float x) {
+  return _IntPoly::a*x*x*x+_IntPoly::b*x*x+_IntPoly::c*x+_IntPoly::d;
+}
+
+void _IntPoly::update(Marker* marker, int pi) {
+  IPn=marker->getLength();
+  IPi=pi;
+  float x1=marker->getOld(IPi);
+  float x2=marker->getOld(IPi+1);
+  float y1=marker->getNew(IPi);
+  float y2=marker->getNew(IPi+1);
+  float d1;
+  float d2;
+  if (IPi<=0)
+    d1=(marker->getNew(1)-marker->getNew(0))/(marker->getOld(1)-marker->getOld(0));
+  else
+    d1=(marker->getNew(IPi-1)-y2)/(marker->getOld(IPi-1)-x2);
+  if (IPi>=IPn-2)
+    d2=(marker->getNew(IPn-1)-marker->getNew(IPn-2))/(marker->getOld(IPn-1)-marker->getOld(IPn-2));
+  else
+    d2=(y1-marker->getNew(IPi+2))/(x1-marker->getOld(IPi+2));
+
+  float** M=new float*[3];
+  for (int j=0; j<3; ++j) {
+    M[j]=new float[3];
+  }
+
+  M[0][0]=3*x1*x1;
+  M[0][1]=2*x1;
+  M[0][2]=1;
+
+  M[1][0]=3*x2*x2;
+  M[1][1]=2*x2;
+  M[1][2]=1;
+
+  M[2][0]=x2*x2*x2-x1*x1*x1;
+  M[2][1]=x2*x2-x1*x1;
+  M[2][2]=x2-x1;
+
+  float** I=invertMatrix(M);
+
+  int zeros=0;
+  for (int j=0; j<3; ++j) {
+    for (int jj=0; jj<3; ++jj) {
+      if (I[j][jj]==0) zeros++;
+    }
+  }
+  if (zeros==9) {
+    a=0;
+    b=0;
+    c=(y2-y1)/(x2-x1);
+    d=y1;
+    return;
+  }
+    
+
+  for (int j=0; j<3; ++j) {
+    delete[] M[j];
+  }
+  delete[] M;
+
+  _IntPoly::a=I[0][0]*d1+I[0][1]*d2+I[0][2]*(y2-y1);
+  _IntPoly::b=I[1][0]*d1+I[1][1]*d2+I[1][2]*(y2-y1);
+  _IntPoly::c=I[2][0]*d1+I[2][1]*d2+I[2][2]*(y2-y1);
+  _IntPoly::d=y1-_IntPoly::a*x1*x1*x1-_IntPoly::b*x1*x1-_IntPoly::c*x1;
+
+  for (int j=0; j<3; ++j) {
+    delete[] I[j];
+  }
+  delete[] I;
+}
+
+float** _IntPoly::invertMatrix(float** A) {
   float** X=new float*[3];
   for (int i=0; i<3; ++i) {
     X[i]=new float[3];
@@ -55,82 +143,5 @@ float** invertMatrix(float** A) {
  
   return X;
 } 
-
-float int_poly(Marker* marker, float old) {
-  int i=marker->getAreaOld(old);
-  int n=marker->getLength();
-
-  float x1=marker->getOld(i);
-  float x2=marker->getOld(i+1);
-  float y1=marker->getNew(i);
-  float y2=marker->getNew(i+1);
-  float d1;
-  float d2;
-  if (i<=0)
-    d1=(marker->getNew(1)-marker->getNew(0))/(marker->getOld(1)-marker->getOld(0));
-  else
-    d1=(marker->getNew(i-1)-y2)/(marker->getOld(i-1)-x2);
-  if (i>=n-2)
-    d2=(marker->getNew(n-1)-marker->getNew(n-2))/(marker->getOld(n-1)-marker->getOld(n-2));
-  else
-    d2=(y1-marker->getNew(i+2))/(x1-marker->getOld(i+2));
-
-  float** M=new float*[3];
-  for (int j=0; j<3; ++j) {
-    M[j]=new float[3];
-  }
-
-  M[0][0]=3*x1*x1;
-  M[0][1]=2*x1;
-  M[0][2]=1;
-
-  M[1][0]=3*x2*x2;
-  M[1][1]=2*x2;
-  M[1][2]=1;
-
-  M[2][0]=x2*x2*x2-x1*x1*x1;
-  M[2][1]=x2*x2-x1*x1;
-  M[2][2]=x2-x1;
-
-  float** I=invertMatrix(M);
-
-  int zeros=0;
-  for (int j=0; j<3; ++j) {
-    for (int jj=0; jj<3; ++jj) {
-      if (I[j][jj]==0) zeros++;
-    }
-  }
-  if (zeros==9) {
-    float c=(y2-y1)/(x2-x1);
-    float d=y1;
-    return c*(old-x1)+d;
-  }
-    
-
-  for (int j=0; j<3; ++j) {
-    delete[] M[j];
-  }
-  delete[] M;
-
-  float a=I[0][0]*d1+I[0][1]*d2+I[0][2]*(y2-y1);
-  float b=I[1][0]*d1+I[1][1]*d2+I[1][2]*(y2-y1);
-  float c=I[2][0]*d1+I[2][1]*d2+I[2][2]*(y2-y1);
-  float d=y1-a*x1*x1*x1-b*x1*x1-c*x1;
-
-  for (int j=0; j<3; ++j) {
-    delete[] I[j];
-  }
-  delete[] I;
-
-/*
-std::cout << " a " << a;
-std::cout << " b " << b;
-std::cout << " c " << c;
-std::cout << " d " << d;
-std::cout << std::endl;
-*/
-
-  return a*old*old*old+b*old*old+c*old+d;
-}
 
 #endif

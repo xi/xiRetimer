@@ -84,6 +84,6 @@ void Curve::clearMarker() {marker->reset();}
 
 bool Curve::showIntLine() {
   // TODO showIntLine
-  return false;
+  return true;
 }
 

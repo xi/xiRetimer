@@ -1,6 +1,4 @@
 #include "sample.h"
-#include <pthread.h>
-
 #include "rbprocess.h"
 
 Sample::Sample(Marker* m) {
