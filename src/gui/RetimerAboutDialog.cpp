@@ -1,13 +1,9 @@
 #include "RetimerAboutDialog.h"
 
-RetimerAboutDialog::RetimerAboutDialog( wxWindow* parent )
-:
-AboutDialog( parent )
-{
-
+RetimerAboutDialog::RetimerAboutDialog(wxWindow* parent) : AboutDialog(parent) {
 }
 
-void RetimerAboutDialog::OnOKClick( wxCommandEvent& event )
-{
+
+void RetimerAboutDialog::OnOKClick(wxCommandEvent& event) {
 	Close();
 }

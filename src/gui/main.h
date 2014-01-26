@@ -4,12 +4,11 @@
 #include <wx/wx.h>
 #include "RetimerMainFrame.h"
 
-class wxWidgetsApp : public wxApp
-{
-public:
-    wxWidgetsApp();
-    virtual ~wxWidgetsApp();
-    virtual bool OnInit();
+class wxWidgetsApp : public wxApp {
+	public:
+		wxWidgetsApp();
+		virtual ~wxWidgetsApp();
+		virtual bool OnInit();
 };
 
 DECLARE_APP(wxWidgetsApp)
