@@ -15,8 +15,6 @@ xiArray::~xiArray() {
 float xiArray::get(int i) {
 	if (i >= 0 && i < getLength()) {
 		return array[i];
-	} else {
-		return NULL;
 	}
 }
 

@@ -249,7 +249,7 @@ void RetimerMainFrame::process() {
 		reportError(_T("Could not process data!"));
 	}
 
-	wxProgressDialog::wxProgressDialog* dialog = new wxProgressDialog(_T("processing..."), _T("please wait"));
+	wxProgressDialog* dialog = new wxProgressDialog(_T("processing..."), _T("please wait"));
 	dialog->Show();
 	while (sample->getProcessing()) {
 		dialog->Update(int(sample->getFinished() * 100));
@@ -260,6 +260,6 @@ void RetimerMainFrame::process() {
 
 
 void RetimerMainFrame::reportError(wxString string) {
-	wxMessageDialog::wxMessageDialog* dialog = new wxMessageDialog(this, string, _T("Error"), wxOK | wxICON_ERROR);
+	wxMessageDialog* dialog = new wxMessageDialog(this, string, _T("Error"), wxOK | wxICON_ERROR);
 	dialog->ShowModal();
 }
