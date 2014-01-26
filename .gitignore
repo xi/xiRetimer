@@ -1,0 +1,5 @@
+src/gui/*.gch
+*.o
+aclocal.m4
+*.cache
+config.log
