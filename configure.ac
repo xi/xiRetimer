@@ -75,7 +75,8 @@ PKG_CHECK_MODULES([MAD],[mad],
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
 
-AC_CONFIG_FILES([makefile
+AC_CONFIG_FILES([
+	Makefile
 	src/gui/retimer_wx.cpp
 	xiretimer.desktop
 	README
