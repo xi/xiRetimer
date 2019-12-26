@@ -1,11 +1,5 @@
 *.gch
 *.o
-aclocal.m4
 *.cache
 config.log
 xiRetimer
-configure
-README
-xiretimer.desktop
-src/gui/retimer_wx.cpp
-makefile

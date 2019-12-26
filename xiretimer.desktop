@@ -4,8 +4,6 @@ Comment[en]=warp audio files
 
 GenericName=retimer
 
-Version=@VERSION@
-
 Type=Application
 Categories=AudioVideo;Audio;
 

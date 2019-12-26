@@ -151,7 +151,7 @@ AboutDialog::AboutDialog(wxWindow* parent, wxWindowID id, const wxString& title,
 	wxBoxSizer* bSizer14;
 	bSizer14 = new wxBoxSizer(wxVERTICAL);
 
-	m_staticText7 = new wxStaticText(this, wxID_ANY, wxT("xiRetimer v@VERSION@"), wxDefaultPosition, wxDefaultSize, 0);
+	m_staticText7 = new wxStaticText(this, wxID_ANY, "xiRetimer v" VERSION, wxDefaultPosition, wxDefaultSize, 0);
 	m_staticText7->Wrap(-1);
 	bSizer14->Add(m_staticText7, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5);
 
