@@ -23,16 +23,16 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 	m_menubar3 = new wxMenuBar(0);
 	m_file = new wxMenu();
 	wxMenuItem* m_open;
-	m_open = new wxMenuItem(m_file, wxID_ANY, wxString(wxT("open")) + wxT('\t') + wxT("CTRL+f"), wxEmptyString, wxITEM_NORMAL);
+	m_open = new wxMenuItem(m_file, wxID_ANY, wxString("open") + '\t' + "CTRL+f", wxEmptyString, wxITEM_NORMAL);
 	#ifdef ICONS_GNOME
-	m_open->SetBitmap(wxBitmap(wxT("/usr/share/icons/gnome/16x16/actions/fileopen.png"), wxBITMAP_TYPE_ANY));
+	m_open->SetBitmap(wxBitmap("/usr/share/icons/gnome/16x16/actions/fileopen.png", wxBITMAP_TYPE_ANY));
 	#endif
 	m_file->Append(m_open);
 
 	wxMenuItem* m_export;
-	m_export = new wxMenuItem(m_file, wxID_ANY, wxString(wxT("export")) + wxT('\t') + wxT("CTRL+s"), wxEmptyString, wxITEM_NORMAL);
+	m_export = new wxMenuItem(m_file, wxID_ANY, wxString("export") + '\t' + "CTRL+s", wxEmptyString, wxITEM_NORMAL);
 	#ifdef ICONS_GNOME
-	m_export->SetBitmap(wxBitmap(wxT("/usr/share/icons/gnome/16x16/actions/document-save.png"), wxBITMAP_TYPE_ANY));
+	m_export->SetBitmap(wxBitmap("/usr/share/icons/gnome/16x16/actions/document-save.png", wxBITMAP_TYPE_ANY));
 	#endif
 	m_file->Append(m_export);
 
@@ -40,9 +40,9 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 	m_separator6 = m_file->AppendSeparator();
 
 	wxMenuItem* m_prefs;
-	m_prefs = new wxMenuItem(m_file, wxID_ANY, wxString(wxT("preferences")) + wxT('\t') + wxT("F5"), wxEmptyString, wxITEM_NORMAL);
+	m_prefs = new wxMenuItem(m_file, wxID_ANY, wxString("preferences") + '\t' + "F5", wxEmptyString, wxITEM_NORMAL);
 	#ifdef ICONS_GNOME
-	m_prefs->SetBitmap(wxBitmap(wxT("/usr/share/icons/gnome/16x16/actions/document-properties.png"), wxBITMAP_TYPE_ANY));
+	m_prefs->SetBitmap(wxBitmap("/usr/share/icons/gnome/16x16/actions/document-properties.png", wxBITMAP_TYPE_ANY));
 	#endif
 	m_file->Append(m_prefs);
 
@@ -50,26 +50,26 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 	m_separator7 = m_file->AppendSeparator();
 
 	wxMenuItem* b_exit;
-	b_exit = new wxMenuItem(m_file, wxID_ANY, wxString(wxT("Exit")) , wxEmptyString, wxITEM_NORMAL);
+	b_exit = new wxMenuItem(m_file, wxID_ANY, wxString("Exit") , wxEmptyString, wxITEM_NORMAL);
 	#ifdef ICONS_GNOME
-	b_exit->SetBitmap(wxBitmap(wxT("/usr/share/icons/gnome/16x16/actions/window-close.png"), wxBITMAP_TYPE_ANY));
+	b_exit->SetBitmap(wxBitmap("/usr/share/icons/gnome/16x16/actions/window-close.png", wxBITMAP_TYPE_ANY));
 	#endif
 	m_file->Append(b_exit);
 
-	m_menubar3->Append(m_file, wxT("File"));
+	m_menubar3->Append(m_file, "File");
 
 	m_edit = new wxMenu();
 	wxMenuItem* m_play;
-	m_play = new wxMenuItem(m_edit, wxID_ANY, wxString(wxT("play/pause")) + wxT('\t') + wxT("SPACE"), wxEmptyString, wxITEM_NORMAL);
+	m_play = new wxMenuItem(m_edit, wxID_ANY, wxString("play/pause") + '\t' + "SPACE", wxEmptyString, wxITEM_NORMAL);
 	#ifdef ICONS_GNOME
-	m_play->SetBitmap(wxBitmap(wxT("/usr/share/icons/gnome/16x16/actions/media-playback-start.png"), wxBITMAP_TYPE_ANY));
+	m_play->SetBitmap(wxBitmap("/usr/share/icons/gnome/16x16/actions/media-playback-start.png", wxBITMAP_TYPE_ANY));
 	#endif
 	m_edit->Append(m_play);
 
 	wxMenuItem* m_start;
-	m_start = new wxMenuItem(m_edit, wxID_ANY, wxString(wxT("start")) + wxT('\t') + wxT("CTRL+LEFT"), wxEmptyString, wxITEM_NORMAL);
+	m_start = new wxMenuItem(m_edit, wxID_ANY, wxString("start") + '\t' + "CTRL+LEFT", wxEmptyString, wxITEM_NORMAL);
 	#ifdef ICONS_GNOME
-	m_start->SetBitmap(wxBitmap(wxT("/usr/share/icons/gnome/16x16/actions/media-skip-backward.png"), wxBITMAP_TYPE_ANY));
+	m_start->SetBitmap(wxBitmap("/usr/share/icons/gnome/16x16/actions/media-skip-backward.png", wxBITMAP_TYPE_ANY));
 	#endif
 	m_edit->Append(m_start);
 
@@ -77,30 +77,30 @@ MainFrame::MainFrame(wxWindow* parent, wxWindowID id, const wxString& title, con
 	m_separator8 = m_edit->AppendSeparator();
 
 	wxMenuItem* m_clear;
-	m_clear = new wxMenuItem(m_edit, wxID_ANY, wxString(wxT("clear markers")) + wxT('\t') + wxT("CTRL+c"), wxEmptyString, wxITEM_NORMAL);
+	m_clear = new wxMenuItem(m_edit, wxID_ANY, wxString("clear markers") + '\t' + "CTRL+c", wxEmptyString, wxITEM_NORMAL);
 	#ifdef ICONS_GNOME
-	m_clear->SetBitmap(wxBitmap(wxT("/usr/share/icons/gnome/16x16/actions/edit-clear.png"), wxBITMAP_TYPE_ANY));
+	m_clear->SetBitmap(wxBitmap("/usr/share/icons/gnome/16x16/actions/edit-clear.png", wxBITMAP_TYPE_ANY));
 	#endif
 	m_edit->Append(m_clear);
 
 	wxMenuItem* m_process;
-	m_process = new wxMenuItem(m_edit, wxID_ANY, wxString(wxT("update audio data")) + wxT('\t') + wxT("CTRL+u"), wxEmptyString, wxITEM_NORMAL);
+	m_process = new wxMenuItem(m_edit, wxID_ANY, wxString("update audio data") + '\t' + "CTRL+u", wxEmptyString, wxITEM_NORMAL);
 	#ifdef ICONS_GNOME
-	m_process->SetBitmap(wxBitmap(wxT("/usr/share/icons/gnome/16x16/actions/stock_refresh.png"), wxBITMAP_TYPE_ANY));
+	m_process->SetBitmap(wxBitmap("/usr/share/icons/gnome/16x16/actions/stock_refresh.png", wxBITMAP_TYPE_ANY));
 	#endif
 	m_edit->Append(m_process);
 
-	m_menubar3->Append(m_edit, wxT("Edit"));
+	m_menubar3->Append(m_edit, "Edit");
 
 	m_help = new wxMenu();
 	wxMenuItem* m_about;
-	m_about = new wxMenuItem(m_help, wxID_ANY, wxString(wxT("about")) + wxT('\t') + wxT("F1"), wxEmptyString, wxITEM_NORMAL);
+	m_about = new wxMenuItem(m_help, wxID_ANY, wxString("about") + '\t' + "F1", wxEmptyString, wxITEM_NORMAL);
 	#ifdef ICONS_GNOME
-	m_about->SetBitmap(wxBitmap(wxT("/usr/share/icons/gnome/16x16/actions/help-about.png"), wxBITMAP_TYPE_ANY));
+	m_about->SetBitmap(wxBitmap("/usr/share/icons/gnome/16x16/actions/help-about.png", wxBITMAP_TYPE_ANY));
 	#endif
 	m_help->Append(m_about);
 
-	m_menubar3->Append(m_help, wxT("Help"));
+	m_menubar3->Append(m_help, "Help");
 
 	this->SetMenuBar(m_menubar3);
 
@@ -155,11 +155,11 @@ AboutDialog::AboutDialog(wxWindow* parent, wxWindowID id, const wxString& title,
 	m_staticText7->Wrap(-1);
 	bSizer14->Add(m_staticText7, 0, wxALL|wxALIGN_CENTER_HORIZONTAL, 5);
 
-	m_staticText1 = new wxStaticText(this, wxID_ANY, wxT("Created by xi."), wxDefaultPosition, wxDefaultSize, 0);
+	m_staticText1 = new wxStaticText(this, wxID_ANY, "Created by xi.", wxDefaultPosition, wxDefaultSize, 0);
 	m_staticText1->Wrap(-1);
 	bSizer14->Add(m_staticText1, 0, wxALIGN_CENTER|wxALL, 5);
 
-	m_staticText2 = new wxStaticText(this, wxID_ANY, wxT("www.github.com/xi"), wxDefaultPosition, wxDefaultSize, 0);
+	m_staticText2 = new wxStaticText(this, wxID_ANY, "www.github.com/xi", wxDefaultPosition, wxDefaultSize, 0);
 	m_staticText2->Wrap(-1);
 	bSizer14->Add(m_staticText2, 0, wxALIGN_CENTER|wxALL, 5);
 
@@ -168,7 +168,7 @@ AboutDialog::AboutDialog(wxWindow* parent, wxWindowID id, const wxString& title,
 	wxBoxSizer* bSizer7;
 	bSizer7 = new wxBoxSizer(wxVERTICAL);
 
-	m_button1 = new wxButton(this, wxID_ANY, wxT("OK"), wxDefaultPosition, wxDefaultSize, 0);
+	m_button1 = new wxButton(this, wxID_ANY, "OK", wxDefaultPosition, wxDefaultSize, 0);
 	bSizer7->Add(m_button1, 0, wxALIGN_CENTER|wxALL, 5);
 
 	bSizer4->Add(bSizer7, 0, wxEXPAND, 5);
@@ -197,32 +197,32 @@ PrefsDialog::PrefsDialog(wxWindow* parent, wxWindowID id, const wxString& title,
 	fgSizer4->SetFlexibleDirection(wxBOTH);
 	fgSizer4->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 
-	l_intmode = new wxStaticText(this, wxID_ANY, wxT("Interpolation Mode"), wxDefaultPosition, wxDefaultSize, 0);
+	l_intmode = new wxStaticText(this, wxID_ANY, "Interpolation Mode", wxDefaultPosition, wxDefaultSize, 0);
 	l_intmode->Wrap(-1);
 	fgSizer4->Add(l_intmode, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
 
-	wxString c_intmodeChoices[] = { wxT("Linear"), wxT("Polynominal") };
+	wxString c_intmodeChoices[] = { "Linear", "Polynominal" };
 	int c_intmodeNChoices = sizeof(c_intmodeChoices) / sizeof(wxString);
 	c_intmode = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, c_intmodeNChoices, c_intmodeChoices, 0);
 	c_intmode->SetSelection(0);
 	fgSizer4->Add(c_intmode, 1, wxALL|wxEXPAND|wxALIGN_CENTER_VERTICAL, 5);
 
-	l_showint = new wxStaticText(this, wxID_ANY, wxT("show interpolation curve"), wxDefaultPosition, wxDefaultSize, 0);
+	l_showint = new wxStaticText(this, wxID_ANY, "show interpolation curve", wxDefaultPosition, wxDefaultSize, 0);
 	l_showint->Wrap(-1);
 	fgSizer4->Add(l_showint, 0, wxALL, 5);
 
 	m_showint = new wxCheckBox(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 	fgSizer4->Add(m_showint, 0, wxALL, 5);
 
-	l_stretchmode = new wxStaticText(this, wxID_ANY, wxT("Stretch Mode"), wxDefaultPosition, wxDefaultSize, 0);
+	l_stretchmode = new wxStaticText(this, wxID_ANY, "Stretch Mode", wxDefaultPosition, wxDefaultSize, 0);
 	l_stretchmode->Wrap(-1);
 	fgSizer4->Add(l_stretchmode, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
 
 	// TODO
 #ifdef MODE_RUBBERBAND
-	wxString c_stretchmodeChoices[] = { wxT("none"), wxT("RubberBand")};
+	wxString c_stretchmodeChoices[] = { "none", "RubberBand"};
 #else
-	wxString c_stretchmodeChoices[] = { wxT("none"), wxT("RubberBand (disabled)")};
+	wxString c_stretchmodeChoices[] = { "none", "RubberBand (disabled")};
 #endif
 
 	int c_stretchmodeNChoices = sizeof(c_stretchmodeChoices) / sizeof(wxString);
@@ -230,14 +230,14 @@ PrefsDialog::PrefsDialog(wxWindow* parent, wxWindowID id, const wxString& title,
 	c_stretchmode->SetSelection(0);
 	fgSizer4->Add(c_stretchmode, 1, wxALL|wxEXPAND|wxALIGN_CENTER_VERTICAL, 5);
 
-	l_tempo = new wxStaticText(this, wxID_ANY, wxT("Tempo"), wxDefaultPosition, wxDefaultSize, 0);
+	l_tempo = new wxStaticText(this, wxID_ANY, "Tempo", wxDefaultPosition, wxDefaultSize, 0);
 	l_tempo->Wrap(-1);
 	fgSizer4->Add(l_tempo, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
 
 	t_tempo = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER|wxTE_RIGHT);
 	fgSizer4->Add(t_tempo, 1, wxALL|wxEXPAND|wxALIGN_CENTER_VERTICAL, 5);
 
-	l_beatres = new wxStaticText(this, wxID_ANY, wxT("Beat Resolution"), wxDefaultPosition, wxDefaultSize, 0);
+	l_beatres = new wxStaticText(this, wxID_ANY, "Beat Resolution", wxDefaultPosition, wxDefaultSize, 0);
 	l_beatres->Wrap(-1);
 	fgSizer4->Add(l_beatres, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5);
 
@@ -249,11 +249,11 @@ PrefsDialog::PrefsDialog(wxWindow* parent, wxWindowID id, const wxString& title,
 	wxBoxSizer* bSizer15;
 	bSizer15 = new wxBoxSizer(wxHORIZONTAL);
 
-	b_OK = new wxButton(this, wxID_ANY, wxT("OK"), wxDefaultPosition, wxDefaultSize, 0);
+	b_OK = new wxButton(this, wxID_ANY, "OK", wxDefaultPosition, wxDefaultSize, 0);
 	bSizer15->Add(b_OK, 0, wxALL|wxALIGN_BOTTOM|wxALIGN_RIGHT, 5);
 
-	b_Cancel = new wxButton(this, wxID_ANY, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0);
-	b_Cancel->SetToolTip(wxT("Escape"));
+	b_Cancel = new wxButton(this, wxID_ANY, "Cancel", wxDefaultPosition, wxDefaultSize, 0);
+	b_Cancel->SetToolTip("Escape");
 
 	bSizer15->Add(b_Cancel, 0, wxALIGN_BOTTOM|wxALIGN_RIGHT|wxALL, 5);
 

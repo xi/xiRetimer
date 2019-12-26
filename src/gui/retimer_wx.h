@@ -60,7 +60,7 @@ class MainFrame : public wxFrame
 		virtual void OnHelpClick(wxCommandEvent& event) { event.Skip(); }
 
 	public:
-		MainFrame(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("xiRetimer"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(611,397), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
+		MainFrame(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = "xiRetimer", const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(611,397), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL);
 		~MainFrame();
 };
 
@@ -79,7 +79,7 @@ class AboutDialog : public wxDialog
 		virtual void OnOKClick(wxCommandEvent& event) { event.Skip(); }
 
 	public:
-		AboutDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("About"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(159,135), long style = wxDEFAULT_DIALOG_STYLE);
+		AboutDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = "About", const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(159,135), long style = wxDEFAULT_DIALOG_STYLE);
 		~AboutDialog();
 };
 
@@ -112,7 +112,7 @@ class PrefsDialog : public wxDialog
 		virtual void OnCancelClick(wxCommandEvent& event) { event.Skip(); }
 
 	public:
-		PrefsDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Preferences"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(322,238), long style = wxDEFAULT_DIALOG_STYLE);
+		PrefsDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = "Preferences", const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(322,238), long style = wxDEFAULT_DIALOG_STYLE);
 		~PrefsDialog();
 };
 
