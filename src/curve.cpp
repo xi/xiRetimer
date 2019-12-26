@@ -54,13 +54,14 @@ float Curve::getSeeker() {
 
 
 float Curve::getBars() {
-	int beats = sample->getGuessedLength() / sample->sfinfo.samplerate;
-	beats *= tempo / 60 / 4;
-	if (beats != 0) {
-		return beats;
-	} else {
-		return 1;
+	if (sample->sfinfo.samplerate != 0) {
+		int beats = sample->getGuessedLength() / sample->sfinfo.samplerate;
+		beats *= tempo / 60 / 4;
+		if (beats != 0) {
+			return beats;
+		}
 	}
+	return 1;
 }
 
 
