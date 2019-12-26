@@ -68,7 +68,6 @@ int Sample::loadFile(const char* fileName) {
 		return 1;
 	}
 	SNDFILE *sndfile = NULL;
-	sfinfo;
 
 	// open file
 	sndfile = sf_open(fileName, SFM_READ, &sfinfo);
