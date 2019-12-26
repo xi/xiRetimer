@@ -1,3 +1,5 @@
+.gui
+.back
 *.gch
 *.o
 *.cache
