@@ -209,26 +209,26 @@ void RetimerMainFrame::paint(wxDC* dc) {
 		}
 		curve->_update = false;
 	}
-	bdc.DrawBitmap(waveform,0,0,false);
+	bdc.DrawBitmap(waveform, 0, 0, false);
 	// marker
 	bdc.SetPen(*penMarker);
 	for (int i = 0; i < curve->getMarkerLength(); ++i) {
-	int n = int(curve->getMarker(i) * (width - 1));
-	bdc.DrawLine(n, 0, n, height);
-	wxPoint ps[3];
-	wxPoint p0(n - MARKERWIDTH / 2, 0);
-	ps[0] = p0;
-	wxPoint p1(n + MARKERWIDTH / 2, 0);
-	ps[1] = p1;
-	wxPoint p2(n + 0, MARKERWIDTH * 4 / 5);
-	ps[2] = p2;
-	bdc.DrawPolygon(3, ps);
+		int n = int(curve->getMarker(i) * (width - 1));
+		bdc.DrawLine(n, 0, n, height);
+		wxPoint ps[3];
+		wxPoint p0(n - MARKERWIDTH / 2, 0);
+		ps[0] = p0;
+		wxPoint p1(n + MARKERWIDTH / 2, 0);
+		ps[1] = p1;
+		wxPoint p2(n + 0, MARKERWIDTH * 4 / 5);
+		ps[2] = p2;
+		bdc.DrawPolygon(3, ps);
 	}
 	// seeker
 	bdc.SetPen(*penSeeker);
 	int seek = int(curve->getSeeker() * (width - 1));
 	bdc.DrawLine(seek, 0, seek, height);
-	//beats
+	// beats
 	bdc.SetPen(*penMarker);
 	int step = int(width / curve->getBars() / curve->getBeatResolution());
 	for (int i = 0; i < width && step != 0; i += step) {
