@@ -115,7 +115,7 @@ void RetimerMainFrame::OnOpenClick(wxCommandEvent& event) {
 
 
 void RetimerMainFrame::OnExportClick(wxCommandEvent& event) {
-	wxFileDialog* dialog = new wxFileDialog((wxWindow*)NULL, _T("Export As"), _T(""), _T(""), _T("*.wav"), wxSAVE | wxOVERWRITE_PROMPT);
+	wxFileDialog* dialog = new wxFileDialog((wxWindow*)NULL, _T("Export As"), _T(""), _T(""), _T("*.wav"), wxFC_SAVE | wxFD_OVERWRITE_PROMPT);
 	dialog->Show();
 
 	if (dialog->ShowModal() == wxID_OK) {
