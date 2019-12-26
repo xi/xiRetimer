@@ -85,6 +85,7 @@ float Marker::getLengthf() {
 	if (getLength() > 0) {
 		return getNew(getLength() - 1) - getNew(0);
 	}
+	return 0;
 }
 
 

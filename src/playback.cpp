@@ -67,6 +67,8 @@ int Playback::start() {
     sounds.dpos = int(seeker*length);
 
   SDL_UnlockAudio();
+
+    return 0;
 }
 
 void callback(void *udata, Uint8 *stream, int len) {

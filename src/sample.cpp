@@ -136,6 +136,7 @@ int Sample::writeFile(const char* fileNameOut) {
 	}
 	sf_write_float(sndfileOut, data, length);
 	sf_close(sndfileOut);
+	return 0;
 }
 
 
