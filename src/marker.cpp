@@ -197,7 +197,7 @@ int Marker::getAreaNew(float n) {
 			return i - 1;
 		}
 	}
-	return getLength()  - 1;
+	return getLength() - 1;
 }
 
 
