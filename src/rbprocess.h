@@ -38,7 +38,7 @@ int RBprocess(int olength, float* data, Marker* marker, Sample* sample, int n=1)
 	// map
 	std::map<long unsigned int, long unsigned int> fmap;
 	for (int i = 0; i < length; i += 1024) {
-		float old = marker->nnew2new(marker->new2old(i / (float)length));
+		float old = marker->new2old(marker->nnew2new(i / (float)length));
 		fmap[int(old * olength) - ostart] = int(i);
 	}
 	ts.setKeyFrameMap(fmap);
