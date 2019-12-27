@@ -89,52 +89,6 @@ float Marker::getLengthf() {
 }
 
 
-float Marker::getRatio(float o) {
-	// deprecated
-	// derivate of old2new
-	// hardcode the derivate to improve performance
-	switch (getInterpolationMode()) {
-		// linear
-		case 0: {
-			int i = getAreaOld(o);
-			if (i < 0 || i + 1 > getLength() - 1) {
-				return 0;
-			}
-			float dold = (getOld(i + 1) - getOld(i));
-			if (dold <= 0) {
-				return 0;
-			}
-			return (getNew(i + 1) - getNew(i)) / dold;
-		} break;
-		default: {
-			// approxmiate ratio
-			float n = 100;  // TODO automate this
-
-			float o1 = o - 1 / n;
-			if (o1 < 0) {
-				o1 = 0;
-			}
-			if (o1 > 1) {
-				return 0;
-			}
-
-			float o2 = o + 1 / n;
-			if (o2 < 0) {
-				return 0;
-			}
-			if (o2 > 1) {
-				o2 = 1;
-			}
-			if (o2 - o1 <= 0) {
-				return 0;
-			}
-
-			return ((old2new(o2) - old2new(o1)) / (o2 - o1));
-		}
-	}
-}
-
-
 int Marker::getLength() {
 	return anew.getLength();
 }
@@ -174,7 +128,7 @@ int Marker::resort(int pi) {
 float Marker::old2new(float o) {
 	// this one does all the interpolation!
 	// for performance reasons you should also hard code the interpolation modes
-	// to getRatio(float) and new2old
+	// to new2old
 	switch (getInterpolationMode()) {
 		// case 0: // linear is default
 		case 1: {  // polynominal spline

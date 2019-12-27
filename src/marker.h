@@ -15,7 +15,6 @@
  * For different modes of interpolation you have to edit 3 functions:
  * old2new
  * new2old - inverse of old2new
- * getRatio - derivate of old2new
  */
 
 /*
@@ -46,7 +45,6 @@ class Marker {
 		int getAreaNew(float n);
 		int getAreaOld(float o);
 		float getLengthf();  // factor by which the length is changed;
-		float getRatio(float o);  // factor by which is stretched on this place;
 		int getInterpolationMode();
 		void setInterpolationMode(int m);
 		// used by interpolation modes to determine if data has to be updated
