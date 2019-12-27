@@ -52,8 +52,8 @@ int RBprocess(int olength, float* data, Marker* marker, Sample* sample, int n=1)
 	ts.process(ibuf, olength2, true);
 	sample->setFinished(0.9);
 
-	int avail=ts.available();
-	if (avail>length) avail=length;
+	int avail = ts.available();
+	if (avail > length) avail = length;
 	ts.retrieve(obuf, avail);
 
 	for (int j = 0; j < avail; ++j) {
@@ -64,7 +64,7 @@ int RBprocess(int olength, float* data, Marker* marker, Sample* sample, int n=1)
 	}
 
 	for (int i = avail; i < length; ++i) {
-		data[i]=0;
+		data[i] = 0;
 	}
 
 	delete[] ibuf[0];
