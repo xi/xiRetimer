@@ -18,7 +18,7 @@ namespace _IntPoly {
 float int_poly(Marker* marker, float old) {
 	int ii = marker->getAreaOld(old);
 	if (marker->_update || ii != _IntPoly::IPi) {
-		_IntPoly::update(marker,ii);
+		_IntPoly::update(marker, ii);
 	}
 	marker->_update = false;
 	return _IntPoly::calculate(old);
@@ -36,6 +36,7 @@ float _IntPoly::calculate(float x) {
 
 
 void _IntPoly::update(Marker* marker, int pi) {
+	/* qubic splines with slope fixed to secant of adjecent areas */
 	IPn = marker->getLength();
 	IPi = pi;
 	float x1 = marker->getOld(IPi);
@@ -70,6 +71,8 @@ void _IntPoly::update(Marker* marker, int pi) {
 	M[1][1] = 2 * x2;
 	M[1][2] = 1;
 
+	// only define difference
+	// it is easier to correct this than to invert 4x4 matrix
 	M[2][0] = x2 * x2 * x2 - x1 * x1 * x1;
 	M[2][1] = x2 * x2 - x1 * x1;
 	M[2][2] = x2 - x1;
